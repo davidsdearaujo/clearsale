@@ -10,15 +10,11 @@ class AnalisysRequest {
 
   AnalisysRequest(this._repository);
   Future<Either<Failure, OrderModel>> call(
-    String token,
     AnalysisRequestModel analysisRequestModel,
   ) async {
-    if (token == null || token.isEmpty) {
-      return left(InvalidFieldFailure("token"));
-    }
     if (analysisRequestModel == null) {
       return left(InvalidFieldFailure("analysisRequestModel"));
     }
-    return await _repository.analisysRequest(token, analysisRequestModel);
+    return await _repository.analisysRequest(analysisRequestModel);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:clearsale/src/domain/errors/usecases.dart';
+import 'package:clearsale/src/domain/models/credentials_model.dart';
 import 'package:clearsale/src/domain/models/token_model.dart';
 import 'package:clearsale/src/domain/repositories/guarantee_repository.dart';
 import 'package:clearsale/src/domain/usecases/authenticate.dart';
@@ -18,47 +19,38 @@ void main() {
 
   test("success", () async {
     final mockResponse = TokenModel("token", DateTime.now());
+    final mockCredentials = CredentialsModel("mock-name", "mock-password");
     when(repository.authenticate(any, any))
         .thenAnswer((realInvocation) async => right(mockResponse));
-    final response = await usecase("mock-name", "mock-password");
+    final response = await usecase(mockCredentials, 5);
+    expect(response | null, mockResponse);
+  });
+  test("success loopCountIfError null", () async {
+    final mockResponse = TokenModel("token", DateTime.now());
+    final mockCredentials = CredentialsModel("mock-name", "mock-password");
+    when(repository.authenticate(any, any))
+        .thenAnswer((realInvocation) async => right(mockResponse));
+    final response = await usecase(mockCredentials, null);
+    expect(response | null, mockResponse);
+  });
+  test("success loopCountIfError 0", () async {
+    final mockResponse = TokenModel("token", DateTime.now());
+    final mockCredentials = CredentialsModel("mock-name", "mock-password");
+    when(repository.authenticate(any, any))
+        .thenAnswer((realInvocation) async => right(mockResponse));
+    final response = await usecase(mockCredentials, 0);
     expect(response | null, mockResponse);
   });
 
   group("InvalidFieldFailure", () {
-    group("name", () {
+    group("credentials", () {
       test("null", () async {
-        final mockResponse = TokenModel("response-token", DateTime.now());
-        when(repository.authenticate(any, any))
-            .thenAnswer((realInvocation) async => right(mockResponse));
-        final response = await usecase(null, "mock-password")
-            .then((value) => value.fold(id, id));
-        expect(response, InvalidFieldFailure("name"));
-      });
-      test("empty", () async {
-        final mockResponse = TokenModel("response-token", DateTime.now());
-        when(repository.authenticate(any, any))
-            .thenAnswer((realInvocation) async => right(mockResponse));
-        final response = await usecase("", "mock-password")
-            .then((value) => value.fold(id, id));
-        expect(response, InvalidFieldFailure("name"));
-      });
-    });
-    group("password", () {
-      test("null", () async {
-        final mockResponse = TokenModel("response-token", DateTime.now());
-        when(repository.authenticate(any, any))
-            .thenAnswer((realInvocation) async => right(mockResponse));
-        final response = await usecase("mock-name", null)
-            .then((value) => value.fold(id, id));
-        expect(response, InvalidFieldFailure("password"));
-      });
-      test("empty", () async {
         final mockResponse = TokenModel("response-token", DateTime.now());
         when(repository.authenticate(any, any))
             .thenAnswer((realInvocation) async => right(mockResponse));
         final response =
-            await usecase("mock-name", "").then((value) => value.fold(id, id));
-        expect(response, InvalidFieldFailure("password"));
+            await usecase(null, 5).then((value) => value.fold(id, id));
+        expect(response, InvalidFieldFailure("credentials"));
       });
     });
   });

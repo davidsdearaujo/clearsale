@@ -14,12 +14,9 @@ class ReanalisysRequest {
     @required String token,
     @required AnalysisRequestModel analysisRequestModel,
   }) async {
-    if (token == null || token.isEmpty) {
-      return left(InvalidFieldFailure("token"));
-    }
     if (analysisRequestModel == null) {
       return left(InvalidFieldFailure("analysisRequestModel"));
     }
-    return await _repository.reanalisysRequest(token, analysisRequestModel);
+    return await _repository.reanalisysRequest(analysisRequestModel);
   }
 }

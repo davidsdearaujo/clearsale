@@ -20,6 +20,6 @@ class StatusUpdate {
     if (analisysNewStatusCode == null || analisysNewStatusCode.isEmpty) {
       return left(InvalidFieldFailure("analisysNewStatusCode"));
     }
-    return await _repository.statusConsult(token, analisysNewStatusCode);
+    return await _repository.statusConsult(analisysNewStatusCode);
   }
 }

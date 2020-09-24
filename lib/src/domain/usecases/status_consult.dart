@@ -19,6 +19,6 @@ class StatusConsult {
     if (analisysCode == null || analisysCode.isEmpty) {
       return left(InvalidFieldFailure("analysisRequestModel"));
     }
-    return await _repository.statusConsult(token, analisysCode);
+    return await _repository.statusConsult(analisysCode);
   }
 }

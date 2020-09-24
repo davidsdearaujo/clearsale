@@ -1,3 +1,4 @@
+import 'package:clearsale/src/domain/models/credentials_model.dart';
 import 'package:dartz/dartz.dart';
 
 import '../enums/payment_status_enum.dart';
@@ -10,34 +11,30 @@ import '../models/token_model.dart';
 
 abstract class GuaranteeRepository {
   Future<Either<Failure, TokenModel>> authenticate(
-    String name,
-    String password,
+    CredentialsModel credentials,
+    int loopIfErrorCount,
   );
 
   Future<Either<Failure, OrderModel>> analisysRequest(
-    String token,
     AnalysisRequestModel analysisRequest,
   );
 
   Future<Either<Failure, OrderModel>> reanalisysRequest(
-    String token,
     AnalysisRequestModel analysisRequest,
   );
 
   Future<Either<Failure, OrderModel>> statusConsult(
-    String token,
     String analisysNewStatusCode,
   );
 
   Future<Either<Failure, MessageModel>> statusUpdate(
-    String token,
     String analysisRequestCode,
     PaymentStatusEnum status,
   );
 
   Future<Either<Failure, ChargebackMarkingResponseModel>> chargebackMarking(
-    String token,
     String message,
+
     ///CODIGO_DO_MEU_PEDIDO
     List<String> analisysCode,
   );

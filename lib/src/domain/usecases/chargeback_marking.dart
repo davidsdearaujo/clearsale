@@ -15,9 +15,6 @@ class ChargebackMarking {
     @required String message,
     List<String> analisysCode,
   }) async {
-    if (token == null || token.isEmpty) {
-      return left(InvalidFieldFailure("token"));
-    }
     if (message == null || message.isEmpty) {
       return left(InvalidFieldFailure("message"));
     }
@@ -25,6 +22,6 @@ class ChargebackMarking {
       return left(InvalidFieldFailure("analisysCode"));
     }
 
-    return await _repository.chargebackMarking(token, message, analisysCode);
+    return await _repository.chargebackMarking(message, analisysCode);
   }
 }
