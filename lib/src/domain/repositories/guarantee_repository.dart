@@ -8,16 +8,16 @@ import '../models/message_model.dart';
 import '../models/order_model.dart';
 import '../models/token_model.dart';
 
-abstract class MaplinkRepository {
-  Future<Either<Failure, TokenModel>> authenticate({
+abstract class GuaranteeRepository {
+  Future<Either<Failure, TokenModel>> authenticate(
     String name,
     String password,
-  });
+  );
 
-  Future<Either<Failure, OrderModel>> analisysRequest({
+  Future<Either<Failure, OrderModel>> analisysRequest(
     String token,
     AnalysisRequestModel analysisRequest,
-  });
+  );
 
   Future<Either<Failure, OrderModel>> reanalisysRequest(
     String token,
@@ -25,7 +25,8 @@ abstract class MaplinkRepository {
   );
 
   Future<Either<Failure, OrderModel>> statusConsult(
-    String requestCode,
+    String token,
+    String analisysNewStatusCode,
   );
 
   Future<Either<Failure, MessageModel>> statusUpdate(
@@ -37,6 +38,7 @@ abstract class MaplinkRepository {
   Future<Either<Failure, ChargebackMarkingResponseModel>> chargebackMarking(
     String token,
     String message,
-    List<String> analysisRequestCode,
+    ///CODIGO_DO_MEU_PEDIDO
+    List<String> analisysCode,
   );
 }
