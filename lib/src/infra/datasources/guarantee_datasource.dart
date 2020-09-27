@@ -12,12 +12,12 @@ abstract class GuaranteeDatasource {
 
   Future<OrderModel> analisysRequest(
     String token,
-    AnalysisRequestModel analysisRequest,
+    AnalisysRequestModel analisysRequest,
   );
 
   Future<OrderModel> reanalisysRequest(
     String token,
-    AnalysisRequestModel analysisRequest,
+    AnalisysRequestModel analysisRequest,
   );
 
   Future<OrderModel> statusConsult(
@@ -27,7 +27,7 @@ abstract class GuaranteeDatasource {
 
   Future<MessageModel> statusUpdate(
     String token,
-    String analysisRequestCode,
+    String analisysRequestCode,
     PaymentStatusEnum status,
   );
 

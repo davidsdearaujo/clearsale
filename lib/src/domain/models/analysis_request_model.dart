@@ -13,8 +13,8 @@ import 'purchase_information_model.dart';
 import 'shipping_model.dart';
 import 'social_network_model.dart';
 
-class AnalysisRequestModel {
-  AnalysisRequestModel({
+class AnalisysRequestModel {
+  AnalisysRequestModel({
     @required this.code,
     @required this.sessionId,
     @required this.date,

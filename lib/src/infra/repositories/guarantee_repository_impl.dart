@@ -18,22 +18,26 @@ class GuaranteeRepositoryImpl implements GuaranteeRepository {
   TokenModel _currentToken;
   CredentialsModel _currentCredentials;
   int _authenticationLoopIfErrorCount;
-  int _authenticationLoopIfErrorIndex = 0;
 
   Future<void> authenticationResilience() async {
-    final isNotAuthenticated = _currentToken == null;
-    if (isNotAuthenticated) {
-      throw AuthenticationRequiredFailure();
-    }
-    final resilienceExceeded =
-        _authenticationLoopIfErrorIndex >= _authenticationLoopIfErrorCount;
-    if (resilienceExceeded) {
-      throw AuthenticationExpiredFailure();
-    }
-    if (_currentToken.isExpired) {
-      await authenticate(_currentCredentials, _authenticationLoopIfErrorCount);
-      _authenticationLoopIfErrorIndex = 0;
-    }
+    int authenticationLoopIfErrorIndex = 0;
+    do {
+      authenticationLoopIfErrorIndex += 1;
+      final isNotAuthenticated = _currentToken == null;
+      if (isNotAuthenticated) {
+        throw AuthenticationRequiredFailure();
+      }
+      final resilienceExceeded =
+          authenticationLoopIfErrorIndex > _authenticationLoopIfErrorCount;
+      if (resilienceExceeded) {
+        throw AuthenticationExpiredFailure();
+      }
+      if (_currentToken.isExpired) {
+        final authResponse = await authenticate(
+            _currentCredentials, _authenticationLoopIfErrorCount);
+        _currentToken = authResponse | _currentToken;
+      }
+    } while (_currentToken.isExpired);
   }
 
   @override
@@ -64,7 +68,7 @@ class GuaranteeRepositoryImpl implements GuaranteeRepository {
 
   @override
   Future<Either<Failure, OrderModel>> analisysRequest(
-    AnalysisRequestModel analisysRequest,
+    AnalisysRequestModel analisysRequest,
   ) async {
     try {
       await authenticationResilience();
@@ -118,7 +122,7 @@ class GuaranteeRepositoryImpl implements GuaranteeRepository {
 
   @override
   Future<Either<Failure, OrderModel>> reanalisysRequest(
-    AnalysisRequestModel analisysRequest,
+    AnalisysRequestModel analisysRequest,
   ) async {
     try {
       await authenticationResilience();
