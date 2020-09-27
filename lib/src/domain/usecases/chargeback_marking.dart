@@ -11,7 +11,6 @@ class ChargebackMarking {
 
   ChargebackMarking(this._repository);
   Future<Either<Failure, ChargebackMarkingResponseModel>> call({
-    @required String token,
     @required String message,
     List<String> analisysCode,
   }) async {

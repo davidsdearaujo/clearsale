@@ -10,7 +10,7 @@ class AnalisysRequest {
 
   AnalisysRequest(this._repository);
   Future<Either<Failure, OrderModel>> call(
-    AnalysisRequestModel analysisRequestModel,
+    AnalisysRequestModel analysisRequestModel,
   ) async {
     if (analysisRequestModel == null) {
       return left(InvalidFieldFailure("analysisRequestModel"));

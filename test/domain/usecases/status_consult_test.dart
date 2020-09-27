@@ -2,7 +2,7 @@ import 'package:clearsale/src/domain/errors/usecases.dart';
 import 'package:clearsale/src/domain/models/analysis_request_model.dart';
 import 'package:clearsale/src/domain/models/order_model.dart';
 import 'package:clearsale/src/domain/repositories/guarantee_repository.dart';
-import 'package:clearsale/src/domain/usecases/analisys_request.dart';
+import 'package:clearsale/src/domain/usecases/status_consult.dart';
 import 'package:dartz/dartz.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
@@ -11,31 +11,37 @@ class MockGaranteeRepository extends Mock implements GuaranteeRepository {}
 
 void main() {
   MockGaranteeRepository repository;
-  AnalisysRequest usecase;
+  StatusConsult usecase;
   setUp(() {
     repository = MockGaranteeRepository();
-    usecase = AnalisysRequest(repository);
+    usecase = StatusConsult(repository);
   });
 
   test("success", () async {
     final mockResponse = OrderModel();
-    // ignore: missing_required_param
-    final requestModel = AnalisysRequestModel();
-    when(repository.analisysRequest(any))
+    when(repository.statusConsult(any))
         .thenAnswer((realInvocation) async => right(mockResponse));
-    final response = await usecase(requestModel);
+    final response = await usecase("mock-analisys-code");
     expect(response | null, mockResponse);
   });
 
   group("InvalidFieldFailure", () {
-    group("analysisRequestModel", () {
+    group("analisysCode", () {
       test("null", () async {
         final mockResponse = OrderModel();
-        when(repository.analisysRequest(any))
+        when(repository.statusConsult(any))
             .thenAnswer((realInvocation) async => right(mockResponse));
         final response =
             await usecase(null).then((value) => value.fold(id, id));
-        expect(response, InvalidFieldFailure("analysisRequestModel"));
+        expect(response, InvalidFieldFailure("analisysCode"));
+      });
+      test("empty", () async {
+        final mockResponse = OrderModel();
+        when(repository.statusConsult(any))
+            .thenAnswer((realInvocation) async => right(mockResponse));
+        final response =
+            await usecase("").then((value) => value.fold(id, id));
+        expect(response, InvalidFieldFailure("analisysCode"));
       });
     });
   });
