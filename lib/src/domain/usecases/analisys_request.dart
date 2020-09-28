@@ -1,9 +1,10 @@
-import 'package:clearsale/src/domain/errors/failure.dart';
-import 'package:clearsale/src/domain/errors/usecases.dart';
-import 'package:clearsale/src/domain/models/analysis_request_model.dart';
-import 'package:clearsale/src/domain/models/order_model.dart';
-import 'package:clearsale/src/domain/repositories/guarantee_repository.dart';
 import 'package:dartz/dartz.dart';
+
+import '../../domain/errors/failure.dart';
+import '../../domain/errors/usecases.dart';
+import '../../domain/models/analysis_request_model.dart';
+import '../../domain/models/order_model.dart';
+import '../../domain/repositories/guarantee_repository.dart';
 
 class AnalisysRequest {
   final GuaranteeRepository _repository;

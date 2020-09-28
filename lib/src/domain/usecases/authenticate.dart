@@ -1,9 +1,10 @@
-import 'package:clearsale/src/domain/errors/failure.dart';
-import 'package:clearsale/src/domain/errors/usecases.dart';
-import 'package:clearsale/src/domain/models/credentials_model.dart';
-import 'package:clearsale/src/domain/models/token_model.dart';
-import 'package:clearsale/src/domain/repositories/guarantee_repository.dart';
 import 'package:dartz/dartz.dart';
+
+import '../../domain/errors/failure.dart';
+import '../../domain/errors/usecases.dart';
+import '../../domain/models/credentials_model.dart';
+import '../../domain/models/token_model.dart';
+import '../../domain/repositories/guarantee_repository.dart';
 
 class Authenticate {
   final GuaranteeRepository _repository;
