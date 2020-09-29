@@ -1,6 +1,7 @@
 import 'package:clearsale/src/domain/errors/usecases.dart';
 import 'package:clearsale/src/domain/models/analysis_request_model.dart';
 import 'package:clearsale/src/domain/models/order_model.dart';
+import 'package:clearsale/src/domain/models/response_model.dart';
 import 'package:clearsale/src/domain/repositories/guarantee_repository.dart';
 import 'package:clearsale/src/domain/usecases/reanalisys_request.dart';
 import 'package:dartz/dartz.dart';
@@ -16,23 +17,21 @@ void main() {
     repository = MockGaranteeRepository();
     usecase = ReanalisysRequest(repository);
   });
-
+  final successMockResponse = ResponseModel(data: OrderModel());
   test("success", () async {
-    final mockResponse = OrderModel();
     // ignore: missing_required_param
     final requestModel = AnalisysRequestModel();
     when(repository.reanalisysRequest(any))
-        .thenAnswer((realInvocation) async => right(mockResponse));
+        .thenAnswer((realInvocation) async => right(successMockResponse));
     final response = await usecase(requestModel);
-    expect(response | null, mockResponse);
+    expect(response | null, successMockResponse);
   });
 
   group("InvalidFieldFailure", () {
     group("analysisRequestModel", () {
       test("null", () async {
-        final mockResponse = OrderModel();
         when(repository.reanalisysRequest(any))
-            .thenAnswer((realInvocation) async => right(mockResponse));
+            .thenAnswer((realInvocation) async => right(successMockResponse));
         final response =
             await usecase(null).then((value) => value.fold(id, id));
         expect(response, InvalidFieldFailure("analysisRequestModel"));

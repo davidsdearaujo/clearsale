@@ -4,12 +4,14 @@ import '../../domain/errors/failure.dart';
 import '../../domain/errors/usecases.dart';
 import '../../domain/models/order_model.dart';
 import '../../domain/repositories/guarantee_repository.dart';
+import '../models/response_model.dart';
 
 class StatusConsult {
   final GuaranteeRepository _repository;
   StatusConsult(this._repository);
 
-  Future<Either<Failure, OrderModel>> call(String analisysCode) async {
+  Future<Either<Failure, ResponseModel<OrderModel>>> call(
+      String analisysCode) async {
     if (analisysCode == null || analisysCode.isEmpty) {
       return left(InvalidFieldFailure("analisysCode"));
     }

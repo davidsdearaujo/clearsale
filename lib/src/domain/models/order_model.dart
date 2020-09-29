@@ -1,7 +1,9 @@
+
+
 class OrderModel {
   String code;
   String status;
-  String score;
+  double score;
   
   OrderModel({
     this.code,

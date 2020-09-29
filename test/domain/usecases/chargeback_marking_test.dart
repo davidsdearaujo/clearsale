@@ -1,5 +1,6 @@
 import 'package:clearsale/src/domain/errors/usecases.dart';
 import 'package:clearsale/src/domain/models/chargeback_marking_response_model.dart';
+import 'package:clearsale/src/domain/models/response_model.dart';
 import 'package:clearsale/src/domain/repositories/guarantee_repository.dart';
 import 'package:clearsale/src/domain/usecases/chargeback_marking.dart';
 import 'package:dartz/dartz.dart';
@@ -16,7 +17,9 @@ void main() {
     usecase = ChargebackMarking(repository);
   });
 
-  final successResponse = ChargebackMarkingResponseModel(code: "mock-code");
+  final successResponse = ResponseModel(
+    data: ChargebackMarkingResponseModel(code: "mock-code"),
+  );
 
   test("success", () async {
     // ignore: missing_required_param

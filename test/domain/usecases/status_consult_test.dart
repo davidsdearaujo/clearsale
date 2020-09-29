@@ -1,6 +1,6 @@
 import 'package:clearsale/src/domain/errors/usecases.dart';
-import 'package:clearsale/src/domain/models/analysis_request_model.dart';
 import 'package:clearsale/src/domain/models/order_model.dart';
+import 'package:clearsale/src/domain/models/response_model.dart';
 import 'package:clearsale/src/domain/repositories/guarantee_repository.dart';
 import 'package:clearsale/src/domain/usecases/status_consult.dart';
 import 'package:dartz/dartz.dart';
@@ -16,31 +16,27 @@ void main() {
     repository = MockGaranteeRepository();
     usecase = StatusConsult(repository);
   });
-
+  final successMockResponse = ResponseModel(data: OrderModel());
   test("success", () async {
-    final mockResponse = OrderModel();
     when(repository.statusConsult(any))
-        .thenAnswer((realInvocation) async => right(mockResponse));
+        .thenAnswer((realInvocation) async => right(successMockResponse));
     final response = await usecase("mock-analisys-code");
-    expect(response | null, mockResponse);
+    expect(response | null, successMockResponse);
   });
 
   group("InvalidFieldFailure", () {
     group("analisysCode", () {
       test("null", () async {
-        final mockResponse = OrderModel();
         when(repository.statusConsult(any))
-            .thenAnswer((realInvocation) async => right(mockResponse));
+            .thenAnswer((realInvocation) async => right(successMockResponse));
         final response =
             await usecase(null).then((value) => value.fold(id, id));
         expect(response, InvalidFieldFailure("analisysCode"));
       });
       test("empty", () async {
-        final mockResponse = OrderModel();
         when(repository.statusConsult(any))
-            .thenAnswer((realInvocation) async => right(mockResponse));
-        final response =
-            await usecase("").then((value) => value.fold(id, id));
+            .thenAnswer((realInvocation) async => right(successMockResponse));
+        final response = await usecase("").then((value) => value.fold(id, id));
         expect(response, InvalidFieldFailure("analisysCode"));
       });
     });

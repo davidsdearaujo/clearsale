@@ -1,15 +1,16 @@
-import 'package:clearsale/src/domain/errors/repository.dart';
-import 'package:clearsale/src/domain/models/credentials_model.dart';
-import 'package:clearsale/src/domain/models/token_model.dart';
-import 'package:clearsale/src/domain/models/order_model.dart';
-import 'package:clearsale/src/domain/models/message_model.dart';
-import 'package:clearsale/src/domain/models/chargeback_marking_response_model.dart';
-import 'package:clearsale/src/domain/models/analysis_request_model.dart';
-import 'package:clearsale/src/domain/errors/failure.dart';
-import 'package:clearsale/src/domain/enums/payment_status_enum.dart';
-import 'package:clearsale/src/domain/repositories/guarantee_repository.dart';
-import 'package:clearsale/src/infra/datasources/guarantee_datasource.dart';
 import 'package:dartz/dartz.dart';
+
+import '../../domain/errors/failure.dart';
+import '../../domain/errors/repository.dart';
+import '../../domain/models/analysis_request_model.dart';
+import '../../domain/models/chargeback_marking_response_model.dart';
+import '../../domain/models/credentials_model.dart';
+import '../../domain/models/message_model.dart';
+import '../../domain/models/order_model.dart';
+import '../../domain/models/response_model.dart';
+import '../../domain/models/token_model.dart';
+import '../../domain/repositories/guarantee_repository.dart';
+import '../datasources/guarantee_datasource.dart';
 
 class GuaranteeRepositoryImpl implements GuaranteeRepository {
   final GuaranteeDatasource _datasource;
@@ -34,20 +35,24 @@ class GuaranteeRepositoryImpl implements GuaranteeRepository {
       }
       if (_currentToken.isExpired) {
         final authResponse = await authenticate(
-            _currentCredentials, _authenticationLoopIfErrorCount);
-        _currentToken = authResponse | _currentToken;
+          _currentCredentials,
+          _authenticationLoopIfErrorCount,
+        );
+        _currentToken = authResponse
+            .getOrElse(() => ResponseModel(data: _currentToken))
+            .data;
       }
     } while (_currentToken.isExpired);
   }
 
   @override
-  Future<Either<Failure, TokenModel>> authenticate(
+  Future<Either<Failure, ResponseModel<TokenModel>>> authenticate(
     CredentialsModel credentials,
     int loopIfErrorCount,
   ) async {
     try {
       final response = await _datasource.authenticate(credentials);
-      _currentToken = response;
+      _currentToken = response.data;
       _currentCredentials = credentials;
       _authenticationLoopIfErrorCount = loopIfErrorCount;
       return right(response);
@@ -67,7 +72,7 @@ class GuaranteeRepositoryImpl implements GuaranteeRepository {
   }
 
   @override
-  Future<Either<Failure, OrderModel>> analisysRequest(
+  Future<Either<Failure, ResponseModel<OrderModel>>> analisysRequest(
     AnalisysRequestModel analisysRequest,
   ) async {
     try {
@@ -93,7 +98,8 @@ class GuaranteeRepositoryImpl implements GuaranteeRepository {
   }
 
   @override
-  Future<Either<Failure, ChargebackMarkingResponseModel>> chargebackMarking(
+  Future<Either<Failure, ResponseModel<ChargebackMarkingResponseModel>>>
+      chargebackMarking(
     String message,
     List<String> analisysCode,
   ) async {
@@ -121,7 +127,7 @@ class GuaranteeRepositoryImpl implements GuaranteeRepository {
   }
 
   @override
-  Future<Either<Failure, OrderModel>> reanalisysRequest(
+  Future<Either<Failure, ResponseModel<OrderModel>>> reanalisysRequest(
     AnalisysRequestModel analisysRequest,
   ) async {
     try {
@@ -147,7 +153,7 @@ class GuaranteeRepositoryImpl implements GuaranteeRepository {
   }
 
   @override
-  Future<Either<Failure, OrderModel>> statusConsult(
+  Future<Either<Failure, ResponseModel<OrderModel>>> statusConsult(
     String analisysNewStatusCode,
   ) async {
     try {
@@ -173,9 +179,9 @@ class GuaranteeRepositoryImpl implements GuaranteeRepository {
   }
 
   @override
-  Future<Either<Failure, MessageModel>> statusUpdate(
+  Future<Either<Failure, ResponseModel<MessageModel>>> statusUpdate(
     String analysisRequestCode,
-    PaymentStatusEnum status,
+    String status,
   ) async {
     try {
       await authenticationResilience();

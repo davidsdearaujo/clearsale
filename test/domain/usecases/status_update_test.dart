@@ -1,6 +1,6 @@
-import 'package:clearsale/src/domain/enums/payment_status_enum.dart';
 import 'package:clearsale/src/domain/errors/usecases.dart';
 import 'package:clearsale/src/domain/models/message_model.dart';
+import 'package:clearsale/src/domain/models/response_model.dart';
 import 'package:clearsale/src/domain/repositories/guarantee_repository.dart';
 import 'package:clearsale/src/domain/usecases/status_update.dart';
 import 'package:dartz/dartz.dart';
@@ -17,31 +17,36 @@ void main() {
     usecase = StatusUpdate(repository);
   });
 
-  final successResponse = MessageModel(status: "ok", message: "success");
+  final successResponse = ResponseModel(
+    data: MessageModel(
+      status: "ok",
+      message: "success",
+    ),
+  );
   test("success", () async {
     when(repository.statusUpdate(any, any))
         .thenAnswer((realInvocation) async => right(successResponse));
-    final response = await usecase("mock-code", PaymentStatusEnum.approved);
+    final response = await usecase("mock-code", "APR");
     expect(response | null, successResponse);
   });
 
   group("InvalidFieldFailure", () {
-    group("analysisRequestCode", () {
+    group("analisysRequestCode", () {
       test("null", () async {
         ;
         when(repository.statusUpdate(any, any))
             .thenAnswer((realInvocation) async => right(successResponse));
-        final response = await usecase(null, PaymentStatusEnum.approved)
-            .then((value) => value.fold(id, id));
-        expect(response, InvalidFieldFailure("analysisRequestCode"));
+        final response =
+            await usecase(null, "APR").then((value) => value.fold(id, id));
+        expect(response, InvalidFieldFailure("analisysRequestCode"));
       });
       test("empty", () async {
         ;
         when(repository.statusUpdate(any, any))
             .thenAnswer((realInvocation) async => right(successResponse));
-        final response = await usecase("", PaymentStatusEnum.approved)
-            .then((value) => value.fold(id, id));
-        expect(response, InvalidFieldFailure("analysisRequestCode"));
+        final response =
+            await usecase("", "APR").then((value) => value.fold(id, id));
+        expect(response, InvalidFieldFailure("analisysRequestCode"));
       });
     });
     group("analisysNewStatusCode", () {

@@ -1,38 +1,39 @@
-import 'package:clearsale/src/domain/models/credentials_model.dart';
 import 'package:dartz/dartz.dart';
 
-import '../enums/payment_status_enum.dart';
 import '../errors/failure.dart';
 import '../models/analysis_request_model.dart';
 import '../models/chargeback_marking_response_model.dart';
+import '../models/credentials_model.dart';
 import '../models/message_model.dart';
 import '../models/order_model.dart';
+import '../models/response_model.dart';
 import '../models/token_model.dart';
 
 abstract class GuaranteeRepository {
-  Future<Either<Failure, TokenModel>> authenticate(
+  Future<Either<Failure, ResponseModel<TokenModel>>> authenticate(
     CredentialsModel credentials,
     int loopIfErrorCount,
   );
 
-  Future<Either<Failure, OrderModel>> analisysRequest(
+  Future<Either<Failure, ResponseModel<OrderModel>>> analisysRequest(
     AnalisysRequestModel analysisRequest,
   );
 
-  Future<Either<Failure, OrderModel>> reanalisysRequest(
+  Future<Either<Failure, ResponseModel<OrderModel>>> reanalisysRequest(
     AnalisysRequestModel analysisRequest,
   );
 
-  Future<Either<Failure, OrderModel>> statusConsult(
+  Future<Either<Failure, ResponseModel<OrderModel>>> statusConsult(
     String analisysNewStatusCode,
   );
 
-  Future<Either<Failure, MessageModel>> statusUpdate(
+  Future<Either<Failure, ResponseModel<MessageModel>>> statusUpdate(
     String analysisRequestCode,
-    PaymentStatusEnum status,
+    String status,
   );
 
-  Future<Either<Failure, ChargebackMarkingResponseModel>> chargebackMarking(
+  Future<Either<Failure, ResponseModel<ChargebackMarkingResponseModel>>>
+      chargebackMarking(
     String message,
 
     ///CODIGO_DO_MEU_PEDIDO
