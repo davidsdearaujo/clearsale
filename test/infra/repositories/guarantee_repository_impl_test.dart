@@ -17,23 +17,18 @@ class MockLoopGuaranteeDatasource extends Mock implements GuaranteeDatasource {
   MockLoopGuaranteeDatasource([this.maxCount = 0]);
 
   @override
-  Future<ResponseModel<TokenModel>> authenticate(
-      CredentialsModel credentials) async {
+  Future<TokenModel> authenticate(CredentialsModel credentials) async {
     bool countExceded = count >= maxCount;
     count++;
     if (countExceded) {
-      return ResponseModel(
-        data: TokenModel(
-          "response-token",
-          DateTime.now().add(Duration(seconds: 10)),
-        ),
+      return TokenModel(
+        "response-token",
+        DateTime.now().add(Duration(seconds: 10)),
       );
     } else {
-      return ResponseModel(
-        data: TokenModel(
-          "response-token",
-          DateTime.now().subtract(Duration(seconds: 1)),
-        ),
+      return TokenModel(
+        "response-token",
+        DateTime.now().subtract(Duration(seconds: 1)),
       );
     }
   }
@@ -44,9 +39,7 @@ void main() {
     final datasource = MockGuaranteeDatasource();
     final repository = GuaranteeRepositoryImpl(datasource);
     final credentials = CredentialsModel("mock-username", "mock-password");
-    final authResponse = ResponseModel(
-      data: TokenModel("response-token", null),
-    );
+    final authResponse = TokenModel("response-token", null);
 
     when(datasource.authenticate(any)).thenAnswer((_) async => authResponse);
     when(datasource.statusConsult(any, any))

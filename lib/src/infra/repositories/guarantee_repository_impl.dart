@@ -38,21 +38,19 @@ class GuaranteeRepositoryImpl implements GuaranteeRepository {
           _currentCredentials,
           _authenticationLoopIfErrorCount,
         );
-        _currentToken = authResponse
-            .getOrElse(() => ResponseModel(data: _currentToken))
-            .data;
+        _currentToken = authResponse ?? _currentToken;
       }
     } while (_currentToken.isExpired);
   }
 
   @override
-  Future<Either<Failure, ResponseModel<TokenModel>>> authenticate(
+  Future<Either<Failure, TokenModel>> authenticate(
     CredentialsModel credentials,
     int loopIfErrorCount,
   ) async {
     try {
       final response = await _datasource.authenticate(credentials);
-      _currentToken = response.data;
+      _currentToken = response;
       _currentCredentials = credentials;
       _authenticationLoopIfErrorCount = loopIfErrorCount;
       return right(response);

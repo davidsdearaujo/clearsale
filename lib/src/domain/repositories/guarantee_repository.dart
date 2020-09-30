@@ -10,7 +10,7 @@ import '../models/response_model.dart';
 import '../models/token_model.dart';
 
 abstract class GuaranteeRepository {
-  Future<Either<Failure, ResponseModel<TokenModel>>> authenticate(
+  Future<Either<Failure, TokenModel>> authenticate(
     CredentialsModel credentials,
     int loopIfErrorCount,
   );

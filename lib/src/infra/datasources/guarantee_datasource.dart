@@ -7,7 +7,7 @@ import '../../domain/models/response_model.dart';
 import '../../domain/models/token_model.dart';
 
 abstract class GuaranteeDatasource {
-  Future<ResponseModel<TokenModel>> authenticate(CredentialsModel credentials);
+  Future<TokenModel> authenticate(CredentialsModel credentials);
 
   Future<ResponseModel<OrderModel>> analisysRequest(
     String token,

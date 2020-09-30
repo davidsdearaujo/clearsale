@@ -1,6 +1,8 @@
+import 'package:clearsale/src/domain/models/credentials_model.dart';
 import 'package:clearsale/src/domain/models/message_model.dart';
 import 'package:clearsale/src/domain/models/order_model.dart';
 import 'package:clearsale/src/domain/models/response_model.dart';
+import 'package:clearsale/src/domain/models/token_model.dart';
 import 'package:clearsale/src/external/datasources/guarantee_datasource_impl.dart';
 import 'package:clearsale/src/external/errors/guarantee_datasource_errors.dart';
 import 'package:http/http.dart';
@@ -9,6 +11,7 @@ import 'package:test/test.dart';
 
 import '../responses/status_update_responses.dart' as statusUpdateResponses;
 import '../responses/status_consult_responses.dart' as statusConsultResponses;
+import '../responses/authenticate_responses.dart' as authenticateResponses;
 
 class MockClient extends Mock implements Client {}
 
@@ -95,6 +98,46 @@ void main() {
       final response = datasource.statusConsult(
         "mock-token",
         "mock-analisysRequestCode",
+      );
+      expect(
+        response,
+        throwsA(NullDatasourceResponseFailure()),
+      );
+    });
+  });
+
+  group("authenticate", () {
+    test("success", () async {
+      when(
+        client.post(
+          any,
+          headers: anyNamed("headers"),
+          body: anyNamed("body"),
+        ),
+      ).thenAnswer((realInvocation) async => authenticateResponses.success);
+
+      final response = await datasource.authenticate(
+        CredentialsModel("mock-username", "mock-password"),
+      );
+      expect(
+        response,
+        TokenModel(
+          "1df73594d7ad4224a3cd4aa9f8a5af06",
+          DateTime.parse("2020-10-01T16:13:51.6146331-03:00"),
+        ),
+      );
+    });
+    test("NullDatasourceResponseFailure", () async {
+      when(
+        client.post(
+          any,
+          headers: anyNamed("headers"),
+          body: anyNamed("body"),
+        ),
+      ).thenAnswer((realInvocation) async => null);
+
+      final response = datasource.authenticate(
+        CredentialsModel("mock-username", "mock-password"),
       );
       expect(
         response,

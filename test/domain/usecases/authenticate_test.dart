@@ -1,6 +1,5 @@
 import 'package:clearsale/src/domain/errors/usecases.dart';
 import 'package:clearsale/src/domain/models/credentials_model.dart';
-import 'package:clearsale/src/domain/models/response_model.dart';
 import 'package:clearsale/src/domain/models/token_model.dart';
 import 'package:clearsale/src/domain/repositories/guarantee_repository.dart';
 import 'package:clearsale/src/domain/usecases/authenticate.dart';
@@ -18,9 +17,7 @@ void main() {
     usecase = Authenticate(repository);
   });
 
-  final successMockResponse = ResponseModel(
-    data: TokenModel("token", DateTime.now()),
-  );
+  final successMockResponse = TokenModel("token", DateTime.now());
 
   test("success", () async {
     final mockCredentials = CredentialsModel("mock-name", "mock-password");

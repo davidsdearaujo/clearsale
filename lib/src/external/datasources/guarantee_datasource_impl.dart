@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:clearsale/src/external/maps/token_model_mapper.dart';
 import 'package:http/http.dart';
 
 import '../../domain/errors/datasource.dart';
@@ -21,27 +22,55 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
 
   @override
   Future<ResponseModel<OrderModel>> analisysRequest(
-      String token, AnalisysRequestModel analisysRequest) {
+    String token,
+    AnalisysRequestModel analisysRequest,
+  ) {
     // TODO: implement analisysRequest
     throw UnimplementedError();
   }
 
   @override
-  Future<ResponseModel<TokenModel>> authenticate(CredentialsModel credentials) {
-    // TODO: implement authenticate
-    throw UnimplementedError();
+  Future<TokenModel> authenticate(CredentialsModel credentials) async {
+    final uri = Uri.https(
+      "homologacao.clearsale.com.br",
+      "/api/v1/authenticate",
+    );
+
+    final body = <String, dynamic>{
+      "name": credentials.userName,
+      "password": credentials.password,
+    };
+
+    final data = await _client.post(
+      uri,
+      body: body,
+      headers: {
+        "Content-Type": "application/json",
+        ...defaultHeaders,
+      },
+    );
+    _throwFailureIfExists(data);
+
+    final json = jsonDecode(data.body);
+    final response = TokenModelMapper.fromMap(json);
+    return response;
   }
 
   @override
   Future<ResponseModel<ChargebackMarkingResponseModel>> chargebackMarking(
-      String token, String message, List<String> analisysCode) {
+    String token,
+    String message,
+    List<String> analisysCode,
+  ) {
     // TODO: implement chargebackMarking
     throw UnimplementedError();
   }
 
   @override
   Future<ResponseModel<OrderModel>> reanalisysRequest(
-      String token, AnalisysRequestModel analysisRequest) {
+    String token,
+    AnalisysRequestModel analysisRequest,
+  ) {
     // TODO: implement reanalisysRequest
     throw UnimplementedError();
   }
@@ -59,7 +88,10 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
 
     final data = await _client.get(
       uri,
-      headers: {"Authorization": "Bearer $token"},
+      headers: {
+        "Authorization": "Bearer $token",
+        ...defaultHeaders,
+      },
     );
     _throwFailureIfExists(data);
 
@@ -80,13 +112,16 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
     );
 
     final body = <String, dynamic>{
-      "status ": status,
+      "status": status,
     };
 
     final data = await _client.put(
       uri,
       body: body,
-      headers: {"Authorization": "Bearer $token"},
+      headers: {
+        "Authorization": "Bearer $token",
+        ...defaultHeaders,
+      },
     );
     _throwFailureIfExists(data);
 
@@ -104,7 +139,7 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
       final lowerHeaders = headers
           .map((key, value) => MapEntry(key.toLowerCase(), value))
           .cast<String, String>();
-          
+
       requestId = lowerHeaders["request-id"];
     }
     return ResponseModel<T>(
@@ -112,6 +147,10 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
       data: response,
     );
   }
+
+  final defaultHeaders = const {
+    "Content-Type": "application/json",
+  };
 
   void _throwFailureIfExists(Response response) {
     if (response == null) throw NullDatasourceResponseFailure();
