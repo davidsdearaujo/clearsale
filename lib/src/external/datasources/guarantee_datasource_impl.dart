@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:clearsale/src/external/maps/chargeback_marking_response_model_mapper.dart';
 import 'package:clearsale/src/external/maps/token_model_mapper.dart';
 import 'package:http/http.dart';
 
@@ -44,10 +45,7 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
     final data = await _client.post(
       uri,
       body: body,
-      headers: {
-        "Content-Type": "application/json",
-        ...defaultHeaders,
-      },
+      headers: defaultHeaders,
     );
     _throwFailureIfExists(data);
 
@@ -61,9 +59,30 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
     String token,
     String message,
     List<String> analisysCode,
-  ) {
-    // TODO: implement chargebackMarking
-    throw UnimplementedError();
+  ) async {
+    final uri = Uri.https(
+      "homologacao.clearsale.com.br",
+      "/api/v1/authenticate",
+    );
+
+    final body = <String, dynamic>{
+      "message": message,
+      "orders": analisysCode,
+    };
+
+    final data = await _client.post(
+      uri,
+      body: body,
+      headers: {
+        "Authorization": "Bearer $token",
+        ...defaultHeaders,
+      },
+    );
+    _throwFailureIfExists(data);
+
+    final json = jsonDecode(data.body);
+    final response = ChargebackMarkingResponseModelMapper.fromMap(json);
+    return _makeResponse(response, data.headers);
   }
 
   @override

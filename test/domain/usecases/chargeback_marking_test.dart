@@ -18,7 +18,7 @@ void main() {
   });
 
   final successResponse = ResponseModel(
-    data: ChargebackMarkingResponseModel(code: "mock-code"),
+    data: ChargebackMarkingResponseModel(orderCode: "mock-code"),
   );
 
   test("success", () async {

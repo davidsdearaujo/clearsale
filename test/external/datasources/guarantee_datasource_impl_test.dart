@@ -1,3 +1,4 @@
+import 'package:clearsale/src/domain/models/chargeback_marking_response_model.dart';
 import 'package:clearsale/src/domain/models/credentials_model.dart';
 import 'package:clearsale/src/domain/models/message_model.dart';
 import 'package:clearsale/src/domain/models/order_model.dart';
@@ -12,6 +13,8 @@ import 'package:test/test.dart';
 import '../responses/status_update_responses.dart' as statusUpdateResponses;
 import '../responses/status_consult_responses.dart' as statusConsultResponses;
 import '../responses/authenticate_responses.dart' as authenticateResponses;
+import '../responses/chargeback_marking_responses.dart'
+    as chargebackMarkingResponses;
 
 class MockClient extends Mock implements Client {}
 
@@ -138,6 +141,52 @@ void main() {
 
       final response = datasource.authenticate(
         CredentialsModel("mock-username", "mock-password"),
+      );
+      expect(
+        response,
+        throwsA(NullDatasourceResponseFailure()),
+      );
+    });
+  });
+  group("chargebackMarking", () {
+    test("success", () async {
+      when(
+        client.post(
+          any,
+          headers: anyNamed("headers"),
+          body: anyNamed("body"),
+        ),
+      ).thenAnswer((_) async => chargebackMarkingResponses.success);
+
+      final response = await datasource.chargebackMarking(
+        "mock-token",
+        "mock-message",
+        ["mock-analisys-code"],
+      );
+      expect(
+        response,
+        ResponseModel(
+          requestId: "12J6-11B3-11A7-93C0",
+          data: ChargebackMarkingResponseModel(
+            orderCode: "{CODIGO_DO_MEU_PEDIDO}",
+            status: "Chargeback done",
+          ),
+        ),
+      );
+    });
+    test("NullDatasourceResponseFailure", () {
+      when(
+        client.post(
+          any,
+          headers: anyNamed("headers"),
+          body: anyNamed("body"),
+        ),
+      ).thenAnswer((realInvocation) async => null);
+
+      final response = datasource.chargebackMarking(
+        "mock-token",
+        "mock-message",
+        ["mock-analisys-code"],
       );
       expect(
         response,
