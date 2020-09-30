@@ -23,17 +23,17 @@ class GuaranteeRepositoryImpl implements GuaranteeRepository {
   Future<void> authenticationResilience() async {
     int authenticationLoopIfErrorIndex = 0;
     do {
-      authenticationLoopIfErrorIndex += 1;
       final isNotAuthenticated = _currentToken == null;
       if (isNotAuthenticated) {
         throw AuthenticationRequiredFailure();
       }
       final resilienceExceeded =
-          authenticationLoopIfErrorIndex > _authenticationLoopIfErrorCount;
-      if (resilienceExceeded) {
-        throw AuthenticationExpiredFailure();
-      }
+          authenticationLoopIfErrorIndex + 1 > _authenticationLoopIfErrorCount;
       if (_currentToken.isExpired) {
+        if (resilienceExceeded) {
+          throw AuthenticationExpiredFailure();
+        }
+        authenticationLoopIfErrorIndex += 1;
         final authResponse = await authenticate(
           _currentCredentials,
           _authenticationLoopIfErrorCount,

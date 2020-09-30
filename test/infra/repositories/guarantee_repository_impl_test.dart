@@ -40,6 +40,24 @@ class MockLoopGuaranteeDatasource extends Mock implements GuaranteeDatasource {
 }
 
 void main() {
+  test("success on expiration date is null", () async {
+    final datasource = MockGuaranteeDatasource();
+    final repository = GuaranteeRepositoryImpl(datasource);
+    final credentials = CredentialsModel("mock-username", "mock-password");
+    final authResponse = ResponseModel(
+      data: TokenModel("response-token", null),
+    );
+
+    when(datasource.authenticate(any)).thenAnswer((_) async => authResponse);
+    when(datasource.statusConsult(any, any))
+        .thenAnswer((_) async => ResponseModel(data: OrderModel()));
+
+    await repository.authenticate(credentials, 0);
+    final response = await repository.statusConsult("mock-status");
+    // verify(datasource.authenticate(credentials)).called(1);
+    expect(response | null, ResponseModel(data: OrderModel()));
+  });
+
   group("token refresh -", () {
     final loopIfErrorCount = 3;
     final credentials = CredentialsModel("mock-username", "mock-password");
@@ -92,8 +110,8 @@ void main() {
     test("error index 4", () async {
       final datasource = MockLoopGuaranteeDatasource(4);
       final repository = GuaranteeRepositoryImpl(datasource);
-      when(datasource.statusConsult(any, any))
-          .thenAnswer((realInvocation) async => ResponseModel(data: OrderModel()));
+      when(datasource.statusConsult(any, any)).thenAnswer(
+          (realInvocation) async => ResponseModel(data: OrderModel()));
 
       await repository.authenticate(credentials, loopIfErrorCount);
       final response = await repository.statusConsult("mock-status");

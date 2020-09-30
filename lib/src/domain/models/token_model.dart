@@ -3,6 +3,7 @@ class TokenModel {
 
   final String token;
   final DateTime expirationDate;
-  
-  bool get isExpired => DateTime.now().isAfter(expirationDate);
+
+  bool get isExpired =>
+      expirationDate != null && DateTime.now().isAfter(expirationDate);
 }
