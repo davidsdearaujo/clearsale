@@ -20,7 +20,7 @@ abstract class GuaranteeRepository {
     AnalisysRequestModel analysisRequest,
   );
 
-  Future<Either<Failure, ResponseModel<OrderModel>>> reanalisysRequest(
+  Future<Either<Failure, ResponseModel<AnalisysResponseModel>>> reanalisysRequest(
     AnalisysRequestModel analysisRequest,
   );
 

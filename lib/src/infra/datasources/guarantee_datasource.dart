@@ -15,7 +15,7 @@ abstract class GuaranteeDatasource {
     AnalisysRequestModel analisysRequest,
   );
 
-  Future<ResponseModel<OrderModel>> reanalisysRequest(
+  Future<ResponseModel<AnalisysResponseModel>> reanalisysRequest(
     String token,
     AnalisysRequestModel analysisRequest,
   );

@@ -126,7 +126,7 @@ class GuaranteeRepositoryImpl implements GuaranteeRepository {
   }
 
   @override
-  Future<Either<Failure, ResponseModel<OrderModel>>> reanalisysRequest(
+  Future<Either<Failure, ResponseModel<AnalisysResponseModel>>> reanalisysRequest(
     AnalisysRequestModel analisysRequest,
   ) async {
     try {

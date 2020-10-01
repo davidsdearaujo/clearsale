@@ -1,13 +1,9 @@
 import 'dart:convert';
 
-import 'package:clearsale/src/domain/models/analisys_response_model.dart';
-import 'package:clearsale/src/external/maps/analisys_request_model_mapper.dart';
-import 'package:clearsale/src/external/maps/analisys_response_model.dart';
-import 'package:clearsale/src/external/maps/chargeback_marking_response_model_mapper.dart';
-import 'package:clearsale/src/external/maps/token_model_mapper.dart';
 import 'package:http/http.dart';
 
 import '../../domain/errors/datasource.dart';
+import '../../domain/models/analisys_response_model.dart';
 import '../../domain/models/analysis_request_model.dart';
 import '../../domain/models/chargeback_marking_response_model.dart';
 import '../../domain/models/credentials_model.dart';
@@ -17,8 +13,12 @@ import '../../domain/models/response_model.dart';
 import '../../domain/models/token_model.dart';
 import '../../infra/datasources/guarantee_datasource.dart';
 import '../errors/guarantee_datasource_errors.dart';
+import '../maps/analisys_request_model_mapper.dart';
+import '../maps/analisys_response_model.dart';
+import '../maps/chargeback_marking_response_model_mapper.dart';
 import '../maps/message_model_mapper.dart';
 import '../maps/order_model_mapper.dart';
+import '../maps/token_model_mapper.dart';
 
 class GuaranteeDatasourceImpl implements GuaranteeDatasource {
   final Client _client;
@@ -107,12 +107,30 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
   }
 
   @override
-  Future<ResponseModel<OrderModel>> reanalisysRequest(
+  Future<ResponseModel<AnalisysResponseModel>> reanalisysRequest(
     String token,
-    AnalisysRequestModel analysisRequest,
-  ) {
-    // TODO: implement reanalisysRequest
-    throw UnimplementedError();
+    AnalisysRequestModel request,
+  ) async {
+    final uri = Uri.https(
+      "homologacao.clearsale.com.br",
+      "/api/v1/orders",
+    );
+
+    final body = AnalisysRequestModelMapper.toMap(request);
+
+    final data = await _client.post(
+      uri,
+      body: body,
+      headers: {
+        "Authorization": "Bearer $token",
+        ...defaultHeaders,
+      },
+    );
+    _throwFailureIfExists(data);
+
+    final response = AnalisysResponseModelMapper.fromJson(data.body);
+
+    return _makeResponse(response, data.headers);
   }
 
   @override

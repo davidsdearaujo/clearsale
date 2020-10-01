@@ -250,4 +250,56 @@ void main() {
       );
     });
   });
+
+  group("reanalisysRequest", () {
+    test("success", () async {
+      when(
+        client.post(
+          any,
+          headers: anyNamed("headers"),
+          body: anyNamed("body"),
+        ),
+      ).thenAnswer((_) async => analisysRequestResponses.success);
+
+      final response = await datasource.reanalisysRequest(
+        "mock-token",
+        // ignore: missing_required_param
+        AnalisysRequestModel(),
+      );
+      expect(
+        response,
+        ResponseModel(
+          requestId: "12J6-11B3-11A7-93C0",
+          data: AnalisysResponseModel(
+            packageID: "4825dc1d-5246-45d3-ba32-d2de9bbff478",
+            orders: [
+              OrderModel(
+                orderCode: "{CODIGO_DO_MEU_PEDIDO}",
+                status: "NVO",
+              ),
+            ],
+          ),
+        ),
+      );
+    });
+    test("NullDatasourceResponseFailure", () {
+      when(
+        client.post(
+          any,
+          headers: anyNamed("headers"),
+          body: anyNamed("body"),
+        ),
+      ).thenAnswer((realInvocation) async => null);
+
+      final response = datasource.reanalisysRequest(
+        "mock-token",
+        // ignore: missing_required_param
+        AnalisysRequestModel(),
+      );
+      expect(
+        response,
+        throwsA(NullDatasourceResponseFailure()),
+      );
+    });
+  });
 }
