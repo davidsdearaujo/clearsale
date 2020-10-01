@@ -2,17 +2,9 @@ import 'package:meta/meta.dart';
 
 import '../enums/person_type_enum.dart';
 
-///### Objeto phones
-///https://api.clearsale.com.br/docs/total-totalGarantido-application#address-object
-class PhoneModel {
-  PhoneModel({
-    @required this.type,
-    this.ddi,
-    @required this.ddd,
-    @required this.number,
-    this.extension,
-  });
+export '../enums/person_type_enum.dart';
 
+class PhoneModel {
   ///Tipo de Telefone
   PersonTypeEnum type;
 
@@ -27,4 +19,37 @@ class PhoneModel {
 
   ///Ramal do Telefone
   String extension;
+  PhoneModel({
+    @required this.type,
+    this.ddi,
+    @required this.ddd,
+    @required this.number,
+    this.extension,
+  });
+
+  @override
+  bool operator ==(Object o) {
+    if (identical(this, o)) return true;
+
+    return o is PhoneModel &&
+        o.type == type &&
+        o.ddi == ddi &&
+        o.ddd == ddd &&
+        o.number == number &&
+        o.extension == extension;
+  }
+
+  @override
+  int get hashCode {
+    return type.hashCode ^
+        ddi.hashCode ^
+        ddd.hashCode ^
+        number.hashCode ^
+        extension.hashCode;
+  }
+
+  @override
+  String toString() {
+    return 'PhoneModel(type: $type, ddi: $ddi, ddd: $ddd, number: $number, extension: $extension)';
+  }
 }

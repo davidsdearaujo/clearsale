@@ -3,30 +3,10 @@ import 'package:meta/meta.dart';
 import '../enums/gender_enum.dart';
 import '../enums/identification_type_enum.dart';
 
-///### Objeto passengers
-///https://api.clearsale.com.br/docs/total-totalGarantido-application#passengers-object
-///
-///**Importante**: Os objetos passengers e connections são utilizados somente em empresas de passagens aéreas.
-///
-///Caso **não** seja o seu caso, favor omitir essas propriedades.
-///
-///No objeto connections informar somente os dados de origem e destino, não informar escalas e conexões.
-///
-///**Por exemplo**:
-///
-///Para um vôo de São Paulo (Guarulhos) para Londres, via New York (JFK), você irá informar apenas GRU-LHR, ao invés de GRU-JFK e JFK-LHR.
-class PassengerModel {
-  PassengerModel({
-    @required this.name,
-    this.companyMileCard,
-    this.mileCard,
-    this.identificationType,
-    this.identificationNumber,
-    this.gender,
-    this.birthdate,
-    this.cpf,
-  });
+export '../enums/gender_enum.dart';
+export '../enums/identification_type_enum.dart';
 
+class PassengerModel {
   ///### Nome do Passageiro
   ///Tamanho: 100
   String name;
@@ -55,4 +35,47 @@ class PassengerModel {
   ///### CPF do Passageiro
   ///Tamanho: 50
   String cpf;
+
+  PassengerModel({
+    @required this.name,
+    this.companyMileCard,
+    this.mileCard,
+    this.identificationType,
+    this.identificationNumber,
+    this.gender,
+    this.birthdate,
+    this.cpf,
+  });
+
+  @override
+  bool operator ==(Object o) {
+    if (identical(this, o)) return true;
+
+    return o is PassengerModel &&
+        o.name == name &&
+        o.companyMileCard == companyMileCard &&
+        o.mileCard == mileCard &&
+        o.identificationType == identificationType &&
+        o.identificationNumber == identificationNumber &&
+        o.gender == gender &&
+        o.birthdate == birthdate &&
+        o.cpf == cpf;
+  }
+
+  @override
+  int get hashCode {
+    return name.hashCode ^
+        companyMileCard.hashCode ^
+        mileCard.hashCode ^
+        identificationType.hashCode ^
+        identificationNumber.hashCode ^
+        gender.hashCode ^
+        birthdate.hashCode ^
+        cpf.hashCode;
+  }
+
+  @override
+  String toString() {
+    return 'PassengerModel(name: $name, companyMileCard: $companyMileCard, mileCard: $mileCard, identificationType: $identificationType, identificationNumber: $identificationNumber, gender: $gender, birthdate: $birthdate, cpf: $cpf)';
+  }
 }

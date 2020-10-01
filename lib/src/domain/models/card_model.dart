@@ -2,21 +2,9 @@ import 'package:meta/meta.dart';
 
 import '../enums/card_brand_enum.dart';
 
-///### Objeto card
-///https://api.clearsale.com.br/docs/total-totalGarantido-application#card-object
-class CardModel {
-  CardModel({
-    this.number,
-    this.hash,
-    @required this.bin,
-    @required this.end,
-    this.type,
-    this.validityDate,
-    @required this.ownerName,
-    this.document,
-    this.nsu,
-  });
+export '../enums/card_brand_enum.dart';
 
+class CardModel {
   ///### Número do Cartão com Máscara
   ///Tamanho: 200
   String number;
@@ -36,7 +24,7 @@ class CardModel {
   ///### Bandeira do Cartão
   CardBrandEnum type;
 
-  ///###Data da Expiração
+  ///### Data da Expiração
   ///Tamanho: 50
   String validityDate;
 
@@ -51,4 +39,50 @@ class CardModel {
   ///### Número identificador único de uma transação de cartão
   ///Tamanho: 50
   String nsu;
+
+  CardModel({
+    this.number,
+    this.hash,
+    @required this.bin,
+    @required this.end,
+    this.type,
+    this.validityDate,
+    @required this.ownerName,
+    this.document,
+    this.nsu,
+  });
+
+  @override
+  bool operator ==(Object o) {
+    if (identical(this, o)) return true;
+
+    return o is CardModel &&
+        o.number == number &&
+        o.hash == hash &&
+        o.bin == bin &&
+        o.end == end &&
+        o.type == type &&
+        o.validityDate == validityDate &&
+        o.ownerName == ownerName &&
+        o.document == document &&
+        o.nsu == nsu;
+  }
+
+  @override
+  int get hashCode {
+    return number.hashCode ^
+        hash.hashCode ^
+        bin.hashCode ^
+        end.hashCode ^
+        type.hashCode ^
+        validityDate.hashCode ^
+        ownerName.hashCode ^
+        document.hashCode ^
+        nsu.hashCode;
+  }
+
+  @override
+  String toString() {
+    return 'CardModel(number: $number, hash: $hash, bin: $bin, end: $end, type: $type, validityDate: $validityDate, ownerName: $ownerName, document: $document, nsu: $nsu)';
+  }
 }

@@ -20,7 +20,7 @@ enum ListTypeEnum {
 }
 
 extension ListTypeEnumExtension on ListTypeEnum {
-  Map<ListTypeEnum, int> get _values => const {
+  static Map<ListTypeEnum, int> get _values => const {
         ListTypeEnum.unregistered: 1,
         ListTypeEnum.babyTea: 2,
         ListTypeEnum.marriage: 3,
@@ -29,4 +29,10 @@ extension ListTypeEnumExtension on ListTypeEnum {
         ListTypeEnum.bridalShower: 6,
       };
   int toMap() => _values[this];
+  static ListTypeEnum fromMap(int val) {
+    if (val == null) return null;
+    return _values.entries
+        .firstWhere((e) => e.value == val, orElse: () => _values.entries.first)
+        .key;
+  }
 }

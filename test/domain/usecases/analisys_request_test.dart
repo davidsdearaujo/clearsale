@@ -1,6 +1,6 @@
 import 'package:clearsale/src/domain/errors/usecases.dart';
+import 'package:clearsale/src/domain/models/analisys_response_model.dart';
 import 'package:clearsale/src/domain/models/analysis_request_model.dart';
-import 'package:clearsale/src/domain/models/order_model.dart';
 import 'package:clearsale/src/domain/models/response_model.dart';
 import 'package:clearsale/src/domain/repositories/guarantee_repository.dart';
 import 'package:clearsale/src/domain/usecases/analisys_request.dart';
@@ -18,7 +18,7 @@ void main() {
     usecase = AnalisysRequest(repository);
   });
 
-  final successMockResponse = ResponseModel(data: OrderModel());
+  final successMockResponse = ResponseModel(data: AnalisysResponseModel());
 
   test("success", () async {
     // ignore: missing_required_param

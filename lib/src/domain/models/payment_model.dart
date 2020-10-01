@@ -1,26 +1,12 @@
+import 'dart:convert';
+
 import 'package:meta/meta.dart';
 
 import '../enums/payment_type_enum.dart';
 import 'address_model.dart';
 import 'card_model.dart';
 
-///### Objeto payments
-///https://api.clearsale.com.br/docs/total-totalGarantido-application#payments-object
 class PaymentModel {
-  PaymentModel({
-    this.sequential,
-    this.date,
-    this.value,
-    @required this.type,
-    this.installments,
-    this.interestRate,
-    this.interestValue,
-    this.currency,
-    this.voucherOrderOrigin,
-    this.address,
-    @required this.card,
-  });
-
   ///Sequência de realização do pagamento
   int sequential;
 
@@ -53,4 +39,56 @@ class PaymentModel {
 
   ///cartão
   CardModel card;
+
+  PaymentModel({
+    this.sequential,
+    this.date,
+    this.value,
+    @required this.type,
+    this.installments,
+    this.interestRate,
+    this.interestValue,
+    this.currency,
+    this.voucherOrderOrigin,
+    this.address,
+    @required this.card,
+  });
+
+  @override
+  bool operator ==(Object o) {
+    if (identical(this, o)) return true;
+
+    return o is PaymentModel &&
+        o.sequential == sequential &&
+        o.date == date &&
+        o.value == value &&
+        o.type == type &&
+        o.installments == installments &&
+        o.interestRate == interestRate &&
+        o.interestValue == interestValue &&
+        o.currency == currency &&
+        o.voucherOrderOrigin == voucherOrderOrigin &&
+        o.address == address &&
+        o.card == card;
+  }
+
+  @override
+  int get hashCode {
+    return sequential.hashCode ^
+        date.hashCode ^
+        value.hashCode ^
+        type.hashCode ^
+        installments.hashCode ^
+        interestRate.hashCode ^
+        interestValue.hashCode ^
+        currency.hashCode ^
+        voucherOrderOrigin.hashCode ^
+        address.hashCode ^
+        card.hashCode;
+  }
+
+  @override
+  String toString() {
+    return 'PaymentModel(sequential: $sequential, date: $date, value: $value, type: $type, installments: $installments, interestRate: $interestRate, interestValue: $interestValue, currency: $currency, voucherOrderOrigin: $voucherOrderOrigin, address: $address, card: $card)';
+  }
 }

@@ -69,7 +69,7 @@ enum DeliveryTypeEnum {
 }
 
 extension DeliveryTypeEnumExtension on DeliveryTypeEnum {
-  Map<DeliveryTypeEnum, int> get _values => const {
+  static Map<DeliveryTypeEnum, int> get _values => const {
         DeliveryTypeEnum.outros: 0,
         DeliveryTypeEnum.normal: 1,
         DeliveryTypeEnum.garantida: 2,
@@ -94,4 +94,10 @@ extension DeliveryTypeEnumExtension on DeliveryTypeEnum {
         DeliveryTypeEnum.retiradaLojaExpresso: 21,
       };
   int toMap() => _values[this];
+  static DeliveryTypeEnum fromMap(int val) {
+    if (val == null) return null;
+    return _values.entries
+        .firstWhere((e) => e.value == val, orElse: () => _values.entries.first)
+        .key;
+  }
 }

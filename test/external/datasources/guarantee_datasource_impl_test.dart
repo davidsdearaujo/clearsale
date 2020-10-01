@@ -1,3 +1,5 @@
+import 'package:clearsale/src/domain/models/analisys_response_model.dart';
+import 'package:clearsale/src/domain/models/analysis_request_model.dart';
 import 'package:clearsale/src/domain/models/chargeback_marking_response_model.dart';
 import 'package:clearsale/src/domain/models/credentials_model.dart';
 import 'package:clearsale/src/domain/models/message_model.dart';
@@ -13,6 +15,8 @@ import 'package:test/test.dart';
 import '../responses/status_update_responses.dart' as statusUpdateResponses;
 import '../responses/status_consult_responses.dart' as statusConsultResponses;
 import '../responses/authenticate_responses.dart' as authenticateResponses;
+import '../responses/analisys_request_responses.dart'
+    as analisysRequestResponses;
 import '../responses/chargeback_marking_responses.dart'
     as chargebackMarkingResponses;
 
@@ -40,7 +44,7 @@ void main() {
         ResponseModel(
           requestId: "12J6-11B3-11A7-93C0",
           data: OrderModel(
-            code: "{CODIGO_DO_MEU_PEDIDO}",
+            orderCode: "{CODIGO_DO_MEU_PEDIDO}",
             status: "AMA",
             score: 99.99,
           ),
@@ -187,6 +191,58 @@ void main() {
         "mock-token",
         "mock-message",
         ["mock-analisys-code"],
+      );
+      expect(
+        response,
+        throwsA(NullDatasourceResponseFailure()),
+      );
+    });
+  });
+
+  group("analisysRequest", () {
+    test("success", () async {
+      when(
+        client.post(
+          any,
+          headers: anyNamed("headers"),
+          body: anyNamed("body"),
+        ),
+      ).thenAnswer((_) async => analisysRequestResponses.success);
+
+      final response = await datasource.analisysRequest(
+        "mock-token",
+        // ignore: missing_required_param
+        AnalisysRequestModel(),
+      );
+      expect(
+        response,
+        ResponseModel(
+          requestId: "12J6-11B3-11A7-93C0",
+          data: AnalisysResponseModel(
+            packageID: "4825dc1d-5246-45d3-ba32-d2de9bbff478",
+            orders: [
+              OrderModel(
+                orderCode: "{CODIGO_DO_MEU_PEDIDO}",
+                status: "NVO",
+              ),
+            ],
+          ),
+        ),
+      );
+    });
+    test("NullDatasourceResponseFailure", () {
+      when(
+        client.post(
+          any,
+          headers: anyNamed("headers"),
+          body: anyNamed("body"),
+        ),
+      ).thenAnswer((realInvocation) async => null);
+
+      final response = datasource.analisysRequest(
+        "mock-token",
+        // ignore: missing_required_param
+        AnalisysRequestModel(),
       );
       expect(
         response,

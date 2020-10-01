@@ -1,3 +1,4 @@
+import 'package:clearsale/src/domain/models/analisys_response_model.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../domain/errors/failure.dart';
@@ -70,7 +71,7 @@ class GuaranteeRepositoryImpl implements GuaranteeRepository {
   }
 
   @override
-  Future<Either<Failure, ResponseModel<OrderModel>>> analisysRequest(
+  Future<Either<Failure, ResponseModel<AnalisysResponseModel>>> analisysRequest(
     AnalisysRequestModel analisysRequest,
   ) async {
     try {

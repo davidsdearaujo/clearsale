@@ -17,7 +17,7 @@ enum SocialNetworkEnum {
 }
 
 extension SocialNetworkEnumExtension on SocialNetworkEnum {
-  Map<SocialNetworkEnum, int> get _values => const {
+  static Map<SocialNetworkEnum, int> get _values => const {
         SocialNetworkEnum.facebook: 1,
         SocialNetworkEnum.twitter: 2,
         SocialNetworkEnum.linkedin: 3,
@@ -25,4 +25,10 @@ extension SocialNetworkEnumExtension on SocialNetworkEnum {
         SocialNetworkEnum.outros: 5,
       };
   int toMap() => _values[this];
+  static SocialNetworkEnum fromMap(int val) {
+    if (val == null) return null;
+    return _values.entries
+        .firstWhere((e) => e.value == val, orElse: () => _values.entries.first)
+        .key;
+  }
 }

@@ -16,11 +16,17 @@ enum RequestStatusEnum {
 }
 
 extension RequestStatusEnumExtension on RequestStatusEnum {
-  Map<RequestStatusEnum, int> get _values => const {
+  static Map<RequestStatusEnum, int> get _values => const {
         RequestStatusEnum.newToAnalisis: 0,
         RequestStatusEnum.approved: 9,
         RequestStatusEnum.canceledByClient: 41,
         RequestStatusEnum.disapproved: 45,
       };
   int toMap() => _values[this];
+  static RequestStatusEnum fromMap(int val) {
+    if (val == null) return null;
+    return _values.entries
+        .firstWhere((e) => e.value == val, orElse: () => _values.entries.first)
+        .key;
+  }
 }

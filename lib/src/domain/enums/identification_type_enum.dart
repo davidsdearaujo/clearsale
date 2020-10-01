@@ -24,7 +24,7 @@ enum IdentificationTypeEnum {
 }
 
 extension IdentificationTypeEnumExtension on IdentificationTypeEnum {
-  Map<IdentificationTypeEnum, int> get _values => const {
+  static Map<IdentificationTypeEnum, int> get _values => const {
         IdentificationTypeEnum.cpf: 1,
         IdentificationTypeEnum.cnpj: 2,
         IdentificationTypeEnum.rg: 3,
@@ -34,4 +34,10 @@ extension IdentificationTypeEnumExtension on IdentificationTypeEnum {
         IdentificationTypeEnum.voterTitle: 7,
       };
   int toMap() => _values[this];
+  static IdentificationTypeEnum fromMap(int val) {
+    if (val == null) return null;
+    return _values.entries
+        .firstWhere((e) => e.value == val, orElse: () => _values.entries.first)
+        .key;
+  }
 }

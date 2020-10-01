@@ -54,7 +54,7 @@ enum PaymentTypeEnum {
 }
 
 extension PaymentTypeEnumExtension on PaymentTypeEnum {
-  Map<PaymentTypeEnum, int> get _values => const {
+  static Map<PaymentTypeEnum, int> get _values => const {
         PaymentTypeEnum.creditCard: 1,
         PaymentTypeEnum.bankSlip: 2,
         PaymentTypeEnum.bankDebit: 3,
@@ -74,4 +74,10 @@ extension PaymentTypeEnumExtension on PaymentTypeEnum {
         PaymentTypeEnum.debitCardOrWireTransfer: 4011,
       };
   int toMap() => _values[this];
+  static PaymentTypeEnum fromMap(int val) {
+    if (val == null) return null;
+    return _values.entries
+        .firstWhere((e) => e.value == val, orElse: () => _values.entries.first)
+        .key;
+  }
 }

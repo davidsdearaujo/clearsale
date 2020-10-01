@@ -1,24 +1,8 @@
+import 'dart:convert';
+
 import 'package:meta/meta.dart';
 
-///### Objeto address
-///**Importante**: O envio do endereço não é obrigatório, porém caso tenha essa informação para envio, deverá respeitar a obrigatoriedade mínima dos campos informados como ‘S’.
-///
-///Em caso de empresas de passagens aéreas o endereço de entrega não é obrigatório.
-///
-///Se em sua regra de negócio existir a entrega física de produtos, os dados de entrega (shipping), incluindo os dados do endereço (shipping.address), deverão ser informados.
 class AddressModel {
-  AddressModel({
-    @required this.street,
-    @required this.number,
-    this.additionalInformation,
-    @required this.county,
-    @required this.city,
-    @required this.state,
-    this.country,
-    @required this.zipcode,
-    this.reference,
-  });
-
   ///Nome do logradouro
   String street;
 
@@ -45,4 +29,50 @@ class AddressModel {
 
   ///Referência do Endereço
   String reference;
+
+  AddressModel({
+    @required this.street,
+    @required this.number,
+    this.additionalInformation,
+    @required this.county,
+    @required this.city,
+    @required this.state,
+    this.country,
+    @required this.zipcode,
+    this.reference,
+  });
+
+  @override
+  bool operator ==(Object o) {
+    if (identical(this, o)) return true;
+
+    return o is AddressModel &&
+        o.street == street &&
+        o.number == number &&
+        o.additionalInformation == additionalInformation &&
+        o.county == county &&
+        o.city == city &&
+        o.state == state &&
+        o.zipcode == zipcode &&
+        o.country == country &&
+        o.reference == reference;
+  }
+
+  @override
+  int get hashCode {
+    return street.hashCode ^
+        number.hashCode ^
+        additionalInformation.hashCode ^
+        county.hashCode ^
+        city.hashCode ^
+        state.hashCode ^
+        zipcode.hashCode ^
+        country.hashCode ^
+        reference.hashCode;
+  }
+
+  @override
+  String toString() {
+    return 'AddressModel(street: $street, number: $number, additionalInformation: $additionalInformation, county: $county, city: $city, state: $state, zipcode: $zipcode, country: $country, reference: $reference)';
+  }
 }

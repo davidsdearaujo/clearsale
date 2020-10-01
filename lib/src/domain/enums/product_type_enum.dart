@@ -23,7 +23,7 @@ enum ProductTypeEnum {
 }
 
 extension ProductTypeEnumExtension on ProductTypeEnum {
-  Map<ProductTypeEnum, int> get _values => const {
+  static Map<ProductTypeEnum, int> get _values => const {
         ProductTypeEnum.others: -1,
         ProductTypeEnum.application: 1,
         ProductTypeEnum.total: 3,
@@ -33,4 +33,10 @@ extension ProductTypeEnumExtension on ProductTypeEnum {
         ProductTypeEnum.tickets: 11,
       };
   int toMap() => _values[this];
+  static ProductTypeEnum fromMap(int val) {
+    if (val == null) return null;
+    return _values.entries
+        .firstWhere((e) => e.value == val, orElse: () => _values.entries.first)
+        .key;
+  }
 }

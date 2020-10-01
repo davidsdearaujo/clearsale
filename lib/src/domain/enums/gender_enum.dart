@@ -8,9 +8,15 @@ enum GenderEnum {
 }
 
 extension GenderEnumExtension on GenderEnum {
-  Map<GenderEnum, String> get _values => const {
+  static Map<GenderEnum, String> get _values => const {
         GenderEnum.male: "M",
         GenderEnum.female: "F",
       };
   String toMap() => _values[this];
+  static GenderEnum fromMap(int val) {
+    if (val == null) return null;
+    return _values.entries
+        .firstWhere((e) => e.value == val, orElse: () => _values.entries.first)
+        .key;
+  }
 }

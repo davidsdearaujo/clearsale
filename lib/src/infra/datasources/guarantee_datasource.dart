@@ -1,3 +1,4 @@
+import '../../domain/models/analisys_response_model.dart';
 import '../../domain/models/analysis_request_model.dart';
 import '../../domain/models/chargeback_marking_response_model.dart';
 import '../../domain/models/credentials_model.dart';
@@ -9,7 +10,7 @@ import '../../domain/models/token_model.dart';
 abstract class GuaranteeDatasource {
   Future<TokenModel> authenticate(CredentialsModel credentials);
 
-  Future<ResponseModel<OrderModel>> analisysRequest(
+  Future<ResponseModel<AnalisysResponseModel>> analisysRequest(
     String token,
     AnalisysRequestModel analisysRequest,
   );

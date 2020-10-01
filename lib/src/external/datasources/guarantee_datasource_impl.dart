@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:clearsale/src/domain/models/analisys_response_model.dart';
+import 'package:clearsale/src/external/maps/analisys_request_model_mapper.dart';
+import 'package:clearsale/src/external/maps/analisys_response_model.dart';
 import 'package:clearsale/src/external/maps/chargeback_marking_response_model_mapper.dart';
 import 'package:clearsale/src/external/maps/token_model_mapper.dart';
 import 'package:http/http.dart';
@@ -22,12 +25,30 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
   GuaranteeDatasourceImpl(this._client);
 
   @override
-  Future<ResponseModel<OrderModel>> analisysRequest(
+  Future<ResponseModel<AnalisysResponseModel>> analisysRequest(
     String token,
     AnalisysRequestModel analisysRequest,
-  ) {
-    // TODO: implement analisysRequest
-    throw UnimplementedError();
+  ) async {
+    final uri = Uri.https(
+      "homologacao.clearsale.com.br",
+      "/api/v1/orders",
+    );
+
+    final body = AnalisysRequestModelMapper.toMap(analisysRequest);
+
+    final data = await _client.post(
+      uri,
+      body: body,
+      headers: {
+        "Authorization": "Bearer $token",
+        ...defaultHeaders,
+      },
+    );
+    _throwFailureIfExists(data);
+
+    final response = AnalisysResponseModelMapper.fromJson(data.body);
+
+    return _makeResponse(response, data.headers);
   }
 
   @override

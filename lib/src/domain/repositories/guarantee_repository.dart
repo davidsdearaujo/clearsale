@@ -1,3 +1,4 @@
+import 'package:clearsale/src/domain/models/analisys_response_model.dart';
 import 'package:dartz/dartz.dart';
 
 import '../errors/failure.dart';
@@ -15,7 +16,7 @@ abstract class GuaranteeRepository {
     int loopIfErrorCount,
   );
 
-  Future<Either<Failure, ResponseModel<OrderModel>>> analisysRequest(
+  Future<Either<Failure, ResponseModel<AnalisysResponseModel>>> analisysRequest(
     AnalisysRequestModel analysisRequest,
   );
 

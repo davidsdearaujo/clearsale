@@ -1,11 +1,12 @@
 import 'package:clearsale/src/domain/models/order_model.dart';
 
-class OrderModelMapper extends OrderModel {
-  Map<String, dynamic> toMap() {
+class OrderModelMapper {
+  static Map<String, dynamic> toMap(OrderModel model) {
+    if (model == null) return null;
     return {
-      'code': code,
-      'status': status,
-      'score': score,
+      'code': model.orderCode,
+      'status': model.status,
+      'score': model.score,
     };
   }
 
@@ -18,7 +19,7 @@ class OrderModelMapper extends OrderModel {
     }
 
     return OrderModel(
-      code: map['code'],
+      orderCode: map['code'],
       status: map['status'],
       score: score,
     );

@@ -13,6 +13,19 @@ import 'purchase_information_model.dart';
 import 'shipping_model.dart';
 import 'social_network_model.dart';
 
+export '../enums/product_type_enum.dart';
+export '../enums/request_status_enum.dart';
+export 'billing_model.dart';
+export 'connection_model.dart';
+export 'hotel_model.dart';
+export 'item_model.dart';
+export 'list_class_model.dart';
+export 'passenger_model.dart';
+export 'payment_model.dart';
+export 'purchase_information_model.dart';
+export 'shipping_model.dart';
+export 'social_network_model.dart';
+
 class AnalisysRequestModel {
   AnalisysRequestModel({
     @required this.code,
@@ -165,4 +178,51 @@ class AnalisysRequestModel {
 
   //Hotéis
   List<HotelModel> hotels;
+
+  @override
+  bool operator ==(Object o) {
+    if (identical(this, o)) return true;
+    return o is AnalisysRequestModel && o.code == code;
+  }
+
+  @override
+  int get hashCode {
+    return code.hashCode ^
+        sessionId.hashCode ^
+        date.hashCode ^
+        email.hashCode ^
+        b2BB2C.hashCode ^
+        itemValue.hashCode ^
+        totalValue.hashCode ^
+        numberOfInstallments.hashCode ^
+        ip.hashCode ^
+        isGift.hashCode ^
+        giftMessage.hashCode ^
+        observation.hashCode ^
+        status.hashCode ^
+        origin.hashCode ^
+        channelId.hashCode ^
+        reservationDate.hashCode ^
+        country.hashCode ^
+        nationality.hashCode ^
+        product.hashCode ^
+        customSla.hashCode ^
+        bankAuthentication.hashCode ^
+        subAcquirer.hashCode ^
+        list.hashCode ^
+        purchaseInformation.hashCode ^
+        socialNetwork.hashCode ^
+        billing.hashCode ^
+        shipping.hashCode ^
+        payments.hashCode ^
+        items.hashCode ^
+        passengers.hashCode ^
+        connections.hashCode ^
+        hotels.hashCode;
+  }
+
+  @override
+  String toString() {
+    return 'AnalisysRequestModel(code: $code, sessionId: $sessionId, date: $date, email: $email, b2BB2C: $b2BB2C, itemValue: $itemValue, totalValue: $totalValue, numberOfInstallments: $numberOfInstallments, ip: $ip, isGift: $isGift, giftMessage: $giftMessage, observation: $observation, status: $status, origin: $origin, channelId: $channelId, reservationDate: $reservationDate, country: $country, nationality: $nationality, product: $product, customSla: $customSla, bankAuthentication: $bankAuthentication, subAcquirer: $subAcquirer, list: $list, purchaseInformation: $purchaseInformation, socialNetwork: $socialNetwork, billing: $billing, shipping: $shipping, payments: $payments, items: $items, passengers: $passengers, connections: $connections, hotels: $hotels)';
+  }
 }

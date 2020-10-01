@@ -45,7 +45,7 @@ enum CardBrandEnum {
 }
 
 extension CardBrandEnumExtension on CardBrandEnum {
-  Map<CardBrandEnum, int> get _values => const {
+  static Map<CardBrandEnum, int> get _values => const {
         CardBrandEnum.diners: 1,
         CardBrandEnum.masterCard: 2,
         CardBrandEnum.visa: 3,
@@ -62,4 +62,10 @@ extension CardBrandEnumExtension on CardBrandEnum {
         CardBrandEnum.cartaoC_A: 105,
       };
   int toMap() => _values[this];
+  static CardBrandEnum fromMap(int val) {
+    if (val == null) return null;
+    return _values.entries
+        .firstWhere((e) => e.value == val, orElse: () => _values.entries.first)
+        .key;
+  }
 }
