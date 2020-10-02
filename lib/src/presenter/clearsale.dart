@@ -1,21 +1,22 @@
-import 'package:clearsale/src/domain/models/analisys_response_model.dart';
-import 'package:clearsale/src/domain/models/analysis_request_model.dart';
-import 'package:clearsale/src/domain/models/chargeback_marking_response_model.dart';
-import 'package:clearsale/src/domain/models/credentials_model.dart';
-import 'package:clearsale/src/domain/models/message_model.dart';
-import 'package:clearsale/src/domain/models/response_model.dart';
-import 'package:clearsale/src/domain/models/token_model.dart';
-import 'package:clearsale/src/domain/usecases/analisys_request.dart';
-import 'package:clearsale/src/domain/usecases/authenticate.dart';
-import 'package:clearsale/src/domain/usecases/chargeback_marking.dart';
-import 'package:clearsale/src/domain/usecases/reanalisys_request.dart';
-import 'package:clearsale/src/domain/usecases/status_consult.dart';
-import 'package:clearsale/src/domain/usecases/status_update.dart';
-import 'package:clearsale/src/external/datasources/guarantee_datasource_impl.dart';
-import 'package:clearsale/src/infra/repositories/guarantee_repository_impl.dart';
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart';
 import 'package:meta/meta.dart';
+
+import '../domain/models/analisys_response_model.dart';
+import '../domain/models/analysis_request_model.dart';
+import '../domain/models/chargeback_marking_response_model.dart';
+import '../domain/models/credentials_model.dart';
+import '../domain/models/message_model.dart';
+import '../domain/models/response_model.dart';
+import '../domain/models/token_model.dart';
+import '../domain/usecases/analisys_request.dart';
+import '../domain/usecases/authenticate.dart';
+import '../domain/usecases/chargeback_marking.dart';
+import '../domain/usecases/reanalisys_request.dart';
+import '../domain/usecases/status_consult.dart';
+import '../domain/usecases/status_update.dart';
+import '../external/datasources/guarantee_datasource_impl.dart';
+import '../infra/repositories/guarantee_repository_impl.dart';
 
 class ClearSale {
   final CredentialsModel credentials;
@@ -27,17 +28,31 @@ class ClearSale {
   StatusUpdate _statusUpdate;
 
   factory ClearSale({
-    @required CredentialsModel credentials,
+    @required String userName,
+    @required String password,
     bool automaticAuthenticate = true,
-  }) =>
-      ClearSale._(credentials, automaticAuthenticate);
+  }) {
+    assert(userName != null);
+    assert(userName != "");
+    assert(password != null);
+    assert(password != "");
+    return ClearSale._(
+      CredentialsModel(userName, password),
+      automaticAuthenticate,
+    );
+  }
 
   factory ClearSale.test({
-    @required CredentialsModel credentials,
+    @required String userName,
+    @required String password,
     bool automaticAuthenticate = true,
     @required Client httpClient,
   }) =>
-      ClearSale._(credentials, automaticAuthenticate, httpClient);
+      ClearSale._(
+        CredentialsModel(userName, password),
+        automaticAuthenticate,
+        httpClient,
+      );
 
   ClearSale._(
     this.credentials,
@@ -95,6 +110,7 @@ class ClearSale {
     return response | null;
   }
 
+  ///Importante: Os status de atualização devem ser combinados com a equipe de integração.
   Future<ResponseModel<MessageModel>> statusUpdate(
     String analysisCode,
     String newStatusCode,

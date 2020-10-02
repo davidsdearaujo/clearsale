@@ -20,7 +20,8 @@ void main() {
         )).thenAnswer((realInvocation) async => authenticateResponses.success);
 
         ClearSale.test(
-          credentials: CredentialsModel("mock-user", "mock-password"),
+          userName: "mock-user",
+          password: "mock-password",
           httpClient: client,
         );
 
@@ -40,7 +41,8 @@ void main() {
         )).thenAnswer((realInvocation) async => authenticateResponses.success);
 
         ClearSale.test(
-          credentials: CredentialsModel("mock-user", "mock-password"),
+          userName: "mock-user",
+          password: "mock-password",
           httpClient: client,
           automaticAuthenticate: true,
         );
@@ -61,7 +63,8 @@ void main() {
         )).thenAnswer((realInvocation) async => authenticateResponses.success);
 
         ClearSale.test(
-          credentials: CredentialsModel("mock-user", "mock-password"),
+          userName: "mock-user",
+          password: "mock-password",
           httpClient: client,
           automaticAuthenticate: false,
         );
