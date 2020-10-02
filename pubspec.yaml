@@ -9,6 +9,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  collection: ^1.14.13
   meta: ^1.2.3
   dartz: ^0.9.1
   http: ^0.12.2
