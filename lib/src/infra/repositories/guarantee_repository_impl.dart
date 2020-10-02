@@ -39,7 +39,7 @@ class GuaranteeRepositoryImpl implements GuaranteeRepository {
           _currentCredentials,
           _authenticationLoopIfErrorCount,
         );
-        _currentToken = authResponse ?? _currentToken;
+        _currentToken = authResponse | null ?? _currentToken;
       }
     } while (_currentToken.isExpired);
   }
