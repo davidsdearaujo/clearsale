@@ -20,24 +20,24 @@ void main() {
   test("success", () async {
     when(repository.statusConsult(any))
         .thenAnswer((realInvocation) async => right(successMockResponse));
-    final response = await usecase("mock-analisys-code");
+    final response = await usecase("mock-analysisCode-code");
     expect(response | null, successMockResponse);
   });
 
   group("InvalidFieldFailure", () {
-    group("analisysCode", () {
+    group("analysisCode", () {
       test("null", () async {
         when(repository.statusConsult(any))
             .thenAnswer((realInvocation) async => right(successMockResponse));
         final response =
             await usecase(null).then((value) => value.fold(id, id));
-        expect(response, InvalidFieldFailure("analisysCode"));
+        expect(response, InvalidFieldFailure("analysisCode"));
       });
       test("empty", () async {
         when(repository.statusConsult(any))
             .thenAnswer((realInvocation) async => right(successMockResponse));
         final response = await usecase("").then((value) => value.fold(id, id));
-        expect(response, InvalidFieldFailure("analisysCode"));
+        expect(response, InvalidFieldFailure("analysisCode"));
       });
     });
   });

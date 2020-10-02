@@ -1,4 +1,4 @@
-import 'package:clearsale/src/domain/models/analisys_response_model.dart';
+import 'package:clearsale/src/domain/models/analysis_response_model.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../domain/errors/failure.dart';
@@ -71,14 +71,14 @@ class GuaranteeRepositoryImpl implements GuaranteeRepository {
   }
 
   @override
-  Future<Either<Failure, ResponseModel<AnalisysResponseModel>>> analisysRequest(
-    AnalisysRequestModel analisysRequest,
+  Future<Either<Failure, ResponseModel<AnalysisResponseModel>>> analysisRequest(
+    AnalysisRequestModel analysisRequest,
   ) async {
     try {
       await authenticationResilience();
-      final response = await _datasource.analisysRequest(
+      final response = await _datasource.analysisRequest(
         _currentToken.token,
-        analisysRequest,
+        analysisRequest,
       );
       return right(response);
     } on Failure catch (exception) {
@@ -100,14 +100,14 @@ class GuaranteeRepositoryImpl implements GuaranteeRepository {
   Future<Either<Failure, ResponseModel<ChargebackMarkingResponseModel>>>
       chargebackMarking(
     String message,
-    List<String> analisysCode,
+    List<String> analysisCode,
   ) async {
     try {
       await authenticationResilience();
       final response = await _datasource.chargebackMarking(
         _currentToken.token,
         message,
-        analisysCode,
+        analysisCode,
       );
       return right(response);
     } on Failure catch (exception) {
@@ -126,14 +126,14 @@ class GuaranteeRepositoryImpl implements GuaranteeRepository {
   }
 
   @override
-  Future<Either<Failure, ResponseModel<AnalisysResponseModel>>> reanalisysRequest(
-    AnalisysRequestModel analisysRequest,
+  Future<Either<Failure, ResponseModel<AnalysisResponseModel>>> reanalysisRequest(
+    AnalysisRequestModel analysisRequest,
   ) async {
     try {
       await authenticationResilience();
-      final response = await _datasource.reanalisysRequest(
+      final response = await _datasource.reanalysisRequest(
         _currentToken.token,
-        analisysRequest,
+        analysisRequest,
       );
       return right(response);
     } on Failure catch (exception) {
@@ -153,13 +153,13 @@ class GuaranteeRepositoryImpl implements GuaranteeRepository {
 
   @override
   Future<Either<Failure, ResponseModel<OrderModel>>> statusConsult(
-    String analisysNewStatusCode,
+    String analysisNewStatusCode,
   ) async {
     try {
       await authenticationResilience();
       final response = await _datasource.statusConsult(
         _currentToken.token,
-        analisysNewStatusCode,
+        analysisNewStatusCode,
       );
       return right(response);
     } on Failure catch (exception) {

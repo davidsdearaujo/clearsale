@@ -1,4 +1,4 @@
-import 'package:clearsale/src/domain/models/analisys_response_model.dart';
+import 'package:clearsale/src/domain/models/analysis_response_model.dart';
 import 'package:clearsale/src/domain/models/analysis_request_model.dart';
 import 'package:clearsale/src/domain/models/chargeback_marking_response_model.dart';
 import 'package:clearsale/src/domain/models/credentials_model.dart';
@@ -15,8 +15,8 @@ import 'package:test/test.dart';
 import '../responses/status_update_responses.dart' as statusUpdateResponses;
 import '../responses/status_consult_responses.dart' as statusConsultResponses;
 import '../responses/authenticate_responses.dart' as authenticateResponses;
-import '../responses/analisys_request_responses.dart'
-    as analisysRequestResponses;
+import '../responses/analysis_request_responses.dart'
+    as analysisRequestResponses;
 import '../responses/chargeback_marking_responses.dart'
     as chargebackMarkingResponses;
 
@@ -37,7 +37,7 @@ void main() {
       );
       final response = await datasource.statusConsult(
         "mock-token",
-        "mock-analisysRequestCode",
+        "mock-analysisRequestCode",
       );
       expect(
         response,
@@ -58,7 +58,7 @@ void main() {
       );
       final response = datasource.statusConsult(
         "mock-token",
-        "mock-analisysRequestCode",
+        "mock-analysisRequestCode",
       );
       expect(
         response,
@@ -79,7 +79,7 @@ void main() {
 
       final response = await datasource.statusUpdate(
         "mock-token",
-        "mock-analisysRequestCode",
+        "mock-analysisRequestCode",
         "APR",
       );
       expect(
@@ -104,7 +104,7 @@ void main() {
       ).thenAnswer((realInvocation) async => null);
       final response = datasource.statusConsult(
         "mock-token",
-        "mock-analisysRequestCode",
+        "mock-analysisRequestCode",
       );
       expect(
         response,
@@ -165,7 +165,7 @@ void main() {
       final response = await datasource.chargebackMarking(
         "mock-token",
         "mock-message",
-        ["mock-analisys-code"],
+        ["mock-analysis-code"],
       );
       expect(
         response,
@@ -190,7 +190,7 @@ void main() {
       final response = datasource.chargebackMarking(
         "mock-token",
         "mock-message",
-        ["mock-analisys-code"],
+        ["mock-analysis-code"],
       );
       expect(
         response,
@@ -199,7 +199,7 @@ void main() {
     });
   });
 
-  group("analisysRequest", () {
+  group("analysisRequest", () {
     test("success", () async {
       when(
         client.post(
@@ -207,18 +207,18 @@ void main() {
           headers: anyNamed("headers"),
           body: anyNamed("body"),
         ),
-      ).thenAnswer((_) async => analisysRequestResponses.success);
+      ).thenAnswer((_) async => analysisRequestResponses.success);
 
-      final response = await datasource.analisysRequest(
+      final response = await datasource.analysisRequest(
         "mock-token",
         // ignore: missing_required_param
-        AnalisysRequestModel(),
+        AnalysisRequestModel(),
       );
       expect(
         response,
         ResponseModel(
           requestId: "12J6-11B3-11A7-93C0",
-          data: AnalisysResponseModel(
+          data: AnalysisResponseModel(
             packageID: "4825dc1d-5246-45d3-ba32-d2de9bbff478",
             orders: [
               OrderModel(
@@ -239,10 +239,10 @@ void main() {
         ),
       ).thenAnswer((realInvocation) async => null);
 
-      final response = datasource.analisysRequest(
+      final response = datasource.analysisRequest(
         "mock-token",
         // ignore: missing_required_param
-        AnalisysRequestModel(),
+        AnalysisRequestModel(),
       );
       expect(
         response,
@@ -251,7 +251,7 @@ void main() {
     });
   });
 
-  group("reanalisysRequest", () {
+  group("reanalysisRequest", () {
     test("success", () async {
       when(
         client.post(
@@ -259,18 +259,18 @@ void main() {
           headers: anyNamed("headers"),
           body: anyNamed("body"),
         ),
-      ).thenAnswer((_) async => analisysRequestResponses.success);
+      ).thenAnswer((_) async => analysisRequestResponses.success);
 
-      final response = await datasource.reanalisysRequest(
+      final response = await datasource.reanalysisRequest(
         "mock-token",
         // ignore: missing_required_param
-        AnalisysRequestModel(),
+        AnalysisRequestModel(),
       );
       expect(
         response,
         ResponseModel(
           requestId: "12J6-11B3-11A7-93C0",
-          data: AnalisysResponseModel(
+          data: AnalysisResponseModel(
             packageID: "4825dc1d-5246-45d3-ba32-d2de9bbff478",
             orders: [
               OrderModel(
@@ -291,10 +291,10 @@ void main() {
         ),
       ).thenAnswer((realInvocation) async => null);
 
-      final response = datasource.reanalisysRequest(
+      final response = datasource.reanalysisRequest(
         "mock-token",
         // ignore: missing_required_param
-        AnalisysRequestModel(),
+        AnalysisRequestModel(),
       );
       expect(
         response,

@@ -49,6 +49,7 @@ clearsale.authenticate();
 
 ## Ações
 O package permite realizar as seguintes ações:
+
 |Método|Descrição|
 |---|---|
 |analysisRequest|Solicitação de análise|
@@ -58,7 +59,7 @@ O package permite realizar as seguintes ações:
 |statusUpdate|Alteração de status de uma solicitação. Importante: Os status de atualização devem ser combinados com a equipe de integração.|
 
 ## Fingerprint
-O campo `sessionID` do objeto `AnalisysRequestModel` (utilizado nas ações de Análise e Reanálise) deve ser preenchido com a fingerprint do dispositivo.
+O campo `sessionID` do objeto `AnalysisRequestModel` (utilizado nas ações de Análise e Reanálise) deve ser preenchido com a fingerprint do dispositivo.
 
 O package para gerar esse código está sendo desenvolvido.
 

@@ -31,14 +31,14 @@ void main() {
   });
 
   group("InvalidFieldFailure", () {
-    group("analisysRequestCode", () {
+    group("analysisRequestCode", () {
       test("null", () async {
         ;
         when(repository.statusUpdate(any, any))
             .thenAnswer((realInvocation) async => right(successResponse));
         final response =
             await usecase(null, "APR").then((value) => value.fold(id, id));
-        expect(response, InvalidFieldFailure("analisysRequestCode"));
+        expect(response, InvalidFieldFailure("analysisRequestCode"));
       });
       test("empty", () async {
         ;
@@ -46,17 +46,17 @@ void main() {
             .thenAnswer((realInvocation) async => right(successResponse));
         final response =
             await usecase("", "APR").then((value) => value.fold(id, id));
-        expect(response, InvalidFieldFailure("analisysRequestCode"));
+        expect(response, InvalidFieldFailure("analysisRequestCode"));
       });
     });
-    group("analisysNewStatusCode", () {
+    group("analysisNewStatusCode", () {
       test("null", () async {
         ;
         when(repository.statusUpdate(any, any))
             .thenAnswer((realInvocation) async => right(successResponse));
         final response = await usecase("mock-code", null)
             .then((value) => value.fold(id, id));
-        expect(response, InvalidFieldFailure("analisysNewStatusCode"));
+        expect(response, InvalidFieldFailure("analysisNewStatusCode"));
       });
     });
   });

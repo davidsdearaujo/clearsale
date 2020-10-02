@@ -13,8 +13,8 @@ import 'purchase_information_model_mapper.dart';
 import 'shipping_model_mapper.dart';
 import 'social_network_model_mapper.dart';
 
-class AnalisysRequestModelMapper {
-  static Map<String, dynamic> toMap(AnalisysRequestModel model) {
+class AnalysisRequestModelMapper {
+  static Map<String, dynamic> toMap(AnalysisRequestModel model) {
     if (model == null) return null;
     return {
       'code': model?.code,
@@ -58,10 +58,10 @@ class AnalisysRequestModelMapper {
     };
   }
 
-  static AnalisysRequestModel fromMap(Map<String, dynamic> map) {
+  static AnalysisRequestModel fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
-    return AnalisysRequestModel(
+    return AnalysisRequestModel(
       code: map['code'],
       sessionId: map['sessionId'],
       date: DateTime.tryParse(map['date']),
@@ -103,12 +103,12 @@ class AnalisysRequestModelMapper {
     );
   }
 
-  static String toJson(AnalisysRequestModel model) {
+  static String toJson(AnalysisRequestModel model) {
     if (model == null) return null;
     return json.encode(toMap(model));
   }
 
-  static AnalisysRequestModel fromJson(String source) {
+  static AnalysisRequestModel fromJson(String source) {
     if (source == null) return null;
     return fromMap(json.decode(source));
   }

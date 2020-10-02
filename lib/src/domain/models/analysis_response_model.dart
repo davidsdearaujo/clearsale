@@ -4,11 +4,11 @@ import 'order_model.dart';
 
 export 'order_model.dart';
 
-class AnalisysResponseModel {
+class AnalysisResponseModel {
   final String packageID;
   final List<OrderModel> orders;
 
-  AnalisysResponseModel({
+  AnalysisResponseModel({
     this.packageID,
     this.orders,
   });
@@ -18,7 +18,7 @@ class AnalisysResponseModel {
     if (identical(this, o)) return true;
     final listEquals = const DeepCollectionEquality().equals;
 
-    return o is AnalisysResponseModel &&
+    return o is AnalysisResponseModel &&
         o.packageID == packageID &&
         listEquals(o.orders, orders);
   }
@@ -28,5 +28,5 @@ class AnalisysResponseModel {
 
   @override
   String toString() =>
-      'AnalisysResponseModel(packageID: $packageID, orders: $orders)';
+      'AnalysisResponseModel(packageID: $packageID, orders: $orders)';
 }

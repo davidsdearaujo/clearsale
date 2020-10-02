@@ -12,18 +12,18 @@ class StatusUpdate {
   StatusUpdate(this._repository);
 
   Future<Either<Failure, ResponseModel<MessageModel>>> call(
-    String analisysRequestCode,
-    String analisysNewStatusCode,
+    String analysisRequestCode,
+    String analysisNewStatusCode,
   ) async {
-    if (analisysRequestCode == null || analisysRequestCode.isEmpty) {
-      return left(InvalidFieldFailure("analisysRequestCode"));
+    if (analysisRequestCode == null || analysisRequestCode.isEmpty) {
+      return left(InvalidFieldFailure("analysisRequestCode"));
     }
-    if (analisysNewStatusCode == null) {
-      return left(InvalidFieldFailure("analisysNewStatusCode"));
+    if (analysisNewStatusCode == null) {
+      return left(InvalidFieldFailure("analysisNewStatusCode"));
     }
     return await _repository.statusUpdate(
-      analisysRequestCode,
-      analisysNewStatusCode,
+      analysisRequestCode,
+      analysisNewStatusCode,
     );
   }
 }

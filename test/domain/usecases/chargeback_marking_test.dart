@@ -27,7 +27,7 @@ void main() {
         .thenAnswer((realInvocation) async => right(successResponse));
     final response = await usecase(
       message: "mock-message",
-      analisysCode: ["mock-code"],
+      analysisCode: ["mock-code"],
     );
     expect(response | null, successResponse);
   });
@@ -39,7 +39,7 @@ void main() {
             .thenAnswer((realInvocation) async => right(successResponse));
         final response = await usecase(
           message: null,
-          analisysCode: ["mock-code"],
+          analysisCode: ["mock-code"],
         ).then((value) => value.fold(id, id));
         expect(response, InvalidFieldFailure("message"));
       });
@@ -48,29 +48,29 @@ void main() {
             .thenAnswer((realInvocation) async => right(successResponse));
         final response = await usecase(
           message: "",
-          analisysCode: ["mock-code"],
+          analysisCode: ["mock-code"],
         ).then((value) => value.fold(id, id));
         expect(response, InvalidFieldFailure("message"));
       });
     });
-    group("analisysCode", () {
+    group("analysisCode", () {
       test("null", () async {
         when(repository.chargebackMarking(any, any))
             .thenAnswer((realInvocation) async => right(successResponse));
         final response = await usecase(
           message: "mock-message",
-          analisysCode: null,
+          analysisCode: null,
         ).then((value) => value.fold(id, id));
-        expect(response, InvalidFieldFailure("analisysCode"));
+        expect(response, InvalidFieldFailure("analysisCode"));
       });
       test("empty", () async {
         when(repository.chargebackMarking(any, any))
             .thenAnswer((realInvocation) async => right(successResponse));
         final response = await usecase(
           message: "mock-message",
-          analisysCode: [],
+          analysisCode: [],
         ).then((value) => value.fold(id, id));
-        expect(response, InvalidFieldFailure("analisysCode"));
+        expect(response, InvalidFieldFailure("analysisCode"));
       });
     });
   });

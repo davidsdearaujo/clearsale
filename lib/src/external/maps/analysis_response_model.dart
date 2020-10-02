@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:clearsale/src/domain/models/analisys_response_model.dart';
+import 'package:clearsale/src/domain/models/analysis_response_model.dart';
 
 import 'order_model_mapper.dart';
 
-class AnalisysResponseModelMapper {
-  static Map<String, dynamic> toMap(AnalisysResponseModel model) {
+class AnalysisResponseModelMapper {
+  static Map<String, dynamic> toMap(AnalysisResponseModel model) {
     if (model == null) return null;
     return {
       'packageID': model.packageID,
@@ -13,9 +13,9 @@ class AnalisysResponseModelMapper {
     };
   }
 
-  static AnalisysResponseModel fromMap(Map<String, dynamic> map) {
+  static AnalysisResponseModel fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
-    return AnalisysResponseModel(
+    return AnalysisResponseModel(
       packageID: map['packageID'],
       orders: List<OrderModel>.from(
         map['orders']?.map((x) => OrderModelMapper.fromMap(x)),
@@ -23,12 +23,12 @@ class AnalisysResponseModelMapper {
     );
   }
 
-  static String toJson(AnalisysResponseModel model) {
+  static String toJson(AnalysisResponseModel model) {
     if (model == null) return null;
     return json.encode(toMap(model));
   }
 
-  static AnalisysResponseModel fromJson(String source) {
+  static AnalysisResponseModel fromJson(String source) {
     if (source == null) return null;
     return fromMap(json.decode(source));
   }

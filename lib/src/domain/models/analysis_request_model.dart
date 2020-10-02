@@ -26,8 +26,8 @@ export 'purchase_information_model.dart';
 export 'shipping_model.dart';
 export 'social_network_model.dart';
 
-class AnalisysRequestModel {
-  AnalisysRequestModel({
+class AnalysisRequestModel {
+  AnalysisRequestModel({
     @required this.code,
     @required this.sessionId,
     @required this.date,
@@ -182,7 +182,7 @@ class AnalisysRequestModel {
   @override
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
-    return o is AnalisysRequestModel && o.code == code;
+    return o is AnalysisRequestModel && o.code == code;
   }
 
   @override
@@ -223,6 +223,6 @@ class AnalisysRequestModel {
 
   @override
   String toString() {
-    return 'AnalisysRequestModel(code: $code, sessionId: $sessionId, date: $date, email: $email, b2BB2C: $b2BB2C, itemValue: $itemValue, totalValue: $totalValue, numberOfInstallments: $numberOfInstallments, ip: $ip, isGift: $isGift, giftMessage: $giftMessage, observation: $observation, status: $status, origin: $origin, channelId: $channelId, reservationDate: $reservationDate, country: $country, nationality: $nationality, product: $product, customSla: $customSla, bankAuthentication: $bankAuthentication, subAcquirer: $subAcquirer, list: $list, purchaseInformation: $purchaseInformation, socialNetwork: $socialNetwork, billing: $billing, shipping: $shipping, payments: $payments, items: $items, passengers: $passengers, connections: $connections, hotels: $hotels)';
+    return 'AnalysisRequestModel(code: $code, sessionId: $sessionId, date: $date, email: $email, b2BB2C: $b2BB2C, itemValue: $itemValue, totalValue: $totalValue, numberOfInstallments: $numberOfInstallments, ip: $ip, isGift: $isGift, giftMessage: $giftMessage, observation: $observation, status: $status, origin: $origin, channelId: $channelId, reservationDate: $reservationDate, country: $country, nationality: $nationality, product: $product, customSla: $customSla, bankAuthentication: $bankAuthentication, subAcquirer: $subAcquirer, list: $list, purchaseInformation: $purchaseInformation, socialNetwork: $socialNetwork, billing: $billing, shipping: $shipping, payments: $payments, items: $items, passengers: $passengers, connections: $connections, hotels: $hotels)';
   }
 }

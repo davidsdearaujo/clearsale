@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart';
 
 import '../../domain/errors/datasource.dart';
-import '../../domain/models/analisys_response_model.dart';
+import '../../domain/models/analysis_response_model.dart';
 import '../../domain/models/analysis_request_model.dart';
 import '../../domain/models/chargeback_marking_response_model.dart';
 import '../../domain/models/credentials_model.dart';
@@ -13,8 +13,8 @@ import '../../domain/models/response_model.dart';
 import '../../domain/models/token_model.dart';
 import '../../infra/datasources/guarantee_datasource.dart';
 import '../errors/guarantee_datasource_errors.dart';
-import '../maps/analisys_request_model_mapper.dart';
-import '../maps/analisys_response_model.dart';
+import '../maps/analysis_request_model_mapper.dart';
+import '../maps/analysis_response_model.dart';
 import '../maps/chargeback_marking_response_model_mapper.dart';
 import '../maps/message_model_mapper.dart';
 import '../maps/order_model_mapper.dart';
@@ -25,16 +25,16 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
   GuaranteeDatasourceImpl(this._client);
 
   @override
-  Future<ResponseModel<AnalisysResponseModel>> analisysRequest(
+  Future<ResponseModel<AnalysisResponseModel>> analysisRequest(
     String token,
-    AnalisysRequestModel analisysRequest,
+    AnalysisRequestModel analysisRequest,
   ) async {
     final uri = Uri.https(
       "homologacao.clearsale.com.br",
       "/api/v1/orders",
     );
 
-    final body = AnalisysRequestModelMapper.toMap(analisysRequest);
+    final body = AnalysisRequestModelMapper.toMap(analysisRequest);
 
     final data = await _client.post(
       uri,
@@ -46,7 +46,7 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
     );
     _throwFailureIfExists(data);
 
-    final response = AnalisysResponseModelMapper.fromJson(data.body);
+    final response = AnalysisResponseModelMapper.fromJson(data.body);
 
     return _makeResponse(response, data.headers);
   }
@@ -79,7 +79,7 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
   Future<ResponseModel<ChargebackMarkingResponseModel>> chargebackMarking(
     String token,
     String message,
-    List<String> analisysCode,
+    List<String> analysisCode,
   ) async {
     final uri = Uri.https(
       "homologacao.clearsale.com.br",
@@ -88,7 +88,7 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
 
     final body = <String, dynamic>{
       "message": message,
-      "orders": analisysCode,
+      "orders": analysisCode,
     };
 
     final data = await _client.post(
@@ -107,16 +107,16 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
   }
 
   @override
-  Future<ResponseModel<AnalisysResponseModel>> reanalisysRequest(
+  Future<ResponseModel<AnalysisResponseModel>> reanalysisRequest(
     String token,
-    AnalisysRequestModel request,
+    AnalysisRequestModel request,
   ) async {
     final uri = Uri.https(
       "homologacao.clearsale.com.br",
       "/api/v1/orders",
     );
 
-    final body = AnalisysRequestModelMapper.toMap(request);
+    final body = AnalysisRequestModelMapper.toMap(request);
 
     final data = await _client.post(
       uri,
@@ -128,7 +128,7 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
     );
     _throwFailureIfExists(data);
 
-    final response = AnalisysResponseModelMapper.fromJson(data.body);
+    final response = AnalysisResponseModelMapper.fromJson(data.body);
 
     return _makeResponse(response, data.headers);
   }
@@ -136,12 +136,12 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
   @override
   Future<ResponseModel<OrderModel>> statusConsult(
     String token,
-    String analisysRequestCode,
+    String analysisRequestCode,
   ) async {
     // GET https://homologacao.clearsale.com.br/api/v1/orders/{CODIGO_DO_MEU_PEDIDO}/status
     final uri = Uri.https(
       "homologacao.clearsale.com.br",
-      "/api/v1/orders/$analisysRequestCode/status",
+      "/api/v1/orders/$analysisRequestCode/status",
     );
 
     final data = await _client.get(
@@ -161,12 +161,12 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
   @override
   Future<ResponseModel<MessageModel>> statusUpdate(
     String token,
-    String analisysRequestCode,
+    String analysisRequestCode,
     String status,
   ) async {
     final uri = Uri.https(
       "homologacao.clearsale.com.br",
-      "/api/v1/orders/$analisysRequestCode/status",
+      "/api/v1/orders/$analysisRequestCode/status",
     );
 
     final body = <String, dynamic>{

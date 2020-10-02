@@ -1,4 +1,4 @@
-import 'package:clearsale/src/domain/models/analisys_response_model.dart';
+import 'package:clearsale/src/domain/models/analysis_response_model.dart';
 import 'package:dartz/dartz.dart';
 
 import '../errors/failure.dart';
@@ -16,16 +16,16 @@ abstract class GuaranteeRepository {
     int loopIfErrorCount,
   );
 
-  Future<Either<Failure, ResponseModel<AnalisysResponseModel>>> analisysRequest(
-    AnalisysRequestModel analysisRequest,
+  Future<Either<Failure, ResponseModel<AnalysisResponseModel>>> analysisRequest(
+    AnalysisRequestModel analysisRequest,
   );
 
-  Future<Either<Failure, ResponseModel<AnalisysResponseModel>>> reanalisysRequest(
-    AnalisysRequestModel analysisRequest,
+  Future<Either<Failure, ResponseModel<AnalysisResponseModel>>> reanalysisRequest(
+    AnalysisRequestModel analysisRequest,
   );
 
   Future<Either<Failure, ResponseModel<OrderModel>>> statusConsult(
-    String analisysNewStatusCode,
+    String analysisNewStatusCode,
   );
 
   Future<Either<Failure, ResponseModel<MessageModel>>> statusUpdate(
@@ -38,6 +38,6 @@ abstract class GuaranteeRepository {
     String message,
 
     ///CODIGO_DO_MEU_PEDIDO
-    List<String> analisysCode,
+    List<String> analysisCode,
   );
 }
