@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 ///### Objeto hotels
 ///https://api.clearsale.com.br/docs/total-totalGarantido-application#hotels-object
 class HotelModel {

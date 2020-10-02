@@ -1,5 +1,3 @@
-
-
 ///### purchaseInformation
 ///https://api.clearsale.com.br/docs/total-totalGarantido-application#purchaseInformation-object
 class PurchaseInformationModel {

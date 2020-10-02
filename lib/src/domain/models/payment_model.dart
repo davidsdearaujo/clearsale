@@ -1,10 +1,12 @@
-import 'dart:convert';
-
 import 'package:meta/meta.dart';
 
 import '../enums/payment_type_enum.dart';
 import 'address_model.dart';
 import 'card_model.dart';
+
+export '../enums/payment_type_enum.dart';
+export 'address_model.dart';
+export 'card_model.dart';
 
 class PaymentModel {
   ///Sequência de realização do pagamento

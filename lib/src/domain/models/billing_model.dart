@@ -8,6 +8,8 @@ import 'phone_model.dart';
 
 export '../enums/gender_enum.dart';
 export '../enums/person_type_enum.dart';
+export 'address_model.dart';
+export 'phone_model.dart';
 
 class BillingModel {
   BillingModel({

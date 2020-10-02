@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 ///### Objeto socialNetwork
 ///https://api.clearsale.com.br/docs/total-totalGarantido-application#socialNetwork-object
 class SocialNetworkModel {

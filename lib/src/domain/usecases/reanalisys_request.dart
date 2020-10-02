@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
 
-import '../../domain/errors/failure.dart';
-import '../../domain/errors/usecases.dart';
-import '../../domain/models/analisys_response_model.dart';
-import '../../domain/models/analysis_request_model.dart';
-import '../../domain/repositories/guarantee_repository.dart';
+import '../errors/failure.dart';
+import '../errors/usecases.dart';
+import '../models/analisys_response_model.dart';
+import '../models/analysis_request_model.dart';
 import '../models/response_model.dart';
+import '../repositories/guarantee_repository.dart';
 
 class ReanalisysRequest {
   final GuaranteeRepository _repository;

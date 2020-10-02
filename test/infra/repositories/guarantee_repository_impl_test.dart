@@ -75,6 +75,7 @@ void main() {
 
       await repository.authenticate(credentials, loopIfErrorCount);
       final response = await repository.statusConsult("mock-status");
+      print(response);
       expect(response | null, ResponseModel(data: OrderModel()));
     });
 

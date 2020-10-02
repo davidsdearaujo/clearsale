@@ -1,10 +1,10 @@
-import 'package:clearsale/src/domain/models/credentials_model.dart';
 import 'package:clearsale/src/presenter/clearsale.dart';
 import 'package:http/http.dart';
 import 'package:mockito/mockito.dart';
+import 'package:test/test.dart';
+
 import '../external/responses/authenticate_responses.dart'
     as authenticateResponses;
-import 'package:test/test.dart';
 
 class MockClient extends Mock implements Client {}
 
