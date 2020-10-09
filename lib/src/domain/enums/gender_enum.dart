@@ -13,7 +13,7 @@ extension GenderEnumExtension on GenderEnum {
         GenderEnum.female: "F",
       };
   String toMap() => _values[this];
-  static GenderEnum fromMap(int val) {
+  static GenderEnum fromMap(String val) {
     if (val == null) return null;
     return _values.entries
         .firstWhere((e) => e.value == val, orElse: () => _values.entries.first)
