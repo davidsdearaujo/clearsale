@@ -1,37 +1,17 @@
 ///### Tipo pessoa (billing/shipping.type)
-///https://api.clearsale.com.br/docs/total-totalGarantido-application#phone-type
+///https://api.clearsale.com.br/docs/total-totalGarantido-application#person-type
 enum PersonTypeEnum {
-  ///Não definido
-  undefined,
+  ///Pessoa Física
+  individual,
 
-  ///Residencial
-  residential,
-
-  ///Comercial
-  commercial,
-
-  ///Recados
-  scraps,
-
-  ///Cobrança
-  collection,
-
-  ///Temporário
-  temporary,
-
-  ///Celular
-  cellPhone,
+  ///Pessoa Jurídica
+  legal,
 }
 
 extension PersonTypeEnumExtension on PersonTypeEnum {
   static Map<PersonTypeEnum, int> get _values => const {
-        PersonTypeEnum.undefined: 0,
-        PersonTypeEnum.residential: 1,
-        PersonTypeEnum.commercial: 2,
-        PersonTypeEnum.scraps: 3,
-        PersonTypeEnum.collection: 4,
-        PersonTypeEnum.temporary: 5,
-        PersonTypeEnum.cellPhone: 6,
+        PersonTypeEnum.individual: 1,
+        PersonTypeEnum.legal: 2,
       };
   int toMap() => _values[this];
   static PersonTypeEnum fromMap(int val) {
