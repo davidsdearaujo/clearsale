@@ -17,7 +17,7 @@ class PhoneModelMapper {
   static PhoneModel fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
     return PhoneModel(
-      type: PersonTypeEnumExtension.fromMap(map['type']),
+      type: PhoneTypeEnumExtension.fromMap(map['type']),
       ddi: map['ddi'],
       ddd: map['ddd'],
       number: map['number'],

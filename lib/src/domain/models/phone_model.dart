@@ -1,12 +1,12 @@
 import 'package:meta/meta.dart';
 
-import '../enums/person_type_enum.dart';
+import '../enums/phone_type_enum.dart';
 
-export '../enums/person_type_enum.dart';
+export '../enums/phone_type_enum.dart';
 
 class PhoneModel {
   ///Tipo de Telefone
-  PersonTypeEnum type;
+  PhoneTypeEnum type;
 
   ///DDI do Telefone
   int ddi;
