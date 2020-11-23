@@ -88,7 +88,7 @@ Todos os erros recebem por herança a estrutura da classe `Failure`, que tem 3 p
 ### Tratamento retorno Clearsale
 |Código|Erro|Mensagem|Descrição|
 |---|---|---|---|
-|empty-datasource-response|`EmptyDatasourceResponseFailure`|`Endereço não encontrado`|Maplink não encontrou nenhum endereço|
-|null-datasource-response|`NullDatasourceResponseFailure`|null|Maplink não retornou nada no body do response|
+|empty-datasource-response|`EmptyDatasourceResponseFailure`|`Endereço não encontrado`|Clearsale não encontrou nenhum endereço|
+|null-datasource-response|`NullDatasourceResponseFailure`|null|Clearsale não retornou nada no body do response|
 |endpoint-message-failure|`EndpointMessageFailure`|Mensagem de erro retornada pelo endpoint|Erro tratado pela Clearsale. Tem a propriedade `status` com o status do erro.|
 |endpoint-invalid-statuscode-failure|`EndpointInvalidStatusCodeFailure`|null|Resposta não tratada pelo package. Tem as propriedades `int statusCode` e `String body`.|
