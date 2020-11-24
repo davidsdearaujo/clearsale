@@ -65,7 +65,7 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
 
     final data = await _client.post(
       uri,
-      body: body,
+      body: jsonEncode(body),
       headers: defaultHeaders,
     );
     _throwFailureIfExists(data);
@@ -93,7 +93,7 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
 
     final data = await _client.post(
       uri,
-      body: body,
+      body: jsonEncode(body),
       headers: {
         "Authorization": "Bearer $token",
         ...defaultHeaders,
@@ -120,7 +120,7 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
 
     final data = await _client.post(
       uri,
-      body: body,
+      body: jsonEncode(body),
       headers: {
         "Authorization": "Bearer $token",
         ...defaultHeaders,
@@ -175,7 +175,7 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
 
     final data = await _client.put(
       uri,
-      body: body,
+      body: jsonEncode(body),
       headers: {
         "Authorization": "Bearer $token",
         ...defaultHeaders,

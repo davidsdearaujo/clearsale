@@ -1,6 +1,6 @@
 name: clearsale
 description: Package para conectar uma aplicação Dart com a Clearsale
-version: 1.0.0-dev.9
+version: 1.0.0-dev.10
 author: F-Team <david@flutterando.com.br>
 homepage: http://f-team.dev/
 repository: https://github.com/davidsdearaujo/clearsale.git
