@@ -38,7 +38,7 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
 
     final data = await _client.post(
       uri,
-      body: body,
+      body: jsonEncode(body),
       headers: {
         "Authorization": "Bearer $token",
         ...defaultHeaders,
