@@ -10,14 +10,14 @@ class PaymentModelMapper extends PaymentModel {
   static Map<String, dynamic> toMap(PaymentModel model) {
     if (model == null) return null;
     return {
-      'sequential': model.sequential,
+      if (model.sequential != null) 'sequential': model.sequential,
       'date': model.date?.toIso8601String(),
-      'value': model.value,
+      if (model.value != null) 'value': model.value,
       'type': model.type?.toMap(),
-      'installments': model.installments,
+      if (model.installments != null) 'installments': model.installments,
       'interestRate': model.interestRate,
       'interestValue': model.interestValue,
-      'currency': model.currency,
+      if (model.currency != null) 'currency': model.currency,
       'voucherOrderOrigin': model.voucherOrderOrigin,
       'address': AddressModelMapper.toMap(model.address),
       'card': CardModelMapper.toMap(model.card),

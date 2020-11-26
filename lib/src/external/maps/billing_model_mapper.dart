@@ -11,7 +11,7 @@ class BillingModelMapper {
   static Map<String, dynamic> toMap(BillingModel model) {
     if (model == null) return null;
     return {
-      'clientId': model.clientId,
+      'clientID': model.clientId,
       'type': model.type?.toMap(),
       'primaryDocument': model.primaryDocument,
       'secondaryDocument': model.secondaryDocument,
@@ -28,7 +28,7 @@ class BillingModelMapper {
     if (map == null) return null;
 
     return BillingModel(
-      clientId: map['clientId'],
+      clientId: map['clientID'],
       type: PersonTypeEnumExtension.fromMap(map['type']),
       primaryDocument: map['primaryDocument'],
       secondaryDocument: map['secondaryDocument'],

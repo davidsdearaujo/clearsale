@@ -17,11 +17,11 @@ class AnalysisRequestModelMapper {
   static Map<String, dynamic> toMap(AnalysisRequestModel model) {
     if (model == null) return null;
     return {
-      'code': model?.code,
-      'sessionId': model?.sessionId,
+      if (model.code != null) 'code': model?.code,
+      'sessionID': model?.sessionId,
       'date': model?.date?.toIso8601String(),
       'email': model?.email,
-      'b2BB2C': model?.b2BB2C,
+      'b2bB2c': model?.b2BB2C,
       'itemValue': model?.itemValue,
       'totalValue': model?.totalValue,
       'numberOfInstallments': model?.numberOfInstallments,
@@ -29,9 +29,9 @@ class AnalysisRequestModelMapper {
       'isGift': model?.isGift,
       'giftMessage': model?.giftMessage,
       'observation': model?.observation,
-      'status': model?.status?.toMap(),
+      if (model.status != null) 'status': model?.status?.toMap(),
       'origin': model?.origin,
-      'channelId': model?.channelId,
+      if (model?.channelId != null) 'channelID': model?.channelId,
       'reservationDate': model?.reservationDate?.toIso8601String(),
       'country': model?.country,
       'nationality': model?.nationality,
@@ -44,7 +44,8 @@ class AnalysisRequestModelMapper {
           PurchaseInformationModelMapper.toMap(model?.purchaseInformation),
       'socialNetwork': SocialNetworkModelMapper.toMap(model?.socialNetwork),
       'billing': BillingModelMapper.toMap(model?.billing),
-      'shipping': ShippingModelMapper.toMap(model?.shipping),
+      if (model.shipping != null)
+        'shipping': ShippingModelMapper.toMap(model?.shipping),
       'payments':
           model?.payments?.map((x) => PaymentModelMapper.toMap(x))?.toList(),
       'items': model?.items?.map((x) => ItemModelMapper.toMap(x))?.toList(),
@@ -63,10 +64,10 @@ class AnalysisRequestModelMapper {
 
     return AnalysisRequestModel(
       code: map['code'],
-      sessionId: map['sessionId'],
+      sessionId: map['sessionID'],
       date: DateTime.tryParse(map['date']),
       email: map['email'],
-      b2BB2C: map['b2BB2C'],
+      b2BB2C: map['b2bB2c'],
       itemValue: map['itemValue'],
       totalValue: map['totalValue'],
       numberOfInstallments: map['numberOfInstallments'],
@@ -76,7 +77,7 @@ class AnalysisRequestModelMapper {
       observation: map['observation'],
       status: RequestStatusEnumExtension.fromMap(map['status']),
       origin: map['origin'],
-      channelId: map['channelId'],
+      channelId: map['channelID'],
       reservationDate: DateTime.tryParse(map['reservationDate']),
       country: map['country'],
       nationality: map['nationality'],
