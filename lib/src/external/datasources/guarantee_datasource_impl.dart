@@ -215,10 +215,11 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
     if (response.statusCode != 200) {
       try {
         final json = jsonDecode(response.body);
-        if (json.containsKey("status") && json.containsKey("message")) {
+        if (json.containsKey("Status") || json.containsKey("Message")) {
           throw EndpointMessageFailure(
-            status: json["status"],
-            message: json["message"],
+            status: json["Status"],
+            message: json["Message"],
+            fields: json["ModelState"]
           );
         }
       } on EndpointMessageFailure {

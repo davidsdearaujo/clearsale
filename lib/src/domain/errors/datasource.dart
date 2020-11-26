@@ -3,9 +3,11 @@ import 'package:meta/meta.dart';
 
 class EndpointMessageFailure extends Failure {
   final String status;
+  final Map<String, dynamic> fields;
   EndpointMessageFailure({
     @required String message,
     @required this.status,
+    @required this.fields,
   }) : super("endpoint-message-failure", message: message);
 }
 
