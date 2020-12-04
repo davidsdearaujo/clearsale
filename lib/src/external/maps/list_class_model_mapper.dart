@@ -6,8 +6,8 @@ class ListClassModelMapper {
   static Map<String, dynamic> toMap(ListClassModel model) {
     if (model == null) return null;
     return {
-      'typeId': model?.typeId?.toMap(),
-      'id': model?.id,
+      if (model.typeId != null) 'typeId': model?.typeId?.toMap(),
+      if (model.id != null) 'id': model?.id,
     };
   }
 

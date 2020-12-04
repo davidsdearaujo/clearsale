@@ -10,20 +10,27 @@ class ShippingModelMapper {
     if (model == null) return null;
 
     return {
-      'clientId': model.clientId,
-      'type': model.type?.toMap(),
-      'primaryDocument': model.primaryDocument,
-      'secondaryDocument': model.secondaryDocument,
-      'name': model.name,
-      'birthDate': model.birthDate?.toIso8601String(),
-      'email': model.email,
-      'gender': model.gender?.toMap(),
-      'address': AddressModelMapper.toMap(model.address),
-      'phones': model.phones?.map((x) => PhoneModelMapper.toMap(x))?.toList(),
-      'deliveryType': model.deliveryType?.toMap(),
-      'deliveryTime': model.deliveryTime,
-      'price': model.price,
-      'pickUpStoreDocument': model.pickUpStoreDocument,
+      if (model.clientId != null) 'clientId': model.clientId,
+      if (model.type != null) 'type': model.type?.toMap(),
+      if (model.primaryDocument != null)
+        'primaryDocument': model.primaryDocument,
+      if (model.secondaryDocument != null)
+        'secondaryDocument': model.secondaryDocument,
+      if (model.name != null) 'name': model.name,
+      if (model.birthDate != null)
+        'birthDate': model.birthDate?.toIso8601String(),
+      if (model.email != null) 'email': model.email,
+      if (model.gender != null) 'gender': model.gender?.toMap(),
+      if (model.address != null)
+        'address': AddressModelMapper.toMap(model.address),
+      if (model.phones != null)
+        'phones': model.phones?.map((x) => PhoneModelMapper.toMap(x))?.toList(),
+      if (model.deliveryType != null)
+        'deliveryType': model.deliveryType?.toMap(),
+      if (model.deliveryTime != null) 'deliveryTime': model.deliveryTime,
+      if (model.price != null) 'price': model.price,
+      if (model.pickUpStoreDocument != null)
+        'pickUpStoreDocument': model.pickUpStoreDocument,
     };
   }
 

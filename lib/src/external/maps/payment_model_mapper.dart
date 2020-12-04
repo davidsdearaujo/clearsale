@@ -11,16 +11,18 @@ class PaymentModelMapper extends PaymentModel {
     if (model == null) return null;
     return {
       if (model.sequential != null) 'sequential': model.sequential,
-      'date': model.date?.toIso8601String(),
+      if (model.interestValue != null) 'date': model.date?.toIso8601String(),
       if (model.value != null) 'value': model.value,
-      'type': model.type?.toMap(),
+      if (model.type != null) 'type': model.type?.toMap(),
       if (model.installments != null) 'installments': model.installments,
-      'interestRate': model.interestRate,
-      'interestValue': model.interestValue,
+      if (model.interestRate != null) 'interestRate': model.interestRate,
+      if (model.interestValue != null) 'interestValue': model.interestValue,
       if (model.currency != null) 'currency': model.currency,
-      'voucherOrderOrigin': model.voucherOrderOrigin,
-      'address': AddressModelMapper.toMap(model.address),
-      'card': CardModelMapper.toMap(model.card),
+      if (model.voucherOrderOrigin != null)
+        'voucherOrderOrigin': model.voucherOrderOrigin,
+      if (model.address != null)
+        'address': AddressModelMapper.toMap(model.address),
+      if (model.card != null) 'card': CardModelMapper.toMap(model.card),
     };
   }
 

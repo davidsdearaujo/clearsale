@@ -6,6 +6,7 @@ export '../enums/card_brand_enum.dart';
 
 class CardModel {
   ///### Número do Cartão com Máscara
+  ///Exemplo: 123456******1234
   ///Tamanho: 200
   String number;
 

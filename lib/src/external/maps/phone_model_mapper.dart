@@ -6,11 +6,11 @@ class PhoneModelMapper {
   static Map<String, dynamic> toMap(PhoneModel model) {
     if (model == null) return null;
     return {
-      'type': model.type?.toMap(),
-      'ddi': model.ddi,
-      'ddd': model.ddd,
-      'number': model.number,
-      'extension': model.extension,
+      if (model.type != null) 'type': model.type?.toMap(),
+      if (model.ddi != null) 'ddi': model.ddi,
+      if (model.ddd != null) 'ddd': model.ddd,
+      if (model.number != null) 'number': model.number,
+      if (model.extension != null) 'extension': model.extension,
     };
   }
 

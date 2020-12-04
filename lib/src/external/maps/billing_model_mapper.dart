@@ -11,16 +11,21 @@ class BillingModelMapper {
   static Map<String, dynamic> toMap(BillingModel model) {
     if (model == null) return null;
     return {
-      'clientID': model.clientId,
-      'type': model.type?.toMap(),
-      'primaryDocument': model.primaryDocument,
-      'secondaryDocument': model.secondaryDocument,
-      'name': model.name,
-      'birthDate': model.birthDate?.toIso8601String(),
-      'email': model.email,
-      'gender': model.gender?.toMap(),
-      'address': AddressModelMapper.toMap(model.address),
-      'phones': model.phones?.map((x) => PhoneModelMapper.toMap(x))?.toList(),
+      if (model.clientId != null) 'clientID': model.clientId,
+      if (model.type != null) 'type': model.type?.toMap(),
+      if (model.primaryDocument != null)
+        'primaryDocument': model.primaryDocument,
+      if (model.secondaryDocument != null)
+        'secondaryDocument': model.secondaryDocument,
+      if (model.name != null) 'name': model.name,
+      if (model.birthDate != null)
+        'birthDate': model.birthDate?.toIso8601String(),
+      if (model.email != null) 'email': model.email,
+      if (model.gender != null) 'gender': model.gender?.toMap(),
+      if (model.address != null)
+        'address': AddressModelMapper.toMap(model.address),
+      if (model.phones != null)
+        'phones': model.phones?.map((x) => PhoneModelMapper.toMap(x))?.toList(),
     };
   }
 

@@ -6,15 +6,18 @@ class ConnectionModelMapper {
   static Map<String, dynamic> toMap(ConnectionModel model) {
     if (model == null) return null;
     return {
-      'company': model.company,
-      'identificationNumber': model.identificationNumber,
-      'date': model.date?.millisecondsSinceEpoch,
-      'seatClass': model.seatClass,
-      'origin': model.origin,
-      'destination': model.destination,
-      'boarding': model.boarding?.millisecondsSinceEpoch,
-      'arriving': model.arriving?.millisecondsSinceEpoch,
-      'fareClass': model.fareClass,
+      if (model.company != null) 'company': model.company,
+      if (model.identificationNumber != null)
+        'identificationNumber': model.identificationNumber,
+      if (model.date != null) 'date': model.date?.millisecondsSinceEpoch,
+      if (model.seatClass != null) 'seatClass': model.seatClass,
+      if (model.origin != null) 'origin': model.origin,
+      if (model.destination != null) 'destination': model.destination,
+      if (model.boarding != null)
+        'boarding': model.boarding?.millisecondsSinceEpoch,
+      if (model.arriving != null)
+        'arriving': model.arriving?.millisecondsSinceEpoch,
+      if (model.fareClass != null) 'fareClass': model.fareClass,
     };
   }
 

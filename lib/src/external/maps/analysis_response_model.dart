@@ -8,8 +8,9 @@ class AnalysisResponseModelMapper {
   static Map<String, dynamic> toMap(AnalysisResponseModel model) {
     if (model == null) return null;
     return {
-      'packageID': model.packageID,
-      'orders': model.orders?.map((x) => OrderModelMapper.toMap(x))?.toList(),
+      if (model.packageID != null) 'packageID': model.packageID,
+      if (model.orders != null)
+        'orders': model.orders?.map((x) => OrderModelMapper.toMap(x))?.toList(),
     };
   }
 

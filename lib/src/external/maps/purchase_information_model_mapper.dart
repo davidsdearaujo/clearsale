@@ -6,17 +6,22 @@ class PurchaseInformationModelMapper {
   static Map<String, dynamic> toMap(PurchaseInformationModel model) {
     if (model == null) return null;
     return {
-      'lastDateInsertedMail': model?.lastDateInsertedMail?.toIso8601String(),
-      'lastDateChangePassword':
-          model?.lastDateChangePassword?.toIso8601String(),
-      'lastDateChangePhone': model?.lastDateChangePhone?.toIso8601String(),
-      'lastDateChangeMobilePhone':
-          model?.lastDateChangeMobilePhone?.toIso8601String(),
-      'lastDateInsertedAddress':
-          model?.lastDateInsertedAddress?.toIso8601String(),
-      'purchaseLogged': model?.purchaseLogged,
-      'email': model?.email,
-      'login': model?.login,
+      if (model.lastDateInsertedMail != null)
+        'lastDateInsertedMail': model?.lastDateInsertedMail?.toIso8601String(),
+      if (model.lastDateChangePassword != null)
+        'lastDateChangePassword':
+            model?.lastDateChangePassword?.toIso8601String(),
+      if (model.lastDateChangePhone != null)
+        'lastDateChangePhone': model?.lastDateChangePhone?.toIso8601String(),
+      if (model.lastDateChangeMobilePhone != null)
+        'lastDateChangeMobilePhone':
+            model?.lastDateChangeMobilePhone?.toIso8601String(),
+      if (model.lastDateInsertedAddress != null)
+        'lastDateInsertedAddress':
+            model?.lastDateInsertedAddress?.toIso8601String(),
+      if (model.purchaseLogged != null) 'purchaseLogged': model?.purchaseLogged,
+      if (model.email != null) 'email': model?.email,
+      if (model.login != null) 'login': model?.login,
     };
   }
 

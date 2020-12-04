@@ -3,8 +3,8 @@ import 'package:clearsale/src/domain/models/message_model.dart';
 class MessageModelMapper extends MessageModel {
   Map<String, dynamic> toMap() {
     return {
-      'status': status,
-      'message': message,
+      if (status != null) 'status': status,
+      if (message != null) 'message': message,
     };
   }
 

@@ -6,18 +6,19 @@ class ItemModelMapper {
   static Map<String, dynamic> toMap(ItemModel model) {
     if (model == null) return null;
     return {
-      'code': model.code,
-      'name': model.name,
-      'barCode': model.barCode,
-      'value': model.value,
-      'amount': model.amount,
-      'categoryID': model.categoryId,
-      'categoryName': model.categoryName,
-      'isGift': model.isGift,
-      'sellerName': model.sellerName,
-      'sellerDocument': model.sellerDocument,
-      'isMarketPlace': model.isMarketPlace,
-      'shippingCompany': model.shippingCompany,
+      if (model.code != null) 'code': model.code,
+      if (model.name != null) 'name': model.name,
+      if (model.barCode != null) 'barCode': model.barCode,
+      if (model.value != null) 'value': model.value,
+      if (model.amount != null) 'amount': model.amount,
+      if (model.categoryId != null) 'categoryID': model.categoryId,
+      if (model.categoryName != null) 'categoryName': model.categoryName,
+      if (model.isGift != null) 'isGift': model.isGift,
+      if (model.sellerName != null) 'sellerName': model.sellerName,
+      if (model.sellerDocument != null) 'sellerDocument': model.sellerDocument,
+      if (model.isMarketPlace != null) 'isMarketPlace': model.isMarketPlace,
+      if (model.shippingCompany != null)
+        'shippingCompany': model.shippingCompany,
     };
   }
 

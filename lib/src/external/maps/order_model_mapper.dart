@@ -4,9 +4,9 @@ class OrderModelMapper {
   static Map<String, dynamic> toMap(OrderModel model) {
     if (model == null) return null;
     return {
-      'code': model.orderCode,
-      'status': model.status,
-      'score': model.score,
+      if (model.orderCode != null) 'code': model.orderCode,
+      if (model.status != null) 'status': model.status,
+      if (model.score != null) 'score': model.score,
     };
   }
 

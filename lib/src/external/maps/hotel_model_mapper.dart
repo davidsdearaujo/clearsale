@@ -6,14 +6,18 @@ class HotelModelMapper {
   static Map<String, dynamic> toMap(HotelModel model) {
     if (model == null) return null;
     return {
-      'name': model.name,
-      'city': model.city,
-      'state': model.state,
-      'country': model.country,
-      'reservationDate': model.reservationDate?.toIso8601String(),
-      'reserveExpirationDate': model.reserveExpirationDate?.toIso8601String(),
-      'checkInDate': model.checkInDate?.toIso8601String(),
-      'checkOutDate': model.checkOutDate?.toIso8601String(),
+      if (model.name != null) 'name': model.name,
+      if (model.city != null) 'city': model.city,
+      if (model.state != null) 'state': model.state,
+      if (model.country != null) 'country': model.country,
+      if (model.reservationDate != null)
+        'reservationDate': model.reservationDate?.toIso8601String(),
+      if (model.reserveExpirationDate != null)
+        'reserveExpirationDate': model.reserveExpirationDate?.toIso8601String(),
+      if (model.checkInDate != null)
+        'checkInDate': model.checkInDate?.toIso8601String(),
+      if (model.checkOutDate != null)
+        'checkOutDate': model.checkOutDate?.toIso8601String(),
     };
   }
 

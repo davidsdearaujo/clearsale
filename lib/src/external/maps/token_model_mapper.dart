@@ -8,8 +8,9 @@ class TokenModelMapper extends TokenModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'token': token,
-      'expirationDate': expirationDate?.toIso8601String(),
+      if (token != null) 'token': token,
+      if (expirationDate != null)
+        'expirationDate': expirationDate?.toIso8601String(),
     };
   }
 

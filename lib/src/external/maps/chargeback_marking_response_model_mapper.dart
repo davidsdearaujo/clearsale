@@ -6,8 +6,8 @@ class ChargebackMarkingResponseModelMapper
     extends ChargebackMarkingResponseModel {
   Map<String, dynamic> toMap() {
     return {
-      'code': orderCode,
-      'status': status,
+      if (orderCode != null) 'code': orderCode,
+      if (status != null) 'status': status,
     };
   }
 
