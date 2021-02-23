@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
+import 'package:meta/meta.dart';
 
 import '../../domain/errors/datasource.dart';
 import '../../domain/models/analysis_response_model.dart';
@@ -22,12 +23,19 @@ import '../maps/token_model_mapper.dart';
 
 class GuaranteeDatasourceImpl implements GuaranteeDatasource {
   final Client _client;
-  final String _baseUrl;
-  GuaranteeDatasourceImpl(this._baseUrl, this._client);
+  final bool isProduction;
+
+  @visibleForTesting
+  String get baseUrl => isProduction ? "api.clearsale.com.br" : "homologacao.clearsale.com.br";
+
+  @visibleForTesting
+  String get initialPath => isProduction ? "" : "/api";
+
+  GuaranteeDatasourceImpl(this.isProduction, this._client);
 
   @override
   Future<ResponseModel<AnalysisResponseModel>> analysisRequest(String token, AnalysisRequestModel analysisRequest) async {
-    final uri = Uri.https(_baseUrl, "/api/v1/orders");
+    final uri = Uri.https(baseUrl, "$initialPath/v1/orders");
     final body = AnalysisRequestModelMapper.toMap(analysisRequest);
     final data = await _client.post(
       uri,
@@ -44,7 +52,7 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
 
   @override
   Future<TokenModel> authenticate(CredentialsModel credentials) async {
-    final uri = Uri.https(_baseUrl, "/api/v1/authenticate");
+    final uri = Uri.https(baseUrl, "$initialPath/v1/authenticate");
     final body = <String, dynamic>{
       "name": credentials.userName,
       "password": credentials.password,
@@ -60,7 +68,7 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
 
   @override
   Future<ResponseModel<ChargebackMarkingResponseModel>> chargebackMarking(String token, String message, List<String> analysisCode) async {
-    final uri = Uri.https(_baseUrl, "/api/v1/authenticate");
+    final uri = Uri.https(baseUrl, "$initialPath/v1/authenticate");
     final body = <String, dynamic>{
       "message": message,
       "orders": analysisCode,
@@ -83,7 +91,7 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
 
   @override
   Future<ResponseModel<AnalysisResponseModel>> reanalysisRequest(String token, AnalysisRequestModel request) async {
-    final uri = Uri.https(_baseUrl, "/api/v1/orders");
+    final uri = Uri.https(baseUrl, "$initialPath/v1/orders");
     final body = AnalysisRequestModelMapper.toMap(request);
     final data = await _client.post(
       uri,
@@ -101,7 +109,7 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
   @override
   Future<ResponseModel<OrderModel>> statusConsult(String token, String analysisRequestCode) async {
     // GET https://homologacao.clearsale.com.br/api/v1/orders/{CODIGO_DO_MEU_PEDIDO}/status
-    final uri = Uri.https(_baseUrl, "/api/v1/orders/$analysisRequestCode/status");
+    final uri = Uri.https(baseUrl, "$initialPath/v1/orders/$analysisRequestCode/status");
     final data = await _client.get(
       uri,
       headers: {
@@ -118,7 +126,7 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
 
   @override
   Future<ResponseModel<MessageModel>> statusUpdate(String token, String analysisRequestCode, String status) async {
-    final uri = Uri.https(_baseUrl, "/api/v1/orders/$analysisRequestCode/status");
+    final uri = Uri.https(baseUrl, "$initialPath/v1/orders/$analysisRequestCode/status");
     final body = <String, dynamic>{
       "status": status,
     };

@@ -25,7 +25,30 @@ void main() {
   MockClient client;
   setUp(() {
     client = MockClient();
-    datasource = GuaranteeDatasourceImpl("homologacao.clearsale.com.br", client);
+    datasource = GuaranteeDatasourceImpl(false, client);
+  });
+
+  group("Url from ambients", () {
+    group("baseUrl", () {
+      test("production", () {
+        final datasource = GuaranteeDatasourceImpl(true, client);
+        expect(datasource.baseUrl, "api.clearsale.com.br");
+      });
+      test("homologation", () {
+        final datasource = GuaranteeDatasourceImpl(false, client);
+        expect(datasource.baseUrl, "homologacao.clearsale.com.br");
+      });
+    });
+    group("initialPath", () {
+      test("production", () {
+        final datasource = GuaranteeDatasourceImpl(true, client);
+        expect(datasource.initialPath, "");
+      });
+      test("homologation", () {
+        final datasource = GuaranteeDatasourceImpl(false, client);
+        expect(datasource.initialPath, "/api");
+      });
+    });
   });
 
   group("statusConsult", () {

@@ -27,21 +27,18 @@ class ClearSale {
   StatusConsult _statusConsult;
   StatusUpdate _statusUpdate;
 
-  ///Homologation url: homologacao.clearsale.com.br
-  ///Production url: api.clearsale.com.br
   factory ClearSale({
     @required String userName,
     @required String password,
-    @required String endpoint,
     bool automaticAuthenticate = true,
+    bool isProduction = false,
   }) {
     assert(userName != null);
     assert(userName != "");
     assert(password != null);
     assert(password != "");
-    assert(endpoint != null);
-    assert(endpoint != "");
-    return ClearSale._(CredentialsModel(userName, password), automaticAuthenticate, endpoint);
+    assert(isProduction != null);
+    return ClearSale._(CredentialsModel(userName, password), automaticAuthenticate, isProduction);
   }
 
   factory ClearSale.test({
@@ -49,13 +46,13 @@ class ClearSale {
     @required String password,
     bool automaticAuthenticate = true,
     @required Client httpClient,
-    @required String endpoint,
+    @required bool isProduction,
   }) {
-    return ClearSale._(CredentialsModel(userName, password), automaticAuthenticate, endpoint, httpClient);
+    return ClearSale._(CredentialsModel(userName, password), automaticAuthenticate, isProduction, httpClient);
   }
 
-  ClearSale._(this.credentials, bool automaticAuthenticate, String endpoint, [Client httpClient]) {
-    final guaranteeDatasource = GuaranteeDatasourceImpl(endpoint, httpClient ?? Client());
+  ClearSale._(this.credentials, bool automaticAuthenticate, bool isProduction, [Client httpClient]) {
+    final guaranteeDatasource = GuaranteeDatasourceImpl(isProduction, httpClient ?? Client());
     final guaranteeRepository = GuaranteeRepositoryImpl(guaranteeDatasource);
     _authenticate = Authenticate(guaranteeRepository);
     _analysisRequest = AnalysisRequest(guaranteeRepository);
