@@ -6,12 +6,9 @@ class SocialNetworkModelMapper {
   static Map<String, dynamic> toMap(SocialNetworkModel model) {
     if (model == null) return null;
     return {
-      if (model.optInCompreConfie != null)
-        'optInCompreConfie': model.authenticationToken,
-      if (model.typeSocialNetwork != null)
-        'typeSocialNetwork': model.typeSocialNetwork,
-      if (model.authenticationToken != null)
-        'authenticationToken': model.authenticationToken,
+      if (model.optInCompreConfie != null) 'optInCompreConfie': model.authenticationToken,
+      if (model.typeSocialNetwork != null) 'typeSocialNetwork': model.typeSocialNetwork,
+      if (model.authenticationToken != null) 'authenticationToken': model.authenticationToken,
     };
   }
 

@@ -8,8 +8,7 @@ class AddressModelMapper {
     return {
       if (model.street != null) 'street': model.street,
       if (model.number != null) 'number': model.number,
-      if (model.additionalInformation != null)
-        'additionalInformation': model.additionalInformation,
+      if (model.additionalInformation != null) 'additionalInformation': model.additionalInformation,
       if (model.county != null) 'county': model.county,
       if (model.city != null) 'city': model.city,
       if (model.state != null) 'state': model.state,
@@ -21,7 +20,6 @@ class AddressModelMapper {
 
   static AddressModel fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
-
     return AddressModel(
       street: map['street'],
       number: map['number'],

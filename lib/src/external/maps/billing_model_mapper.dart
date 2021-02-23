@@ -13,19 +13,14 @@ class BillingModelMapper {
     return {
       if (model.clientId != null) 'clientID': model.clientId,
       if (model.type != null) 'type': model.type?.toMap(),
-      if (model.primaryDocument != null)
-        'primaryDocument': model.primaryDocument,
-      if (model.secondaryDocument != null)
-        'secondaryDocument': model.secondaryDocument,
+      if (model.primaryDocument != null) 'primaryDocument': model.primaryDocument,
+      if (model.secondaryDocument != null) 'secondaryDocument': model.secondaryDocument,
       if (model.name != null) 'name': model.name,
-      if (model.birthDate != null)
-        'birthDate': model.birthDate?.toIso8601String(),
+      if (model.birthDate != null) 'birthDate': model.birthDate?.toIso8601String(),
       if (model.email != null) 'email': model.email,
       if (model.gender != null) 'gender': model.gender?.toMap(),
-      if (model.address != null)
-        'address': AddressModelMapper.toMap(model.address),
-      if (model.phones != null)
-        'phones': model.phones?.map((x) => PhoneModelMapper.toMap(x))?.toList(),
+      if (model.address != null) 'address': AddressModelMapper.toMap(model.address),
+      if (model.phones != null) 'phones': model.phones?.map((x) => PhoneModelMapper.toMap(x))?.toList(),
     };
   }
 
@@ -42,9 +37,7 @@ class BillingModelMapper {
       email: map['email'],
       gender: GenderEnumExtension.fromMap(map['gender']),
       address: AddressModelMapper.fromMap(map['address']),
-      phones: List<PhoneModel>.from(
-        map['phones']?.map((x) => PhoneModelMapper.fromMap(x)),
-      ),
+      phones: List<PhoneModel>.from(map['phones']?.map((x) => PhoneModelMapper.fromMap(x))),
     );
   }
 

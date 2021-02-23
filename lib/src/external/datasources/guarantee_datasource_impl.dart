@@ -22,20 +22,13 @@ import '../maps/token_model_mapper.dart';
 
 class GuaranteeDatasourceImpl implements GuaranteeDatasource {
   final Client _client;
-  GuaranteeDatasourceImpl(this._client);
+  final String _baseUrl;
+  GuaranteeDatasourceImpl(this._baseUrl, this._client);
 
   @override
-  Future<ResponseModel<AnalysisResponseModel>> analysisRequest(
-    String token,
-    AnalysisRequestModel analysisRequest,
-  ) async {
-    final uri = Uri.https(
-      "homologacao.clearsale.com.br",
-      "/api/v1/orders",
-    );
-
+  Future<ResponseModel<AnalysisResponseModel>> analysisRequest(String token, AnalysisRequestModel analysisRequest) async {
+    final uri = Uri.https(_baseUrl, "/api/v1/orders");
     final body = AnalysisRequestModelMapper.toMap(analysisRequest);
-
     final data = await _client.post(
       uri,
       body: jsonEncode(body),
@@ -45,29 +38,19 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
       },
     );
     _throwFailureIfExists(data);
-
     final response = AnalysisResponseModelMapper.fromJson(data.body);
-
     return _makeResponse(response, data.headers);
   }
 
   @override
   Future<TokenModel> authenticate(CredentialsModel credentials) async {
-    final uri = Uri.https(
-      "homologacao.clearsale.com.br",
-      "/api/v1/authenticate",
-    );
-
+    final uri = Uri.https(_baseUrl, "/api/v1/authenticate");
     final body = <String, dynamic>{
       "name": credentials.userName,
       "password": credentials.password,
     };
 
-    final data = await _client.post(
-      uri,
-      body: jsonEncode(body),
-      headers: defaultHeaders,
-    );
+    final data = await _client.post(uri, body: jsonEncode(body), headers: defaultHeaders);
     _throwFailureIfExists(data);
 
     final json = jsonDecode(data.body);
@@ -76,16 +59,8 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
   }
 
   @override
-  Future<ResponseModel<ChargebackMarkingResponseModel>> chargebackMarking(
-    String token,
-    String message,
-    List<String> analysisCode,
-  ) async {
-    final uri = Uri.https(
-      "homologacao.clearsale.com.br",
-      "/api/v1/authenticate",
-    );
-
+  Future<ResponseModel<ChargebackMarkingResponseModel>> chargebackMarking(String token, String message, List<String> analysisCode) async {
+    final uri = Uri.https(_baseUrl, "/api/v1/authenticate");
     final body = <String, dynamic>{
       "message": message,
       "orders": analysisCode,
@@ -107,17 +82,9 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
   }
 
   @override
-  Future<ResponseModel<AnalysisResponseModel>> reanalysisRequest(
-    String token,
-    AnalysisRequestModel request,
-  ) async {
-    final uri = Uri.https(
-      "homologacao.clearsale.com.br",
-      "/api/v1/orders",
-    );
-
+  Future<ResponseModel<AnalysisResponseModel>> reanalysisRequest(String token, AnalysisRequestModel request) async {
+    final uri = Uri.https(_baseUrl, "/api/v1/orders");
     final body = AnalysisRequestModelMapper.toMap(request);
-
     final data = await _client.post(
       uri,
       body: jsonEncode(body),
@@ -127,23 +94,14 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
       },
     );
     _throwFailureIfExists(data);
-
     final response = AnalysisResponseModelMapper.fromJson(data.body);
-
     return _makeResponse(response, data.headers);
   }
 
   @override
-  Future<ResponseModel<OrderModel>> statusConsult(
-    String token,
-    String analysisRequestCode,
-  ) async {
+  Future<ResponseModel<OrderModel>> statusConsult(String token, String analysisRequestCode) async {
     // GET https://homologacao.clearsale.com.br/api/v1/orders/{CODIGO_DO_MEU_PEDIDO}/status
-    final uri = Uri.https(
-      "homologacao.clearsale.com.br",
-      "/api/v1/orders/$analysisRequestCode/status",
-    );
-
+    final uri = Uri.https(_baseUrl, "/api/v1/orders/$analysisRequestCode/status");
     final data = await _client.get(
       uri,
       headers: {
@@ -159,16 +117,8 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
   }
 
   @override
-  Future<ResponseModel<MessageModel>> statusUpdate(
-    String token,
-    String analysisRequestCode,
-    String status,
-  ) async {
-    final uri = Uri.https(
-      "homologacao.clearsale.com.br",
-      "/api/v1/orders/$analysisRequestCode/status",
-    );
-
+  Future<ResponseModel<MessageModel>> statusUpdate(String token, String analysisRequestCode, String status) async {
+    final uri = Uri.https(_baseUrl, "/api/v1/orders/$analysisRequestCode/status");
     final body = <String, dynamic>{
       "status": status,
     };
@@ -188,22 +138,13 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
     return _makeResponse(response, data?.headers);
   }
 
-  ResponseModel<T> _makeResponse<T>(
-    T response,
-    Map<String, String> headers,
-  ) {
+  ResponseModel<T> _makeResponse<T>(T response, Map<String, String> headers) {
     String requestId;
     if (headers != null && headers.isNotEmpty) {
-      final lowerHeaders = headers
-          .map((key, value) => MapEntry(key.toLowerCase(), value))
-          .cast<String, String>();
-
+      final lowerHeaders = headers.map((key, value) => MapEntry(key.toLowerCase(), value)).cast<String, String>();
       requestId = lowerHeaders["request-id"];
     }
-    return ResponseModel<T>(
-      requestId: requestId,
-      data: response,
-    );
+    return ResponseModel<T>(requestId: requestId, data: response);
   }
 
   final defaultHeaders = const {
@@ -216,19 +157,12 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
       try {
         final json = jsonDecode(response.body);
         if (json.containsKey("Status") || json.containsKey("Message")) {
-          throw EndpointMessageFailure(
-            status: json["Status"],
-            message: json["Message"],
-            fields: json["ModelState"]
-          );
+          throw EndpointMessageFailure(status: json["Status"], message: json["Message"], fields: json["ModelState"]);
         }
       } on EndpointMessageFailure {
         rethrow;
       } catch (ex) {
-        throw EndpointInvalidStatusCodeFailure(
-          statusCode: response.statusCode,
-          body: response.body,
-        );
+        throw EndpointInvalidStatusCodeFailure(statusCode: response.statusCode, body: response.body);
       }
     }
   }

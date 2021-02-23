@@ -17,8 +17,7 @@ class ItemModelMapper {
       if (model.sellerName != null) 'sellerName': model.sellerName,
       if (model.sellerDocument != null) 'sellerDocument': model.sellerDocument,
       if (model.isMarketPlace != null) 'isMarketPlace': model.isMarketPlace,
-      if (model.shippingCompany != null)
-        'shippingCompany': model.shippingCompany,
+      if (model.shippingCompany != null) 'shippingCompany': model.shippingCompany,
     };
   }
 

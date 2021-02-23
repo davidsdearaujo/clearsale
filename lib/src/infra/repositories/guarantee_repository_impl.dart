@@ -28,27 +28,20 @@ class GuaranteeRepositoryImpl implements GuaranteeRepository {
       if (isNotAuthenticated) {
         throw AuthenticationRequiredFailure();
       }
-      final resilienceExceeded =
-          authenticationLoopIfErrorIndex + 1 > _authenticationLoopIfErrorCount;
+      final resilienceExceeded = authenticationLoopIfErrorIndex + 1 > _authenticationLoopIfErrorCount;
       if (_currentToken.isExpired) {
         if (resilienceExceeded) {
           throw AuthenticationExpiredFailure();
         }
         authenticationLoopIfErrorIndex += 1;
-        final authResponse = await authenticate(
-          _currentCredentials,
-          _authenticationLoopIfErrorCount,
-        );
+        final authResponse = await authenticate(_currentCredentials, _authenticationLoopIfErrorCount);
         _currentToken = authResponse | null ?? _currentToken;
       }
     } while (_currentToken.isExpired);
   }
 
   @override
-  Future<Either<Failure, TokenModel>> authenticate(
-    CredentialsModel credentials,
-    int loopIfErrorCount,
-  ) async {
+  Future<Either<Failure, TokenModel>> authenticate(CredentialsModel credentials, int loopIfErrorCount) async {
     try {
       final response = await _datasource.authenticate(credentials);
       _currentToken = response;
@@ -58,150 +51,84 @@ class GuaranteeRepositoryImpl implements GuaranteeRepository {
     } on Failure catch (exception) {
       return left(exception);
     } on Exception catch (exception) {
-      return left(DatasourceExceptionFailure(
-        "guarantee-datasource-exception",
-        exception,
-      ));
+      return left(DatasourceExceptionFailure("guarantee-datasource-exception", exception));
     } catch (error) {
-      return left(DatasourceExceptionFailure(
-        "guarantee-datasource-unexpected-throw",
-        Exception(error),
-      ));
+      return left(DatasourceExceptionFailure("guarantee-datasource-unexpected-throw", Exception(error)));
     }
   }
 
   @override
-  Future<Either<Failure, ResponseModel<AnalysisResponseModel>>> analysisRequest(
-    AnalysisRequestModel analysisRequest,
-  ) async {
+  Future<Either<Failure, ResponseModel<AnalysisResponseModel>>> analysisRequest(AnalysisRequestModel analysisRequest) async {
     try {
       await authenticationResilience();
-      final response = await _datasource.analysisRequest(
-        _currentToken.token,
-        analysisRequest,
-      );
+      final response = await _datasource.analysisRequest(_currentToken.token, analysisRequest);
       return right(response);
     } on Failure catch (exception) {
       return left(exception);
     } on Exception catch (exception) {
-      return left(DatasourceExceptionFailure(
-        "guarantee-datasource-exception",
-        exception,
-      ));
+      return left(DatasourceExceptionFailure("guarantee-datasource-exception", exception));
     } catch (error) {
-      return left(DatasourceExceptionFailure(
-        "guarantee-datasource-unexpected-throw",
-        Exception(error),
-      ));
+      return left(DatasourceExceptionFailure("guarantee-datasource-unexpected-throw", Exception(error)));
     }
   }
 
   @override
-  Future<Either<Failure, ResponseModel<ChargebackMarkingResponseModel>>>
-      chargebackMarking(
-    String message,
-    List<String> analysisCode,
-  ) async {
+  Future<Either<Failure, ResponseModel<ChargebackMarkingResponseModel>>> chargebackMarking(String message, List<String> analysisCode) async {
     try {
       await authenticationResilience();
-      final response = await _datasource.chargebackMarking(
-        _currentToken.token,
-        message,
-        analysisCode,
-      );
+      final response = await _datasource.chargebackMarking(_currentToken.token, message, analysisCode);
       return right(response);
     } on Failure catch (exception) {
       return left(exception);
     } on Exception catch (exception) {
-      return left(DatasourceExceptionFailure(
-        "guarantee-datasource-exception",
-        exception,
-      ));
+      return left(DatasourceExceptionFailure("guarantee-datasource-exception", exception));
     } catch (error) {
-      return left(DatasourceExceptionFailure(
-        "guarantee-datasource-unexpected-throw",
-        Exception(error),
-      ));
+      return left(DatasourceExceptionFailure("guarantee-datasource-unexpected-throw", Exception(error)));
     }
   }
 
   @override
-  Future<Either<Failure, ResponseModel<AnalysisResponseModel>>> reanalysisRequest(
-    AnalysisRequestModel analysisRequest,
-  ) async {
+  Future<Either<Failure, ResponseModel<AnalysisResponseModel>>> reanalysisRequest(AnalysisRequestModel analysisRequest) async {
     try {
       await authenticationResilience();
-      final response = await _datasource.reanalysisRequest(
-        _currentToken.token,
-        analysisRequest,
-      );
+      final response = await _datasource.reanalysisRequest(_currentToken.token, analysisRequest);
       return right(response);
     } on Failure catch (exception) {
       return left(exception);
     } on Exception catch (exception) {
-      return left(DatasourceExceptionFailure(
-        "guarantee-datasource-exception",
-        exception,
-      ));
+      return left(DatasourceExceptionFailure("guarantee-datasource-exception", exception));
     } catch (error) {
-      return left(DatasourceExceptionFailure(
-        "guarantee-datasource-unexpected-throw",
-        Exception(error),
-      ));
+      return left(DatasourceExceptionFailure("guarantee-datasource-unexpected-throw", Exception(error)));
     }
   }
 
   @override
-  Future<Either<Failure, ResponseModel<OrderModel>>> statusConsult(
-    String analysisNewStatusCode,
-  ) async {
+  Future<Either<Failure, ResponseModel<OrderModel>>> statusConsult(String analysisNewStatusCode) async {
     try {
       await authenticationResilience();
-      final response = await _datasource.statusConsult(
-        _currentToken.token,
-        analysisNewStatusCode,
-      );
+      final response = await _datasource.statusConsult(_currentToken.token, analysisNewStatusCode);
       return right(response);
     } on Failure catch (exception) {
       return left(exception);
     } on Exception catch (exception) {
-      return left(DatasourceExceptionFailure(
-        "guarantee-datasource-exception",
-        exception,
-      ));
+      return left(DatasourceExceptionFailure("guarantee-datasource-exception", exception));
     } catch (error) {
-      return left(DatasourceExceptionFailure(
-        "guarantee-datasource-unexpected-throw",
-        Exception(error),
-      ));
+      return left(DatasourceExceptionFailure("guarantee-datasource-unexpected-throw", Exception(error)));
     }
   }
 
   @override
-  Future<Either<Failure, ResponseModel<MessageModel>>> statusUpdate(
-    String analysisRequestCode,
-    String status,
-  ) async {
+  Future<Either<Failure, ResponseModel<MessageModel>>> statusUpdate(String analysisRequestCode, String status) async {
     try {
       await authenticationResilience();
-      final response = await _datasource.statusUpdate(
-        _currentToken.token,
-        analysisRequestCode,
-        status,
-      );
+      final response = await _datasource.statusUpdate(_currentToken.token, analysisRequestCode, status);
       return right(response);
     } on Failure catch (exception) {
       return left(exception);
     } on Exception catch (exception) {
-      return left(DatasourceExceptionFailure(
-        "guarantee-datasource-exception",
-        exception,
-      ));
+      return left(DatasourceExceptionFailure("guarantee-datasource-exception", exception));
     } catch (error) {
-      return left(DatasourceExceptionFailure(
-        "guarantee-datasource-unexpected-throw",
-        Exception(error),
-      ));
+      return left(DatasourceExceptionFailure("guarantee-datasource-unexpected-throw", Exception(error)));
     }
   }
 }

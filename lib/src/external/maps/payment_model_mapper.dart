@@ -18,10 +18,8 @@ class PaymentModelMapper extends PaymentModel {
       if (model.interestRate != null) 'interestRate': model.interestRate,
       if (model.interestValue != null) 'interestValue': model.interestValue,
       if (model.currency != null) 'currency': model.currency,
-      if (model.voucherOrderOrigin != null)
-        'voucherOrderOrigin': model.voucherOrderOrigin,
-      if (model.address != null)
-        'address': AddressModelMapper.toMap(model.address),
+      if (model.voucherOrderOrigin != null) 'voucherOrderOrigin': model.voucherOrderOrigin,
+      if (model.address != null) 'address': AddressModelMapper.toMap(model.address),
       if (model.card != null) 'card': CardModelMapper.toMap(model.card),
     };
   }

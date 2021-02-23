@@ -18,10 +18,6 @@ class OrderModelMapper {
       score = double.parse(map['score'].toString());
     }
 
-    return OrderModel(
-      orderCode: map['code'],
-      status: map['status'],
-      score: score,
-    );
+    return OrderModel(orderCode: map['code'], status: map['status'], score: score);
   }
 }

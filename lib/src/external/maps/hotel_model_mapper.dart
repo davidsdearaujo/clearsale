@@ -10,14 +10,10 @@ class HotelModelMapper {
       if (model.city != null) 'city': model.city,
       if (model.state != null) 'state': model.state,
       if (model.country != null) 'country': model.country,
-      if (model.reservationDate != null)
-        'reservationDate': model.reservationDate?.toIso8601String(),
-      if (model.reserveExpirationDate != null)
-        'reserveExpirationDate': model.reserveExpirationDate?.toIso8601String(),
-      if (model.checkInDate != null)
-        'checkInDate': model.checkInDate?.toIso8601String(),
-      if (model.checkOutDate != null)
-        'checkOutDate': model.checkOutDate?.toIso8601String(),
+      if (model.reservationDate != null) 'reservationDate': model.reservationDate?.toIso8601String(),
+      if (model.reserveExpirationDate != null) 'reserveExpirationDate': model.reserveExpirationDate?.toIso8601String(),
+      if (model.checkInDate != null) 'checkInDate': model.checkInDate?.toIso8601String(),
+      if (model.checkOutDate != null) 'checkOutDate': model.checkOutDate?.toIso8601String(),
     };
   }
 

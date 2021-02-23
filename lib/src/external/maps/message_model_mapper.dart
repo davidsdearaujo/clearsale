@@ -10,9 +10,6 @@ class MessageModelMapper extends MessageModel {
 
   static MessageModel fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
-    return MessageModel(
-      message: map['message'],
-      status: map['status'],
-    );
+    return MessageModel(message: map['message'], status: map['status']);
   }
 }

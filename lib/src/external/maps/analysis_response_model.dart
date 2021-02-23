@@ -9,8 +9,7 @@ class AnalysisResponseModelMapper {
     if (model == null) return null;
     return {
       if (model.packageID != null) 'packageID': model.packageID,
-      if (model.orders != null)
-        'orders': model.orders?.map((x) => OrderModelMapper.toMap(x))?.toList(),
+      if (model.orders != null) 'orders': model.orders?.map((x) => OrderModelMapper.toMap(x))?.toList(),
     };
   }
 
