@@ -13,11 +13,9 @@ extension PersonTypeEnumExtension on PersonTypeEnum {
         PersonTypeEnum.individual_person: 1,
         PersonTypeEnum.corporate_entity: 2,
       };
-  int toMap() => _values[this];
-  static PersonTypeEnum fromMap(int val) {
+  int toMap() => _values[this]!;
+  static PersonTypeEnum? fromMap(int? val) {
     if (val == null) return null;
-    return _values.entries
-        .firstWhere((e) => e.value == val, orElse: () => _values.entries.first)
-        .key;
+    return _values.entries.firstWhere((e) => e.value == val, orElse: () => _values.entries.first).key;
   }
 }

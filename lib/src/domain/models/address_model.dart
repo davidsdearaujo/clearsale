@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 class AddressModel {
   ///Nome do logradouro
   String street;
@@ -8,7 +6,7 @@ class AddressModel {
   String number;
 
   ///Complemento do Endereço
-  String additionalInformation;
+  String? additionalInformation;
 
   ///Bairro do Endereço
   String county;
@@ -23,20 +21,20 @@ class AddressModel {
   String zipcode;
 
   ///CEP do Endereço
-  String country;
+  String? country;
 
   ///Referência do Endereço
-  String reference;
+  String? reference;
 
   AddressModel({
-    @required this.street,
-    @required this.number,
+    required this.street,
+    required this.number,
     this.additionalInformation,
-    @required this.county,
-    @required this.city,
-    @required this.state,
+    required this.county,
+    required this.city,
+    required this.state,
     this.country,
-    @required this.zipcode,
+    required this.zipcode,
     this.reference,
   });
 
@@ -44,29 +42,12 @@ class AddressModel {
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
 
-    return o is AddressModel &&
-        o.street == street &&
-        o.number == number &&
-        o.additionalInformation == additionalInformation &&
-        o.county == county &&
-        o.city == city &&
-        o.state == state &&
-        o.zipcode == zipcode &&
-        o.country == country &&
-        o.reference == reference;
+    return o is AddressModel && o.street == street && o.number == number && o.additionalInformation == additionalInformation && o.county == county && o.city == city && o.state == state && o.zipcode == zipcode && o.country == country && o.reference == reference;
   }
 
   @override
   int get hashCode {
-    return street.hashCode ^
-        number.hashCode ^
-        additionalInformation.hashCode ^
-        county.hashCode ^
-        city.hashCode ^
-        state.hashCode ^
-        zipcode.hashCode ^
-        country.hashCode ^
-        reference.hashCode;
+    return street.hashCode ^ number.hashCode ^ additionalInformation.hashCode ^ county.hashCode ^ city.hashCode ^ state.hashCode ^ zipcode.hashCode ^ country.hashCode ^ reference.hashCode;
   }
 
   @override

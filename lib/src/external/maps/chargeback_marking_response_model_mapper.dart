@@ -5,14 +5,12 @@ import 'package:clearsale/src/domain/models/chargeback_marking_response_model.da
 class ChargebackMarkingResponseModelMapper extends ChargebackMarkingResponseModel {
   Map<String, dynamic> toMap() {
     return {
-      if (orderCode != null) 'code': orderCode,
-      if (status != null) 'status': status,
+      'code': orderCode,
+      'status': status,
     };
   }
 
   static ChargebackMarkingResponseModel fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
-
     return ChargebackMarkingResponseModel(
       orderCode: map['code'],
       status: map['status'],

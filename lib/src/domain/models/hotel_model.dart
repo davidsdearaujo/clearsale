@@ -2,28 +2,28 @@
 ///https://api.clearsale.com.br/docs/total-totalGarantido-application#hotels-object
 class HotelModel {
   ///Nome do Hotel (tamanho 200)
-  String name;
+  String? name;
 
   ///Cidade (tamanho 150)
-  String city;
+  String? city;
 
   ///Estado (tamanho 150)
-  String state;
+  String? state;
 
   ///País (tamanho 150)
-  String country;
+  String? country;
 
   ///Data da Reserva
-  DateTime reservationDate;
+  DateTime? reservationDate;
 
   ///Data da Expiração da Reserva
-  DateTime reserveExpirationDate;
+  DateTime? reserveExpirationDate;
 
   ///Data da Chegada
-  DateTime checkInDate;
+  DateTime? checkInDate;
 
   ///Data da Saída
-  DateTime checkOutDate;
+  DateTime? checkOutDate;
 
   HotelModel({
     this.name,
@@ -40,27 +40,12 @@ class HotelModel {
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
 
-    return o is HotelModel &&
-        o.name == name &&
-        o.city == city &&
-        o.state == state &&
-        o.country == country &&
-        o.reservationDate == reservationDate &&
-        o.reserveExpirationDate == reserveExpirationDate &&
-        o.checkInDate == checkInDate &&
-        o.checkOutDate == checkOutDate;
+    return o is HotelModel && o.name == name && o.city == city && o.state == state && o.country == country && o.reservationDate == reservationDate && o.reserveExpirationDate == reserveExpirationDate && o.checkInDate == checkInDate && o.checkOutDate == checkOutDate;
   }
 
   @override
   int get hashCode {
-    return name.hashCode ^
-        city.hashCode ^
-        state.hashCode ^
-        country.hashCode ^
-        reservationDate.hashCode ^
-        reserveExpirationDate.hashCode ^
-        checkInDate.hashCode ^
-        checkOutDate.hashCode;
+    return name.hashCode ^ city.hashCode ^ state.hashCode ^ country.hashCode ^ reservationDate.hashCode ^ reserveExpirationDate.hashCode ^ checkInDate.hashCode ^ checkOutDate.hashCode;
   }
 
   @override

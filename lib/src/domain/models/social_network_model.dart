@@ -8,31 +8,24 @@ class SocialNetworkModel {
   });
 
   ///Cliente aceita ingressar no movimento Compre e Confie
-  int optInCompreConfie;
+  int? optInCompreConfie;
 
   ///ID da rede social
-  int typeSocialNetwork;
+  int? typeSocialNetwork;
 
   ///Token retornado pela Rede Social
-  String authenticationToken;
+  String? authenticationToken;
 
   @override
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
 
-    return o is SocialNetworkModel &&
-        o.optInCompreConfie == optInCompreConfie &&
-        o.typeSocialNetwork == typeSocialNetwork &&
-        o.authenticationToken == authenticationToken;
+    return o is SocialNetworkModel && o.optInCompreConfie == optInCompreConfie && o.typeSocialNetwork == typeSocialNetwork && o.authenticationToken == authenticationToken;
   }
 
   @override
-  int get hashCode =>
-      optInCompreConfie.hashCode ^
-      typeSocialNetwork.hashCode ^
-      authenticationToken.hashCode;
+  int get hashCode => optInCompreConfie.hashCode ^ typeSocialNetwork.hashCode ^ authenticationToken.hashCode;
 
   @override
-  String toString() =>
-      'SocialNetworkModel(optInCompreConfie: $optInCompreConfie, typeSocialNetwork: $typeSocialNetwork, authenticationToken: $authenticationToken)';
+  String toString() => 'SocialNetworkModel(optInCompreConfie: $optInCompreConfie, typeSocialNetwork: $typeSocialNetwork, authenticationToken: $authenticationToken)';
 }

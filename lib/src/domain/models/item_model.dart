@@ -1,9 +1,7 @@
-import 'package:meta/meta.dart';
-
 class ItemModel {
   ///### Código do Produto
   ///Tamanho: 50
-  String code;
+  String? code;
 
   ///### Nome do Produto
   ///Tamanho: 150
@@ -11,43 +9,43 @@ class ItemModel {
 
   ///### EAN (Código de barras) do produto
   ///Tamanho: 200
-  String barCode;
+  String? barCode;
 
   ///### Valor Unitário
   ///Tamanho: 20,4
-  double value;
+  double? value;
 
   ///### Quantidade
-  int amount;
+  int? amount;
 
   ///### Valor Unitário
-  int categoryId;
+  int? categoryId;
 
   ///### 	Código da Categoria do Produto
-  String categoryName;
+  String? categoryName;
 
   ///### Identifica se o item é um presente (true ou false)
-  bool isGift;
+  bool? isGift;
 
   ///### Nome do seller
   ///Tamanho: 200
-  String sellerName;
+  String? sellerName;
 
   ///### CNPJ do seller
   ///Tamanho: 14
-  String sellerDocument;
+  String? sellerDocument;
 
   ///### Identifica se o item é de um Marketplace (Informar “true” ou “false”)
   ///Tamanho: 5
-  String isMarketPlace;
+  String? isMarketPlace;
 
   ///### Nome da Transportadora
   ///Tamanho: 200
-  String shippingCompany;
+  String? shippingCompany;
 
   ItemModel({
     this.code,
-    @required this.name,
+    required this.name,
     this.barCode,
     this.value,
     this.amount,
@@ -64,35 +62,12 @@ class ItemModel {
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
 
-    return o is ItemModel &&
-        o.code == code &&
-        o.name == name &&
-        o.barCode == barCode &&
-        o.value == value &&
-        o.amount == amount &&
-        o.categoryId == categoryId &&
-        o.categoryName == categoryName &&
-        o.isGift == isGift &&
-        o.sellerName == sellerName &&
-        o.sellerDocument == sellerDocument &&
-        o.isMarketPlace == isMarketPlace &&
-        o.shippingCompany == shippingCompany;
+    return o is ItemModel && o.code == code && o.name == name && o.barCode == barCode && o.value == value && o.amount == amount && o.categoryId == categoryId && o.categoryName == categoryName && o.isGift == isGift && o.sellerName == sellerName && o.sellerDocument == sellerDocument && o.isMarketPlace == isMarketPlace && o.shippingCompany == shippingCompany;
   }
 
   @override
   int get hashCode {
-    return code.hashCode ^
-        name.hashCode ^
-        barCode.hashCode ^
-        value.hashCode ^
-        amount.hashCode ^
-        categoryId.hashCode ^
-        categoryName.hashCode ^
-        isGift.hashCode ^
-        sellerName.hashCode ^
-        sellerDocument.hashCode ^
-        isMarketPlace.hashCode ^
-        shippingCompany.hashCode;
+    return code.hashCode ^ name.hashCode ^ barCode.hashCode ^ value.hashCode ^ amount.hashCode ^ categoryId.hashCode ^ categoryName.hashCode ^ isGift.hashCode ^ sellerName.hashCode ^ sellerDocument.hashCode ^ isMarketPlace.hashCode ^ shippingCompany.hashCode;
   }
 
   @override

@@ -32,11 +32,9 @@ extension ProductTypeEnumExtension on ProductTypeEnum {
         ProductTypeEnum.realtimeDecision: 10,
         ProductTypeEnum.tickets: 11,
       };
-  int toMap() => _values[this];
-  static ProductTypeEnum fromMap(int val) {
+  int toMap() => _values[this]!;
+  static ProductTypeEnum? fromMap(int? val) {
     if (val == null) return null;
-    return _values.entries
-        .firstWhere((e) => e.value == val, orElse: () => _values.entries.first)
-        .key;
+    return _values.entries.firstWhere((e) => e.value == val, orElse: () => _values.entries.first).key;
   }
 }

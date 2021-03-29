@@ -73,11 +73,9 @@ extension PaymentTypeEnumExtension on PaymentTypeEnum {
         PaymentTypeEnum.virtualGiftCard: 1041,
         PaymentTypeEnum.debitCardOrWireTransfer: 4011,
       };
-  int toMap() => _values[this];
-  static PaymentTypeEnum fromMap(int val) {
+  int toMap() => _values[this]!;
+  static PaymentTypeEnum? fromMap(int? val) {
     if (val == null) return null;
-    return _values.entries
-        .firstWhere((e) => e.value == val, orElse: () => _values.entries.first)
-        .key;
+    return _values.entries.firstWhere((e) => e.value == val, orElse: () => _values.entries.first).key;
   }
 }

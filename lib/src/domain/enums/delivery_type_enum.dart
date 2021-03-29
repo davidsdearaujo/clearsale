@@ -93,11 +93,9 @@ extension DeliveryTypeEnumExtension on DeliveryTypeEnum {
         DeliveryTypeEnum.entregaGarantidaDiaSeguinte: 20,
         DeliveryTypeEnum.retiradaLojaExpresso: 21,
       };
-  int toMap() => _values[this];
-  static DeliveryTypeEnum fromMap(int val) {
+  int toMap() => _values[this]!;
+  static DeliveryTypeEnum? fromMap(int? val) {
     if (val == null) return null;
-    return _values.entries
-        .firstWhere((e) => e.value == val, orElse: () => _values.entries.first)
-        .key;
+    return _values.entries.firstWhere((e) => e.value == val, orElse: () => _values.entries.first).key;
   }
 }

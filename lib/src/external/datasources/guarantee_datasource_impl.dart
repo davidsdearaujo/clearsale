@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
-import 'package:meta/meta.dart';
 
 import '../../domain/errors/datasource.dart';
 import '../../domain/models/analysis_response_model.dart';
@@ -25,10 +24,10 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
   final Client _client;
   final bool isProduction;
 
-  @visibleForTesting
+//  @visibleForTesting
   String get baseUrl => isProduction ? "api.clearsale.com.br" : "homologacao.clearsale.com.br";
 
-  @visibleForTesting
+//  @visibleForTesting
   String get initialPath => isProduction ? "" : "/api";
 
   GuaranteeDatasourceImpl(this.isProduction, this._client);
@@ -121,7 +120,7 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
 
     final json = jsonDecode(data.body);
     final response = OrderModelMapper.fromMap(json);
-    return _makeResponse(response, data?.headers);
+    return _makeResponse(response, data.headers);
   }
 
   @override
@@ -143,14 +142,14 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
 
     final json = jsonDecode(data.body);
     final response = MessageModelMapper.fromMap(json);
-    return _makeResponse(response, data?.headers);
+    return _makeResponse(response, data.headers);
   }
 
-  ResponseModel<T> _makeResponse<T>(T response, Map<String, String> headers) {
-    String requestId;
+  ResponseModel<T> _makeResponse<T>(T response, Map<String, String>? headers) {
+    String? requestId;
     if (headers != null && headers.isNotEmpty) {
       final lowerHeaders = headers.map((key, value) => MapEntry(key.toLowerCase(), value)).cast<String, String>();
-      requestId = lowerHeaders["request-id"];
+      requestId = lowerHeaders["request-id"]!;
     }
     return ResponseModel<T>(requestId: requestId, data: response);
   }
@@ -159,7 +158,7 @@ class GuaranteeDatasourceImpl implements GuaranteeDatasource {
     "Content-Type": "application/json",
   };
 
-  void _throwFailureIfExists(Response response) {
+  void _throwFailureIfExists(Response? response) {
     if (response == null) throw NullDatasourceResponseFailure();
     if (response.statusCode != 200) {
       try {

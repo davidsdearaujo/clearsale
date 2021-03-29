@@ -28,11 +28,9 @@ extension ListTypeEnumExtension on ListTypeEnum {
         ListTypeEnum.birthday: 5,
         ListTypeEnum.bridalShower: 6,
       };
-  int toMap() => _values[this];
-  static ListTypeEnum fromMap(int val) {
+  int toMap() => _values[this]!;
+  static ListTypeEnum? fromMap(int? val) {
     if (val == null) return null;
-    return _values.entries
-        .firstWhere((e) => e.value == val, orElse: () => _values.entries.first)
-        .key;
+    return _values.entries.firstWhere((e) => e.value == val, orElse: () => _values.entries.first).key;
   }
 }

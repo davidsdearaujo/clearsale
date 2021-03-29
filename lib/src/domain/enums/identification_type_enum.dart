@@ -33,11 +33,9 @@ extension IdentificationTypeEnumExtension on IdentificationTypeEnum {
         IdentificationTypeEnum.ctps: 6,
         IdentificationTypeEnum.voterTitle: 7,
       };
-  int toMap() => _values[this];
-  static IdentificationTypeEnum fromMap(int val) {
+  int toMap() => _values[this]!;
+  static IdentificationTypeEnum? fromMap(int? val) {
     if (val == null) return null;
-    return _values.entries
-        .firstWhere((e) => e.value == val, orElse: () => _values.entries.first)
-        .key;
+    return _values.entries.firstWhere((e) => e.value == val, orElse: () => _values.entries.first).key;
   }
 }
