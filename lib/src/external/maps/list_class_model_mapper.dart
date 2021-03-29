@@ -3,30 +3,17 @@ import 'dart:convert';
 import 'package:clearsale/src/domain/models/list_class_model.dart';
 
 class ListClassModelMapper {
-  static Map<String, dynamic> toMap(ListClassModel model) {
-    if (model == null) return null;
-    return {
-      if (model.typeId != null) 'typeId': model?.typeId?.toMap(),
-      if (model.id != null) 'id': model?.id,
-    };
-  }
+  static Map<String, dynamic> toMap(ListClassModel model) => {
+        if (model.typeId != null) 'typeId': model.typeId?.toMap(),
+        'id': model.id,
+      };
 
-  static ListClassModel fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
+  static ListClassModel fromMap(Map<String, dynamic> map) => ListClassModel(
+        typeId: ListTypeEnumExtension.fromMap(map['typeId']),
+        id: map['id'],
+      );
 
-    return ListClassModel(
-      typeId: ListTypeEnumExtension.fromMap(map['typeId']),
-      id: map['id'],
-    );
-  }
+  static String toJson(ListClassModel model) => json.encode(toMap(model));
 
-  static String toJson(ListClassModel model) {
-    if (model == null) return null;
-    return json.encode(toMap(model));
-  }
-
-  static ListClassModel fromJson(String source) {
-    if (source == null) return null;
-    return fromMap(json.decode(source));
-  }
+  static ListClassModel fromJson(String source) => fromMap(json.decode(source));
 }

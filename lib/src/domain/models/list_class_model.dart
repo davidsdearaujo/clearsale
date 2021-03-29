@@ -3,11 +3,11 @@ import '../enums/list_type_enum.dart';
 export '../enums/list_type_enum.dart';
 
 class ListClassModel {
-  ListTypeEnum typeId;
+  ListTypeEnum? typeId;
   String id;
 
   ListClassModel({
-    required this.typeId,
+    this.typeId,
     required this.id,
   });
 

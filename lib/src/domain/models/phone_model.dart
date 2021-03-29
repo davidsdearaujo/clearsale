@@ -4,7 +4,7 @@ export '../enums/phone_type_enum.dart';
 
 class PhoneModel {
   ///Tipo de Telefone
-  PhoneTypeEnum type;
+  PhoneTypeEnum? type;
 
   ///DDI do Telefone
   int? ddi;

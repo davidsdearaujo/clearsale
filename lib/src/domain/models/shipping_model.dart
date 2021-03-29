@@ -17,7 +17,7 @@ class ShippingModel {
   String? clientId;
 
   ///Pessoa Física ou Jurídica
-  PersonTypeEnum type;
+  PersonTypeEnum? type;
 
   ///CPF ou CNPJ
   String primaryDocument;

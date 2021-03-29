@@ -17,7 +17,7 @@ class PaymentModel {
   double? value;
 
   ///Tipo de Pagamento
-  PaymentTypeEnum type;
+  PaymentTypeEnum? type;
 
   ///Quantidade de Parcelas
   double? installments;
@@ -38,20 +38,20 @@ class PaymentModel {
   AddressModel? address;
 
   ///cartão
-  CardModel card;
+  CardModel? card;
 
   PaymentModel({
     this.sequential,
     this.date,
     this.value,
-    required this.type,
+    this.type,
     this.installments,
     this.interestRate,
     this.interestValue,
     this.currency,
     this.voucherOrderOrigin,
     this.address,
-    required this.card,
+    this.card,
   });
 
   @override
