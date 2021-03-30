@@ -9,24 +9,21 @@ import 'phone_model_mapper.dart';
 
 class BillingModelMapper {
   static Map<String, dynamic> toMap(BillingModel model) {
-    if (model == null) return null;
     return {
       if (model.clientId != null) 'clientID': model.clientId,
-      if (model.type != null) 'type': model.type?.toMap(),
-      if (model.primaryDocument != null) 'primaryDocument': model.primaryDocument,
+      if (model.type != null) 'type': model.type!.toMap(),
+      'primaryDocument': model.primaryDocument,
       if (model.secondaryDocument != null) 'secondaryDocument': model.secondaryDocument,
-      if (model.name != null) 'name': model.name,
+      'name': model.name,
       if (model.birthDate != null) 'birthDate': model.birthDate?.toIso8601String(),
       if (model.email != null) 'email': model.email,
       if (model.gender != null) 'gender': model.gender?.toMap(),
-      if (model.address != null) 'address': AddressModelMapper.toMap(model.address),
-      if (model.phones != null) 'phones': model.phones?.map((x) => PhoneModelMapper.toMap(x))?.toList(),
+      if (model.address != null) 'address': AddressModelMapper.toMap(model.address!),
+      'phones': model.phones.map((x) => PhoneModelMapper.toMap(x)).toList(),
     };
   }
 
   static BillingModel fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
-
     return BillingModel(
       clientId: map['clientID'],
       type: PersonTypeEnumExtension.fromMap(map['type']),
@@ -41,13 +38,7 @@ class BillingModelMapper {
     );
   }
 
-  static String toJson(BillingModel model) {
-    if (model == null) null;
-    return json.encode(toMap(model));
-  }
+  static String toJson(BillingModel model) => json.encode(toMap(model));
 
-  static BillingModel fromJson(String source) {
-    if (json == null) return null;
-    return fromMap(json.decode(source));
-  }
+  static BillingModel fromJson(String source) => fromMap(json.decode(source));
 }

@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 import '../enums/payment_type_enum.dart';
 import 'address_model.dart';
 import 'card_model.dart';
@@ -10,83 +8,62 @@ export 'card_model.dart';
 
 class PaymentModel {
   ///Sequência de realização do pagamento
-  int sequential;
+  int? sequential;
 
   ///Data do pagamento
-  DateTime date;
+  DateTime? date;
 
   ///Valor cobrado neste pagamento
-  double value;
+  double? value;
 
   ///Tipo de Pagamento
-  PaymentTypeEnum type;
+  PaymentTypeEnum? type;
 
   ///Quantidade de Parcelas
-  double installments;
+  double? installments;
 
   ///Taxa de Juros
-  double interestRate;
+  double? interestRate;
 
   ///Valor dos Juros
-  int interestValue;
+  int? interestValue;
 
   ///Código da moeda
-  int currency;
+  int? currency;
 
   ///ID do pedido que gerou vale troca (caso a forma de pagamento atual seja “Vale”)
-  String voucherOrderOrigin;
+  String? voucherOrderOrigin;
 
   ///Endereço pagamento
-  AddressModel address;
+  AddressModel? address;
 
   ///cartão
-  CardModel card;
+  CardModel? card;
 
   PaymentModel({
     this.sequential,
     this.date,
     this.value,
-    @required this.type,
+    this.type,
     this.installments,
     this.interestRate,
     this.interestValue,
     this.currency,
     this.voucherOrderOrigin,
     this.address,
-    @required this.card,
+    this.card,
   });
 
   @override
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
 
-    return o is PaymentModel &&
-        o.sequential == sequential &&
-        o.date == date &&
-        o.value == value &&
-        o.type == type &&
-        o.installments == installments &&
-        o.interestRate == interestRate &&
-        o.interestValue == interestValue &&
-        o.currency == currency &&
-        o.voucherOrderOrigin == voucherOrderOrigin &&
-        o.address == address &&
-        o.card == card;
+    return o is PaymentModel && o.sequential == sequential && o.date == date && o.value == value && o.type == type && o.installments == installments && o.interestRate == interestRate && o.interestValue == interestValue && o.currency == currency && o.voucherOrderOrigin == voucherOrderOrigin && o.address == address && o.card == card;
   }
 
   @override
   int get hashCode {
-    return sequential.hashCode ^
-        date.hashCode ^
-        value.hashCode ^
-        type.hashCode ^
-        installments.hashCode ^
-        interestRate.hashCode ^
-        interestValue.hashCode ^
-        currency.hashCode ^
-        voucherOrderOrigin.hashCode ^
-        address.hashCode ^
-        card.hashCode;
+    return sequential.hashCode ^ date.hashCode ^ value.hashCode ^ type.hashCode ^ installments.hashCode ^ interestRate.hashCode ^ interestValue.hashCode ^ currency.hashCode ^ voucherOrderOrigin.hashCode ^ address.hashCode ^ card.hashCode;
   }
 
   @override

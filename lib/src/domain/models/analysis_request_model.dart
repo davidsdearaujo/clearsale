@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 import '../enums/product_type_enum.dart';
 import '../enums/request_status_enum.dart';
 import 'billing_model.dart';
@@ -28,13 +26,13 @@ export 'social_network_model.dart';
 
 class AnalysisRequestModel {
   AnalysisRequestModel({
-    @required this.code,
-    @required this.sessionId,
-    @required this.date,
-    @required this.email,
+    required this.code,
+    required this.sessionId,
+    this.date,
+    required this.email,
     this.b2BB2C,
     this.itemValue,
-    @required this.totalValue,
+    required this.totalValue,
     this.numberOfInstallments,
     this.ip,
     this.isGift,
@@ -53,10 +51,10 @@ class AnalysisRequestModel {
     this.list,
     this.purchaseInformation,
     this.socialNetwork,
-    @required this.billing,
+    required this.billing,
     this.shipping,
-    @required this.payments,
-    @required this.items,
+    required this.payments,
+    required this.items,
     this.passengers,
     this.connections,
     this.hotels,
@@ -69,81 +67,81 @@ class AnalysisRequestModel {
   String sessionId;
 
   ///Data do pedido
-  DateTime date;
+  DateTime? date;
 
   ///Email do pedido
   String email;
 
   ///Tipo do ecommerce
-  String b2BB2C;
+  String? b2BB2C;
 
   ///Valor Total dos Itens
-  double itemValue;
+  double? itemValue;
 
   ///Valor Total do Pedido. Composto pelo Valor Total dos Itens + Valor do Frete + Eventual Valor de Juros da Compra
   double totalValue;
 
   ///Quantidade de Parcelas
-  int numberOfInstallments;
+  int? numberOfInstallments;
 
   ///IP do Pedido
-  String ip;
+  String? ip;
 
   ///Identifica se o pedido é presente
-  bool isGift;
+  bool? isGift;
 
   ///Mensagem de Presente
-  String giftMessage;
+  String? giftMessage;
 
   ///Observação do Pedido
-  String observation;
+  String? observation;
 
   ///### Status do Pedido
   ///
   ///**Atenção**: Ao enviar o status no pedido é importante ressaltar que este pedido será incluso como histórico e não será analisado pela ClearSale.
-  RequestStatusEnum status;
+  RequestStatusEnum? status;
 
   ///Canal de Origem do Pedido (ex: TELEVENDAS, WEBSITE, APP, etc.)
-  String origin;
+  String? origin;
 
   ///Canal de Origem complementar, se houver. (ex: ANDROID, IOS, etc.)
-  String channelId;
+  String? channelId;
 
   ///Data do Primeiro Voo do Pedido (em caso de aéreas)
-  DateTime reservationDate;
+  DateTime? reservationDate;
 
   ///Nome do País
-  String country;
+  String? country;
 
   ///Nome da Nacionalidade
-  String nationality;
+  String? nationality;
 
   ///Tipo do produto
-  ProductTypeEnum product;
+  ProductTypeEnum? product;
 
   ///Valor em Minutos de SLA máximo de Análise do Pedido, se houver
-  int customSla;
+  int? customSla;
 
   ///Tipo de autenticação do banco
-  String bankAuthentication;
+  String? bankAuthentication;
 
   ///Nome do sub adquirente
-  String subAcquirer;
+  String? subAcquirer;
 
   ///tipo de lista
-  ListClassModel list;
+  ListClassModel? list;
 
   ///Dados de cobrança
-  PurchaseInformationModel purchaseInformation;
+  PurchaseInformationModel? purchaseInformation;
 
   ///socialNetwork
-  SocialNetworkModel socialNetwork;
+  SocialNetworkModel? socialNetwork;
 
   ///Dados de cobrança
   BillingModel billing;
 
   ///Dados de entrega
-  ShippingModel shipping;
+  ShippingModel? shipping;
 
   ///Dados de pagamento
   List<PaymentModel> payments;
@@ -162,7 +160,7 @@ class AnalysisRequestModel {
   ///**Por exemplo**:
   ///
   ///Para um vôo de São Paulo (Guarulhos) para Londres, via New York (JFK), você irá informar apenas GRU-LHR, ao invés de GRU-JFK e JFK-LHR.
-  List<PassengerModel> passengers;
+  List<PassengerModel>? passengers;
 
   ///### Conexões
   ///**Importante**: Os objetos passengers e connections são utilizados somente em empresas de passagens aéreas.
@@ -174,10 +172,10 @@ class AnalysisRequestModel {
   ///**Por exemplo**:
   ///
   ///Para um vôo de São Paulo (Guarulhos) para Londres, via New York (JFK), você irá informar apenas GRU-LHR, ao invés de GRU-JFK e JFK-LHR.
-  List<ConnectionModel> connections;
+  List<ConnectionModel>? connections;
 
   //Hotéis
-  List<HotelModel> hotels;
+  List<HotelModel>? hotels;
 
   @override
   bool operator ==(Object o) {
@@ -187,38 +185,7 @@ class AnalysisRequestModel {
 
   @override
   int get hashCode {
-    return code.hashCode ^
-        sessionId.hashCode ^
-        date.hashCode ^
-        email.hashCode ^
-        b2BB2C.hashCode ^
-        itemValue.hashCode ^
-        totalValue.hashCode ^
-        numberOfInstallments.hashCode ^
-        ip.hashCode ^
-        isGift.hashCode ^
-        giftMessage.hashCode ^
-        observation.hashCode ^
-        status.hashCode ^
-        origin.hashCode ^
-        channelId.hashCode ^
-        reservationDate.hashCode ^
-        country.hashCode ^
-        nationality.hashCode ^
-        product.hashCode ^
-        customSla.hashCode ^
-        bankAuthentication.hashCode ^
-        subAcquirer.hashCode ^
-        list.hashCode ^
-        purchaseInformation.hashCode ^
-        socialNetwork.hashCode ^
-        billing.hashCode ^
-        shipping.hashCode ^
-        payments.hashCode ^
-        items.hashCode ^
-        passengers.hashCode ^
-        connections.hashCode ^
-        hotels.hashCode;
+    return code.hashCode ^ sessionId.hashCode ^ date.hashCode ^ email.hashCode ^ b2BB2C.hashCode ^ itemValue.hashCode ^ totalValue.hashCode ^ numberOfInstallments.hashCode ^ ip.hashCode ^ isGift.hashCode ^ giftMessage.hashCode ^ observation.hashCode ^ status.hashCode ^ origin.hashCode ^ channelId.hashCode ^ reservationDate.hashCode ^ country.hashCode ^ nationality.hashCode ^ product.hashCode ^ customSla.hashCode ^ bankAuthentication.hashCode ^ subAcquirer.hashCode ^ list.hashCode ^ purchaseInformation.hashCode ^ socialNetwork.hashCode ^ billing.hashCode ^ shipping.hashCode ^ payments.hashCode ^ items.hashCode ^ passengers.hashCode ^ connections.hashCode ^ hotels.hashCode;
   }
 
   @override

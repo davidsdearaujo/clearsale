@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 import '../enums/gender_enum.dart';
 import '../enums/identification_type_enum.dart';
 
@@ -13,31 +11,31 @@ class PassengerModel {
 
   ///### Companhia de Milhagem (Fidelidade)
   ///Tamanho: 50
-  String companyMileCard;
+  String? companyMileCard;
 
   ///### Cartão de Milhagem (Fidelidade)
   ///Tamanho: 50
-  String mileCard;
+  String? mileCard;
 
   ///### Tipo de Documento de Identificação
-  IdentificationTypeEnum identificationType;
+  IdentificationTypeEnum? identificationType;
 
   ///### Número do Documento
   ///Tamanho: 50
-  String identificationNumber;
+  String? identificationNumber;
 
   ///### Sexo do Passageiro
-  GenderEnum gender;
+  GenderEnum? gender;
 
   ///### Data de nascimento
-  DateTime birthdate;
+  DateTime? birthdate;
 
   ///### CPF do Passageiro
   ///Tamanho: 50
-  String cpf;
+  String? cpf;
 
   PassengerModel({
-    @required this.name,
+    required this.name,
     this.companyMileCard,
     this.mileCard,
     this.identificationType,
@@ -51,27 +49,12 @@ class PassengerModel {
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
 
-    return o is PassengerModel &&
-        o.name == name &&
-        o.companyMileCard == companyMileCard &&
-        o.mileCard == mileCard &&
-        o.identificationType == identificationType &&
-        o.identificationNumber == identificationNumber &&
-        o.gender == gender &&
-        o.birthdate == birthdate &&
-        o.cpf == cpf;
+    return o is PassengerModel && o.name == name && o.companyMileCard == companyMileCard && o.mileCard == mileCard && o.identificationType == identificationType && o.identificationNumber == identificationNumber && o.gender == gender && o.birthdate == birthdate && o.cpf == cpf;
   }
 
   @override
   int get hashCode {
-    return name.hashCode ^
-        companyMileCard.hashCode ^
-        mileCard.hashCode ^
-        identificationType.hashCode ^
-        identificationNumber.hashCode ^
-        gender.hashCode ^
-        birthdate.hashCode ^
-        cpf.hashCode;
+    return name.hashCode ^ companyMileCard.hashCode ^ mileCard.hashCode ^ identificationType.hashCode ^ identificationNumber.hashCode ^ gender.hashCode ^ birthdate.hashCode ^ cpf.hashCode;
   }
 
   @override

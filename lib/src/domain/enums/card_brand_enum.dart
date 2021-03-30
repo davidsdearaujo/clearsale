@@ -61,11 +61,9 @@ extension CardBrandEnumExtension on CardBrandEnum {
         CardBrandEnum.cartaoMais: 103,
         CardBrandEnum.cartaoC_A: 105,
       };
-  int toMap() => _values[this];
-  static CardBrandEnum fromMap(int val) {
+  int toMap() => _values[this]!;
+  static CardBrandEnum? fromMap(int? val) {
     if (val == null) return null;
-    return _values.entries
-        .firstWhere((e) => e.value == val, orElse: () => _values.entries.first)
-        .key;
+    return _values.entries.firstWhere((e) => e.value == val, orElse: () => _values.entries.first).key;
   }
 }

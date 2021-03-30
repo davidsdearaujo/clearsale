@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart';
-import 'package:meta/meta.dart';
 
 import '../domain/models/analysis_response_model.dart';
 import '../domain/models/analysis_request_model.dart';
@@ -20,38 +19,37 @@ import '../infra/repositories/guarantee_repository_impl.dart';
 
 class ClearSale {
   final CredentialsModel credentials;
-  Authenticate _authenticate;
-  AnalysisRequest _analysisRequest;
-  ReanalysisRequest _reanalysisRequest;
-  ChargebackMarking _chargebackMarking;
-  StatusConsult _statusConsult;
-  StatusUpdate _statusUpdate;
+  late Authenticate _authenticate;
+  late AnalysisRequest _analysisRequest;
+  late ReanalysisRequest _reanalysisRequest;
+  late ChargebackMarking _chargebackMarking;
+  late StatusConsult _statusConsult;
+  late StatusUpdate _statusUpdate;
 
   factory ClearSale({
-    @required String userName,
-    @required String password,
+    required String userName,
+    required String password,
     bool automaticAuthenticate = true,
     bool isProduction = false,
   }) {
-    assert(userName != null);
     assert(userName != "");
-    assert(password != null);
+
     assert(password != "");
-    assert(isProduction != null);
+
     return ClearSale._(CredentialsModel(userName, password), automaticAuthenticate, isProduction);
   }
 
   factory ClearSale.test({
-    @required String userName,
-    @required String password,
+    required String userName,
+    required String password,
     bool automaticAuthenticate = true,
-    @required Client httpClient,
-    @required bool isProduction,
+    required Client httpClient,
+    required bool isProduction,
   }) {
     return ClearSale._(CredentialsModel(userName, password), automaticAuthenticate, isProduction, httpClient);
   }
 
-  ClearSale._(this.credentials, bool automaticAuthenticate, bool isProduction, [Client httpClient]) {
+  ClearSale._(this.credentials, bool automaticAuthenticate, bool isProduction, [Client? httpClient]) {
     final guaranteeDatasource = GuaranteeDatasourceImpl(isProduction, httpClient ?? Client());
     final guaranteeRepository = GuaranteeRepositoryImpl(guaranteeDatasource);
     _authenticate = Authenticate(guaranteeRepository);
@@ -63,53 +61,53 @@ class ClearSale {
     if (automaticAuthenticate) authenticate();
   }
 
-  Future<TokenModel> authenticate({int loopCountIfError = 3}) async {
+  Future<TokenModel?> authenticate({int loopCountIfError = 3}) async {
     final response = await _authenticate.call(credentials, loopCountIfError);
     if (response.isLeft()) throw response.fold(id, id);
-    return response | null;
+    return response.fold((l) => null, (r) => r);
   }
 
-  Future<ResponseModel<AnalysisResponseModel>> analysisRequest(
+  Future<ResponseModel<AnalysisResponseModel>?> analysisRequest(
     AnalysisRequestModel analysisRequestModel,
   ) async {
     final response = await _analysisRequest.call(analysisRequestModel);
     if (response.isLeft()) throw response.fold(id, id);
-    return response | null;
+    return response.fold((l) => null, (r) => r);
   }
 
-  Future<ResponseModel<AnalysisResponseModel>> reanalysisRequest(
+  Future<ResponseModel<AnalysisResponseModel>?> reanalysisRequest(
     AnalysisRequestModel analysisRequestModel,
   ) async {
     final response = await _reanalysisRequest.call(analysisRequestModel);
     if (response.isLeft()) throw response.fold(id, id);
-    return response | null;
+    return response.fold((l) => null, (r) => r);
   }
 
-  Future<ResponseModel<ChargebackMarkingResponseModel>> chargebackMarking({
-    String message,
-    List<String> analysisCode,
+  Future<ResponseModel<ChargebackMarkingResponseModel>?> chargebackMarking({
+    required String message,
+    required List<String> analysisCode,
   }) async {
     final response = await _chargebackMarking.call(
       message: message,
       analysisCode: analysisCode,
     );
     if (response.isLeft()) throw response.fold(id, id);
-    return response | null;
+    return response.fold((l) => null, (r) => r);
   }
 
-  Future<ResponseModel<OrderModel>> statusConsult(String analysisCode) async {
+  Future<ResponseModel<OrderModel>?> statusConsult(String analysisCode) async {
     final response = await _statusConsult.call(analysisCode);
     if (response.isLeft()) throw response.fold(id, id);
-    return response | null;
+    return response.fold((l) => null, (r) => r);
   }
 
   ///Importante: Os status de atualização devem ser combinados com a equipe de integração.
-  Future<ResponseModel<MessageModel>> statusUpdate(
+  Future<ResponseModel<MessageModel>?> statusUpdate(
     String analysisCode,
     String newStatusCode,
   ) async {
     final response = await _statusUpdate.call(analysisCode, newStatusCode);
     if (response.isLeft()) throw response.fold(id, id);
-    return response | null;
+    return response.fold((l) => null, (r) => r);
   }
 }

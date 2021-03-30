@@ -15,46 +15,43 @@ import 'social_network_model_mapper.dart';
 
 class AnalysisRequestModelMapper {
   static Map<String, dynamic> toMap(AnalysisRequestModel model) {
-    if (model == null) return null;
     return {
-      if (model.code != null) 'code': model?.code,
-      if (model.sessionId != null) 'sessionID': model?.sessionId,
-      if (model.date != null) 'date': model?.date?.toIso8601String(),
-      if (model.email != null) 'email': model?.email,
-      if (model.b2BB2C != null) 'b2bB2c': model?.b2BB2C,
-      if (model.itemValue != null) 'itemValue': model?.itemValue,
-      if (model.totalValue != null) 'totalValue': model?.totalValue,
-      if (model.numberOfInstallments != null) 'numberOfInstallments': model?.numberOfInstallments,
-      if (model.ip != null) 'ip': model?.ip,
-      if (model.isGift != null) 'isGift': model?.isGift,
-      if (model.giftMessage != null) 'giftMessage': model?.giftMessage,
-      if (model.observation != null) 'observation': model?.observation,
-      if (model.status != null) 'status': model?.status?.toMap(),
-      if (model.origin != null) 'origin': model?.origin,
-      if (model?.channelId != null) 'channelID': model?.channelId,
-      if (model.reservationDate != null) 'reservationDate': model?.reservationDate?.toIso8601String(),
-      if (model.country != null) 'country': model?.country,
-      if (model.nationality != null) 'nationality': model?.nationality,
-      if (model.product != null) 'product': model?.product?.toMap(),
-      if (model.customSla != null) 'customSla': model?.customSla,
-      if (model.bankAuthentication != null) 'bankAuthentication': model?.bankAuthentication,
-      if (model.subAcquirer != null) 'subAcquirer': model?.subAcquirer,
-      if (model.list != null) 'list': ListClassModelMapper.toMap(model?.list),
-      if (model.purchaseInformation != null) 'purchaseInformation': PurchaseInformationModelMapper.toMap(model?.purchaseInformation),
-      if (model.socialNetwork != null) 'socialNetwork': SocialNetworkModelMapper.toMap(model?.socialNetwork),
-      if (model.billing != null) 'billing': BillingModelMapper.toMap(model?.billing),
-      if (model.shipping != null) 'shipping': ShippingModelMapper.toMap(model?.shipping),
-      if (model.payments != null) 'payments': model?.payments?.map((x) => PaymentModelMapper.toMap(x))?.toList(),
-      if (model.items != null) 'items': model?.items?.map((x) => ItemModelMapper.toMap(x))?.toList(),
-      if (model.passengers != null) 'passengers': model?.passengers?.map((x) => PassengerModelMapper.toMap(x))?.toList(),
-      if (model.connections != null) 'connections': model?.connections?.map((x) => ConnectionModelMapper.toMap(x))?.toList(),
-      if (model.hotels != null) 'hotels': model?.hotels?.map((x) => HotelModelMapper.toMap(x))?.toList(),
+      'code': model.code,
+      'sessionID': model.sessionId,
+      'date': model.date?.toIso8601String(),
+      'email': model.email,
+      'b2bB2c': model.b2BB2C,
+      'itemValue': model.itemValue,
+      'totalValue': model.totalValue,
+      if (model.numberOfInstallments != null) 'numberOfInstallments': model.numberOfInstallments,
+      if (model.ip != null) 'ip': model.ip,
+      if (model.isGift != null) 'isGift': model.isGift,
+      if (model.giftMessage != null) 'giftMessage': model.giftMessage,
+      if (model.observation != null) 'observation': model.observation,
+      if (model.status != null) 'status': model.status?.toMap(),
+      if (model.origin != null) 'origin': model.origin,
+      if (model.channelId != null) 'channelID': model.channelId,
+      if (model.reservationDate != null) 'reservationDate': model.reservationDate?.toIso8601String(),
+      if (model.country != null) 'country': model.country,
+      if (model.nationality != null) 'nationality': model.nationality,
+      if (model.product != null) 'product': model.product?.toMap(),
+      if (model.customSla != null) 'customSla': model.customSla,
+      if (model.bankAuthentication != null) 'bankAuthentication': model.bankAuthentication,
+      if (model.subAcquirer != null) 'subAcquirer': model.subAcquirer,
+      if (model.list != null) 'list': ListClassModelMapper.toMap(model.list!),
+      if (model.purchaseInformation != null) 'purchaseInformation': PurchaseInformationModelMapper.toMap(model.purchaseInformation!),
+      if (model.socialNetwork != null) 'socialNetwork': SocialNetworkModelMapper.toMap(model.socialNetwork!),
+      'billing': BillingModelMapper.toMap(model.billing),
+      if (model.shipping != null) 'shipping': ShippingModelMapper.toMap(model.shipping!),
+      'payments': model.payments.map((x) => PaymentModelMapper.toMap(x)).toList(),
+      'items': model.items.map((x) => ItemModelMapper.toMap(x)).toList(),
+      if (model.passengers != null && model.passengers!.isNotEmpty) 'passengers': model.passengers!.map((x) => PassengerModelMapper.toMap(x)).toList(),
+      if (model.connections != null && model.connections!.isNotEmpty) 'connections': model.connections!.map((x) => ConnectionModelMapper.toMap(x)).toList(),
+      if (model.hotels != null && model.hotels!.isNotEmpty) 'hotels': model.hotels!.map((x) => HotelModelMapper.toMap(x)).toList(),
     };
   }
 
   static AnalysisRequestModel fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
-
     return AnalysisRequestModel(
       code: map['code'],
       sessionId: map['sessionID'],
@@ -92,12 +89,10 @@ class AnalysisRequestModelMapper {
   }
 
   static String toJson(AnalysisRequestModel model) {
-    if (model == null) return null;
     return json.encode(toMap(model));
   }
 
   static AnalysisRequestModel fromJson(String source) {
-    if (source == null) return null;
     return fromMap(json.decode(source));
   }
 }

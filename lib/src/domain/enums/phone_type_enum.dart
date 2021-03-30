@@ -33,11 +33,9 @@ extension PhoneTypeEnumExtension on PhoneTypeEnum {
         PhoneTypeEnum.temporary: 5,
         PhoneTypeEnum.cell_phone: 6,
       };
-  int toMap() => _values[this];
-  static PhoneTypeEnum fromMap(int val) {
+  int toMap() => _values[this]!;
+  static PhoneTypeEnum? fromMap(int? val) {
     if (val == null) return null;
-    return _values.entries
-        .firstWhere((e) => e.value == val, orElse: () => _values.entries.first)
-        .key;
+    return _values.entries.firstWhere((e) => e.value == val, orElse: () => _values.entries.first).key;
   }
 }

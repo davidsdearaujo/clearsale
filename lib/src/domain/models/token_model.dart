@@ -2,10 +2,9 @@ class TokenModel {
   TokenModel(this.token, this.expirationDate);
 
   final String token;
-  final DateTime expirationDate;
+  final DateTime? expirationDate;
 
-  bool get isExpired =>
-      expirationDate != null && DateTime.now().isAfter(expirationDate);
+  bool get isExpired => expirationDate != null && DateTime.now().isAfter(expirationDate!);
 
   @override
   bool operator ==(Object o) {
@@ -18,6 +17,5 @@ class TokenModel {
   int get hashCode => token.hashCode ^ expirationDate.hashCode;
 
   @override
-  String toString() =>
-      'TokenModel(token: $token, expirationDate: $expirationDate)';
+  String toString() => 'TokenModel(token: $token, expirationDate: $expirationDate)';
 }

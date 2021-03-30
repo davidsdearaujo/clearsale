@@ -22,11 +22,9 @@ extension RequestStatusEnumExtension on RequestStatusEnum {
         RequestStatusEnum.canceledByClient: 41,
         RequestStatusEnum.disapproved: 45,
       };
-  int toMap() => _values[this];
-  static RequestStatusEnum fromMap(int val) {
+  int toMap() => _values[this]!;
+  static RequestStatusEnum? fromMap(int? val) {
     if (val == null) return null;
-    return _values.entries
-        .firstWhere((e) => e.value == val, orElse: () => _values.entries.first)
-        .key;
+    return _values.entries.firstWhere((e) => e.value == val, orElse: () => _values.entries.first).key;
   }
 }

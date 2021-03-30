@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:meta/meta.dart';
 
 import '../errors/failure.dart';
 import '../errors/usecases.dart';
@@ -12,13 +11,13 @@ class ChargebackMarking {
 
   ChargebackMarking(this._repository);
   Future<Either<Failure, ResponseModel<ChargebackMarkingResponseModel>>> call({
-    @required String message,
-    List<String> analysisCode,
+    required String message,
+    required List<String> analysisCode,
   }) async {
-    if (message == null || message.isEmpty) {
+    if (message.isEmpty) {
       return left(InvalidFieldFailure("message"));
     }
-    if (analysisCode == null || analysisCode.isEmpty) {
+    if (analysisCode.isEmpty) {
       return left(InvalidFieldFailure("analysisCode"));
     }
 

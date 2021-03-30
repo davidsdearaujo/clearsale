@@ -1,5 +1,4 @@
 import 'package:collection/collection.dart';
-import 'package:meta/meta.dart';
 
 import '../enums/delivery_type_enum.dart';
 import '../enums/gender_enum.dart';
@@ -15,61 +14,61 @@ export 'phone_model.dart';
 
 class ShippingModel {
   ///Código do cliente
-  String clientId;
+  String? clientId;
 
   ///Pessoa Física ou Jurídica
-  PersonTypeEnum type;
+  PersonTypeEnum? type;
 
   ///CPF ou CNPJ
   String primaryDocument;
 
   ///RG ou Inscrição Estadual
-  String secondaryDocument;
+  String? secondaryDocument;
 
   ///Nome do cliente
   String name;
 
   ///Data de Nascimento
-  DateTime birthDate;
+  DateTime? birthDate;
 
   ///Email
-  String email;
+  String? email;
 
   ///Gênero
-  GenderEnum gender;
+  GenderEnum? gender;
 
   ///Endereço
-  AddressModel address;
+  AddressModel? address;
 
   ///Telefones
   List<PhoneModel> phones;
 
   ///ID do Tipo de entrega
-  DeliveryTypeEnum deliveryType;
+  DeliveryTypeEnum? deliveryType;
 
   ///Prazo de Entrega
-  String deliveryTime;
+  String? deliveryTime;
 
   ///Valor do Frete
-  double price;
+  double? price;
 
   ///### CPF para retirada em loja
   ///(caso o pedido seja de algum tipo de entrega “Retirada”)
   ///
   ///Tamanho: 30
-  String pickUpStoreDocument;
+  String? pickUpStoreDocument;
 
   ShippingModel({
     this.clientId,
-    @required this.type,
-    @required this.primaryDocument,
+    required this.type,
+    required this.primaryDocument,
     this.secondaryDocument,
-    @required this.name,
+    required this.name,
     this.birthDate,
     this.email,
     this.gender,
     this.address,
-    @required this.phones,
+    required this.phones,
     this.deliveryType,
     this.deliveryTime,
     this.price,
@@ -81,39 +80,12 @@ class ShippingModel {
     if (identical(this, o)) return true;
     final listEquals = const DeepCollectionEquality().equals;
 
-    return o is ShippingModel &&
-        o.clientId == clientId &&
-        o.type == type &&
-        o.primaryDocument == primaryDocument &&
-        o.secondaryDocument == secondaryDocument &&
-        o.name == name &&
-        o.birthDate == birthDate &&
-        o.email == email &&
-        o.gender == gender &&
-        o.address == address &&
-        listEquals(o.phones, phones) &&
-        o.deliveryType == deliveryType &&
-        o.deliveryTime == deliveryTime &&
-        o.price == price &&
-        o.pickUpStoreDocument == pickUpStoreDocument;
+    return o is ShippingModel && o.clientId == clientId && o.type == type && o.primaryDocument == primaryDocument && o.secondaryDocument == secondaryDocument && o.name == name && o.birthDate == birthDate && o.email == email && o.gender == gender && o.address == address && listEquals(o.phones, phones) && o.deliveryType == deliveryType && o.deliveryTime == deliveryTime && o.price == price && o.pickUpStoreDocument == pickUpStoreDocument;
   }
 
   @override
   int get hashCode {
-    return clientId.hashCode ^
-        type.hashCode ^
-        primaryDocument.hashCode ^
-        secondaryDocument.hashCode ^
-        name.hashCode ^
-        birthDate.hashCode ^
-        email.hashCode ^
-        gender.hashCode ^
-        address.hashCode ^
-        phones.hashCode ^
-        deliveryType.hashCode ^
-        deliveryTime.hashCode ^
-        price.hashCode ^
-        pickUpStoreDocument.hashCode;
+    return clientId.hashCode ^ type.hashCode ^ primaryDocument.hashCode ^ secondaryDocument.hashCode ^ name.hashCode ^ birthDate.hashCode ^ email.hashCode ^ gender.hashCode ^ address.hashCode ^ phones.hashCode ^ deliveryType.hashCode ^ deliveryTime.hashCode ^ price.hashCode ^ pickUpStoreDocument.hashCode;
   }
 
   @override

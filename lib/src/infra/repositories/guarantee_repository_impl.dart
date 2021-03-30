@@ -17,9 +17,9 @@ class GuaranteeRepositoryImpl implements GuaranteeRepository {
   final GuaranteeDatasource _datasource;
   GuaranteeRepositoryImpl(this._datasource) {}
 
-  TokenModel _currentToken;
-  CredentialsModel _currentCredentials;
-  int _authenticationLoopIfErrorCount;
+  TokenModel? _currentToken;
+  late CredentialsModel _currentCredentials;
+  late int _authenticationLoopIfErrorCount;
 
   Future<void> authenticationResilience() async {
     int authenticationLoopIfErrorIndex = 0;
@@ -29,15 +29,15 @@ class GuaranteeRepositoryImpl implements GuaranteeRepository {
         throw AuthenticationRequiredFailure();
       }
       final resilienceExceeded = authenticationLoopIfErrorIndex + 1 > _authenticationLoopIfErrorCount;
-      if (_currentToken.isExpired) {
+      if (_currentToken!.isExpired) {
         if (resilienceExceeded) {
           throw AuthenticationExpiredFailure();
         }
         authenticationLoopIfErrorIndex += 1;
         final authResponse = await authenticate(_currentCredentials, _authenticationLoopIfErrorCount);
-        _currentToken = authResponse | null ?? _currentToken;
+        _currentToken = authResponse.getOrElse(() => _currentToken!);
       }
-    } while (_currentToken.isExpired);
+    } while (_currentToken!.isExpired);
   }
 
   @override
@@ -61,7 +61,7 @@ class GuaranteeRepositoryImpl implements GuaranteeRepository {
   Future<Either<Failure, ResponseModel<AnalysisResponseModel>>> analysisRequest(AnalysisRequestModel analysisRequest) async {
     try {
       await authenticationResilience();
-      final response = await _datasource.analysisRequest(_currentToken.token, analysisRequest);
+      final response = await _datasource.analysisRequest(_currentToken!.token, analysisRequest);
       return right(response);
     } on Failure catch (exception) {
       return left(exception);
@@ -76,7 +76,7 @@ class GuaranteeRepositoryImpl implements GuaranteeRepository {
   Future<Either<Failure, ResponseModel<ChargebackMarkingResponseModel>>> chargebackMarking(String message, List<String> analysisCode) async {
     try {
       await authenticationResilience();
-      final response = await _datasource.chargebackMarking(_currentToken.token, message, analysisCode);
+      final response = await _datasource.chargebackMarking(_currentToken!.token, message, analysisCode);
       return right(response);
     } on Failure catch (exception) {
       return left(exception);
@@ -91,7 +91,7 @@ class GuaranteeRepositoryImpl implements GuaranteeRepository {
   Future<Either<Failure, ResponseModel<AnalysisResponseModel>>> reanalysisRequest(AnalysisRequestModel analysisRequest) async {
     try {
       await authenticationResilience();
-      final response = await _datasource.reanalysisRequest(_currentToken.token, analysisRequest);
+      final response = await _datasource.reanalysisRequest(_currentToken!.token, analysisRequest);
       return right(response);
     } on Failure catch (exception) {
       return left(exception);
@@ -106,7 +106,7 @@ class GuaranteeRepositoryImpl implements GuaranteeRepository {
   Future<Either<Failure, ResponseModel<OrderModel>>> statusConsult(String analysisNewStatusCode) async {
     try {
       await authenticationResilience();
-      final response = await _datasource.statusConsult(_currentToken.token, analysisNewStatusCode);
+      final response = await _datasource.statusConsult(_currentToken!.token, analysisNewStatusCode);
       return right(response);
     } on Failure catch (exception) {
       return left(exception);
@@ -121,7 +121,7 @@ class GuaranteeRepositoryImpl implements GuaranteeRepository {
   Future<Either<Failure, ResponseModel<MessageModel>>> statusUpdate(String analysisRequestCode, String status) async {
     try {
       await authenticationResilience();
-      final response = await _datasource.statusUpdate(_currentToken.token, analysisRequestCode, status);
+      final response = await _datasource.statusUpdate(_currentToken!.token, analysisRequestCode, status);
       return right(response);
     } on Failure catch (exception) {
       return left(exception);

@@ -1,15 +1,13 @@
 class MessageModel {
-  String status;
-  String message;
+  String? status;
+  String? message;
   MessageModel({this.status, this.message});
 
   @override
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
-  
-    return o is MessageModel &&
-      o.status == status &&
-      o.message == message;
+
+    return o is MessageModel && o.status == status && o.message == message;
   }
 
   @override

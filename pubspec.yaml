@@ -1,19 +1,18 @@
 name: clearsale
 description: Package para conectar uma aplicação Dart com a Clearsale
-version: 1.0.0-dev.16
+version: 2.0.0-dev.17
 author: F-Team <david@flutterando.com.br>
 homepage: http://f-team.dev/
 repository: https://github.com/davidsdearaujo/clearsale.git
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0-0 <3.0.0"
 
 dependencies:
-  collection: ^1.14.13
-  meta: ^1.2.3
-  dartz: ^0.9.1
-  http: ^0.12.2
+  collection: ^1.15.0
+  dartz: ^0.10.0-nullsafety.1
+  http: ^0.13.1
 
 dev_dependencies:
-  mockito: ^4.1.1
-  test: ^1.15.4
+  mocktail: ^0.1.1
+  test: ^1.16.8

@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 import '../enums/card_brand_enum.dart';
 
 export '../enums/card_brand_enum.dart';
@@ -8,11 +6,11 @@ class CardModel {
   ///### Número do Cartão com Máscara
   ///Exemplo: 123456******1234
   ///Tamanho: 200
-  String number;
+  String? number;
 
   ///### Hash do número do cartão
   ///Tamanho: 128
-  String hash;
+  String? hash;
 
   ///### 6 Primeiros Números do Cartão de Crédito
   ///Tamanho: 6
@@ -23,11 +21,11 @@ class CardModel {
   String end;
 
   ///### Bandeira do Cartão
-  CardBrandEnum type;
+  CardBrandEnum? type;
 
   ///### Data da Expiração
   ///Tamanho: 50
-  String validityDate;
+  String? validityDate;
 
   ///### Nome de Cobrança
   ///Tamanho: 150
@@ -35,20 +33,20 @@ class CardModel {
 
   ///### Documento da Pessoa de Cobrança
   ///Tamanho: 100
-  String document;
+  String? document;
 
   ///### Número identificador único de uma transação de cartão
   ///Tamanho: 50
-  String nsu;
+  String? nsu;
 
   CardModel({
     this.number,
     this.hash,
-    @required this.bin,
-    @required this.end,
+    required this.bin,
+    required this.end,
     this.type,
     this.validityDate,
-    @required this.ownerName,
+    required this.ownerName,
     this.document,
     this.nsu,
   });
@@ -57,29 +55,12 @@ class CardModel {
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
 
-    return o is CardModel &&
-        o.number == number &&
-        o.hash == hash &&
-        o.bin == bin &&
-        o.end == end &&
-        o.type == type &&
-        o.validityDate == validityDate &&
-        o.ownerName == ownerName &&
-        o.document == document &&
-        o.nsu == nsu;
+    return o is CardModel && o.number == number && o.hash == hash && o.bin == bin && o.end == end && o.type == type && o.validityDate == validityDate && o.ownerName == ownerName && o.document == document && o.nsu == nsu;
   }
 
   @override
   int get hashCode {
-    return number.hashCode ^
-        hash.hashCode ^
-        bin.hashCode ^
-        end.hashCode ^
-        type.hashCode ^
-        validityDate.hashCode ^
-        ownerName.hashCode ^
-        document.hashCode ^
-        nsu.hashCode;
+    return number.hashCode ^ hash.hashCode ^ bin.hashCode ^ end.hashCode ^ type.hashCode ^ validityDate.hashCode ^ ownerName.hashCode ^ document.hashCode ^ nsu.hashCode;
   }
 
   @override

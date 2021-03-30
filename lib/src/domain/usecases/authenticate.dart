@@ -11,8 +11,8 @@ class Authenticate {
 
   Authenticate(this._repository);
   Future<Either<Failure, TokenModel>> call(
-    CredentialsModel credentials,
-    int loopCountIfError,
+    CredentialsModel? credentials,
+    int? loopCountIfError,
   ) async {
     if (credentials == null) {
       return left(InvalidFieldFailure("credentials"));

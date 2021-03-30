@@ -15,11 +15,8 @@ class StatusUpdate {
     String analysisRequestCode,
     String analysisNewStatusCode,
   ) async {
-    if (analysisRequestCode == null || analysisRequestCode.isEmpty) {
+    if (analysisRequestCode.isEmpty) {
       return left(InvalidFieldFailure("analysisRequestCode"));
-    }
-    if (analysisNewStatusCode == null) {
-      return left(InvalidFieldFailure("analysisNewStatusCode"));
     }
     return await _repository.statusUpdate(
       analysisRequestCode,

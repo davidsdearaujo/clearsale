@@ -1,16 +1,14 @@
-import 'package:meta/meta.dart';
-
 import '../enums/list_type_enum.dart';
 
 export '../enums/list_type_enum.dart';
 
 class ListClassModel {
-  ListTypeEnum typeId;
+  ListTypeEnum? typeId;
   String id;
 
   ListClassModel({
-    @required this.typeId,
-    @required this.id,
+    this.typeId,
+    required this.id,
   });
 
   @override
@@ -27,8 +25,8 @@ class ListClassModel {
   String toString() => 'ListClassModel(typeId: $typeId, id: $id)';
 
   ListClassModel copyWith({
-    ListTypeEnum typeId,
-    String id,
+    ListTypeEnum? typeId,
+    String? id,
   }) {
     return ListClassModel(
       typeId: typeId ?? this.typeId,
