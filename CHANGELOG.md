@@ -1,3 +1,3 @@
-## [0.0.1] - TODO: Add release date.
+## [1.0.0-nullsafety-dev.1] - 30/03/2021
 
-* TODO: Describe initial release.
+* Null Safety Migration
