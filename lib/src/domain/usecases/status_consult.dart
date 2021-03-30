@@ -10,9 +10,8 @@ class StatusConsult {
   final GuaranteeRepository _repository;
   StatusConsult(this._repository);
 
-  Future<Either<Failure, ResponseModel<OrderModel>>> call(
-      String analysisCode) async {
-    if (analysisCode == null || analysisCode.isEmpty) {
+  Future<Either<Failure, ResponseModel<OrderModel>>> call(String analysisCode) async {
+    if (analysisCode.isEmpty) {
       return left(InvalidFieldFailure("analysisCode"));
     }
     return await _repository.statusConsult(analysisCode);

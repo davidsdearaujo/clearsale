@@ -7,9 +7,8 @@ import 'package:clearsale/src/domain/models/order_model.dart';
 import 'package:clearsale/src/domain/models/response_model.dart';
 import 'package:clearsale/src/domain/models/token_model.dart';
 import 'package:clearsale/src/external/datasources/guarantee_datasource_impl.dart';
-import 'package:clearsale/src/external/errors/guarantee_datasource_errors.dart';
 import 'package:http/http.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
 import '../responses/status_update_responses.dart' as statusUpdateResponses;
@@ -20,13 +19,21 @@ import '../responses/chargeback_marking_responses.dart' as chargebackMarkingResp
 
 class MockClient extends Mock implements Client {}
 
+class UriFake extends Fake implements Uri {}
+
 void main() {
-  GuaranteeDatasourceImpl datasource;
-  MockClient client;
+  late GuaranteeDatasourceImpl datasource;
+  late MockClient client;
   setUp(() {
     client = MockClient();
     datasource = GuaranteeDatasourceImpl(false, client);
   });
+
+  setUpAll(() {
+    registerFallbackValue<Uri>(UriFake());
+  });
+
+  var model = AnalysisRequestModel(code: "10", sessionId: "10", email: "10", totalValue: 100.0, billing: BillingModel(primaryDocument: "asd", name: "", phones: []), payments: [], items: []);
 
   group("Url from ambients", () {
     group("baseUrl", () {
@@ -53,7 +60,7 @@ void main() {
 
   group("statusConsult", () {
     test("success", () async {
-      when(client.get(any, headers: anyNamed("headers"))).thenAnswer((realInvocation) async => statusConsultResponses.success);
+      when(() => client.get(any(), headers: any(named: "headers"))).thenAnswer((realInvocation) async => statusConsultResponses.success);
       final response = await datasource.statusConsult("mock-token", "mock-analysisRequestCode");
       expect(
         response,
@@ -63,17 +70,17 @@ void main() {
         ),
       );
     });
-
-    test("NullDatasourceResponseFailure", () async {
-      when(client.get(any, headers: anyNamed("headers"))).thenAnswer((realInvocation) async => null);
-      final response = datasource.statusConsult("mock-token", "mock-analysisRequestCode");
-      expect(response, throwsA(NullDatasourceResponseFailure()));
-    });
+    // Http não retorna null
+    // test("NullDatasourceResponseFailure", () async {
+    //   when(() => client.get(any(), headers: any(named: "headers"))).thenAnswer((realInvocation) async => null);
+    //   final response = datasource.statusConsult("mock-token", "mock-analysisRequestCode");
+    //   expect(response, throwsA(NullDatasourceResponseFailure()));
+    // });
   });
 
   group("statusUpdate", () {
     test("success", () async {
-      when(client.put(any, headers: anyNamed("headers"), body: anyNamed("body"))).thenAnswer((realInvocation) async => statusUpdateResponses.success);
+      when(() => client.put(any(), headers: any(named: "headers"), body: any(named: "body"))).thenAnswer((realInvocation) async => statusUpdateResponses.success);
 
       final response = await datasource.statusUpdate("mock-token", "mock-analysisRequestCode", "APR");
       expect(
@@ -84,38 +91,39 @@ void main() {
         ),
       );
     });
-
-    test("NullDatasourceResponseFailure", () async {
-      when(client.put(any, headers: anyNamed("headers"), body: anyNamed("body"))).thenAnswer((realInvocation) async => null);
-      final response = datasource.statusConsult("mock-token", "mock-analysisRequestCode");
-      expect(
-        response,
-        throwsA(NullDatasourceResponseFailure()),
-      );
-    });
+    // Http não retorna null
+    // test("NullDatasourceResponseFailure", () async {
+    //   when(() => client.put(any(), headers: any(named: "headers"), body: any(named: "body"))).thenAnswer((realInvocation) async => null);
+    //   final response = datasource.statusConsult("mock-token", "mock-analysisRequestCode");
+    //   expect(
+    //     response,
+    //     throwsA(NullDatasourceResponseFailure()),
+    //   );
+    // });
   });
 
   group("authenticate", () {
     test("success", () async {
-      when(client.post(any, headers: anyNamed("headers"), body: anyNamed("body"))).thenAnswer((realInvocation) async => authenticateResponses.success);
+      when(() => client.post(any(), headers: any(named: "headers"), body: any(named: "body"))).thenAnswer((realInvocation) async => authenticateResponses.success);
       final response = await datasource.authenticate(CredentialsModel("mock-username", "mock-password"));
       expect(
         response,
         TokenModel("1df73594d7ad4224a3cd4aa9f8a5af06", DateTime.parse("2020-10-01T16:13:51.6146331-03:00")),
       );
     });
-    test("NullDatasourceResponseFailure", () async {
-      when(client.post(any, headers: anyNamed("headers"), body: anyNamed("body"))).thenAnswer((realInvocation) async => null);
-      final response = datasource.authenticate(CredentialsModel("mock-username", "mock-password"));
-      expect(
-        response,
-        throwsA(NullDatasourceResponseFailure()),
-      );
-    });
+    // Http não retorna null
+    // test("NullDatasourceResponseFailure", () async {
+    //   when(() => client.post(any(), headers: any(named: "headers"), body: any(named: "body"))).thenAnswer((realInvocation) async => null);
+    //   final response = datasource.authenticate(CredentialsModel("mock-username", "mock-password"));
+    //   expect(
+    //     response,
+    //     throwsA(NullDatasourceResponseFailure()),
+    //   );
+    // });
   });
   group("chargebackMarking", () {
     test("success", () async {
-      when(client.post(any, headers: anyNamed("headers"), body: anyNamed("body"))).thenAnswer((_) async => chargebackMarkingResponses.success);
+      when(() => client.post(any(), headers: any(named: "headers"), body: any(named: "body"))).thenAnswer((_) async => chargebackMarkingResponses.success);
       final response = await datasource.chargebackMarking(
         "mock-token",
         "mock-message",
@@ -131,29 +139,30 @@ void main() {
         ),
       );
     });
-    test("NullDatasourceResponseFailure", () {
-      when(client.post(any, headers: anyNamed("headers"), body: anyNamed("body"))).thenAnswer((realInvocation) async => null);
-      final response = datasource.chargebackMarking(
-        "mock-token",
-        "mock-message",
-        [
-          "mock-analysis-code"
-        ],
-      );
-      expect(
-        response,
-        throwsA(NullDatasourceResponseFailure()),
-      );
-    });
+    // Http não retorna null
+    // test("NullDatasourceResponseFailure", () {
+    //   when(() => client.post(any(), headers: any(named: "headers"), body: any(named: "body"))).thenAnswer((realInvocation) async => null);
+    //   final response = datasource.chargebackMarking(
+    //     "mock-token",
+    //     "mock-message",
+    //     [
+    //       "mock-analysis-code"
+    //     ],
+    //   );
+    //   expect(
+    //     response,
+    //     throwsA(NullDatasourceResponseFailure()),
+    //   );
+    // });
   });
 
   group("analysisRequest", () {
     test("success", () async {
-      when(client.post(any, headers: anyNamed("headers"), body: anyNamed("body"))).thenAnswer((_) async => analysisRequestResponses.success);
+      when(() => client.post(any(), headers: any(named: "headers"), body: any(named: "body"))).thenAnswer((_) async => analysisRequestResponses.success);
       final response = await datasource.analysisRequest(
         "mock-token",
         // ignore: missing_required_param
-        AnalysisRequestModel(),
+        model,
       );
       expect(
         response,
@@ -168,24 +177,25 @@ void main() {
         ),
       );
     });
-    test("NullDatasourceResponseFailure", () {
-      when(client.post(any, headers: anyNamed("headers"), body: anyNamed("body"))).thenAnswer((realInvocation) async => null);
-      final response = datasource.analysisRequest(
-        "mock-token",
-        // ignore: missing_required_param
-        AnalysisRequestModel(),
-      );
-      expect(response, throwsA(NullDatasourceResponseFailure()));
-    });
+    // Http não retorna null
+    // test("NullDatasourceResponseFailure", () {
+    //   when(() => client.post(any(), headers: any(named: "headers"), body: any(named: "body"))).thenAnswer((realInvocation) async => null);
+    //   final response = datasource.analysisRequest(
+    //     "mock-token",
+    //     // ignore: missing_required_param
+    //     model,
+    //   );
+    //   expect(response, throwsA(NullDatasourceResponseFailure()));
+    // });
   });
 
   group("reanalysisRequest", () {
     test("success", () async {
-      when(client.post(any, headers: anyNamed("headers"), body: anyNamed("body"))).thenAnswer((_) async => analysisRequestResponses.success);
+      when(() => client.post(any(), headers: any(named: "headers"), body: any(named: "body"))).thenAnswer((_) async => analysisRequestResponses.success);
       final response = await datasource.reanalysisRequest(
         "mock-token",
         // ignore: missing_required_param
-        AnalysisRequestModel(),
+        model,
       );
       expect(
         response,
@@ -200,14 +210,15 @@ void main() {
         ),
       );
     });
-    test("NullDatasourceResponseFailure", () {
-      when(client.post(any, headers: anyNamed("headers"), body: anyNamed("body"))).thenAnswer((realInvocation) async => null);
-      final response = datasource.reanalysisRequest(
-        "mock-token",
-        // ignore: missing_required_param
-        AnalysisRequestModel(),
-      );
-      expect(response, throwsA(NullDatasourceResponseFailure()));
-    });
+    // Http não retorna null
+    // test("NullDatasourceResponseFailure", () {
+    //   when(() => client.post(any(), headers: any(named: "headers"), body: any(named: "body"))).thenAnswer((realInvocation) async => Response("", 1));
+    //   final response = datasource.reanalysisRequest(
+    //     "mock-token",
+    //     // ignore: missing_required_param
+    //     model,
+    //   );
+    //   expect(response, throwsA(NullDatasourceResponseFailure()));
+    // });
   });
 }

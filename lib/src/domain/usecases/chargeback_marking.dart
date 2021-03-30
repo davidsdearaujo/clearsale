@@ -12,12 +12,12 @@ class ChargebackMarking {
   ChargebackMarking(this._repository);
   Future<Either<Failure, ResponseModel<ChargebackMarkingResponseModel>>> call({
     required String message,
-    List<String>? analysisCode,
+    required List<String> analysisCode,
   }) async {
-    // if (message == null || message.isEmpty) {
-    //   return left(InvalidFieldFailure("message"));
-    // }
-    if (analysisCode == null || analysisCode.isEmpty) {
+    if (message.isEmpty) {
+      return left(InvalidFieldFailure("message"));
+    }
+    if (analysisCode.isEmpty) {
       return left(InvalidFieldFailure("analysisCode"));
     }
 

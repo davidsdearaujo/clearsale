@@ -85,7 +85,7 @@ class ClearSale {
 
   Future<ResponseModel<ChargebackMarkingResponseModel>?> chargebackMarking({
     required String message,
-    List<String>? analysisCode,
+    required List<String> analysisCode,
   }) async {
     final response = await _chargebackMarking.call(
       message: message,

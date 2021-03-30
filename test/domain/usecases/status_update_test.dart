@@ -4,14 +4,14 @@ import 'package:clearsale/src/domain/models/response_model.dart';
 import 'package:clearsale/src/domain/repositories/guarantee_repository.dart';
 import 'package:clearsale/src/domain/usecases/status_update.dart';
 import 'package:dartz/dartz.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
 class MockGaranteeRepository extends Mock implements GuaranteeRepository {}
 
 void main() {
-  MockGaranteeRepository repository;
-  StatusUpdate usecase;
+  late MockGaranteeRepository repository;
+  late StatusUpdate usecase;
   setUp(() {
     repository = MockGaranteeRepository();
     usecase = StatusUpdate(repository);
@@ -24,40 +24,39 @@ void main() {
     ),
   );
   test("success", () async {
-    when(repository.statusUpdate(any, any))
-        .thenAnswer((realInvocation) async => right(successResponse));
+    when(() => repository.statusUpdate(any(), any())).thenAnswer((realInvocation) async => right(successResponse));
     final response = await usecase("mock-code", "APR");
-    expect(response | null, successResponse);
+    expect(response.fold(id, id), successResponse);
   });
 
   group("InvalidFieldFailure", () {
     group("analysisRequestCode", () {
-      test("null", () async {
-        ;
-        when(repository.statusUpdate(any, any))
-            .thenAnswer((realInvocation) async => right(successResponse));
-        final response =
-            await usecase(null, "APR").then((value) => value.fold(id, id));
-        expect(response, InvalidFieldFailure("analysisRequestCode"));
-      });
+      // Não pode ser nulo
+      // test("null", () async {
+      //   ;
+      //   when(() => repository.statusUpdate(any(), any()))
+      //       .thenAnswer((realInvocation) async => right(successResponse));
+      //   final response =
+      //       await usecase(null, "APR").then((value) => value.fold(id, id));
+      //   expect(response, InvalidFieldFailure("analysisRequestCode"));
+      // });
       test("empty", () async {
         ;
-        when(repository.statusUpdate(any, any))
-            .thenAnswer((realInvocation) async => right(successResponse));
-        final response =
-            await usecase("", "APR").then((value) => value.fold(id, id));
+        when(() => repository.statusUpdate(any(), any())).thenAnswer((realInvocation) async => right(successResponse));
+        final response = await usecase("", "APR").then((value) => value.fold(id, id));
         expect(response, InvalidFieldFailure("analysisRequestCode"));
       });
     });
-    group("analysisNewStatusCode", () {
-      test("null", () async {
-        ;
-        when(repository.statusUpdate(any, any))
-            .thenAnswer((realInvocation) async => right(successResponse));
-        final response = await usecase("mock-code", null)
-            .then((value) => value.fold(id, id));
-        expect(response, InvalidFieldFailure("analysisNewStatusCode"));
-      });
-    });
+    // Não pode ser nulo
+    // group("analysisNewStatusCode", () {
+    //   test("null", () async {
+    //     ;
+    //     when(() => repository.statusUpdate(any(), any()))
+    //         .thenAnswer((realInvocation) async => right(successResponse));
+    //     final response = await usecase("mock-code", null)
+    //         .then((value) => value.fold(id, id));
+    //     expect(response, InvalidFieldFailure("analysisNewStatusCode"));
+    //   });
+    // });
   });
 }
