@@ -1,13 +1,12 @@
 class ResponseModel<T> {
   final String? requestId;
-  final T? data;
+  final T data;
 
-  ResponseModel({this.requestId, this.data});
+  ResponseModel({this.requestId, required this.data});
 
   @override
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
-
     return o is ResponseModel<T> && o.requestId == requestId && o.data == data;
   }
 
